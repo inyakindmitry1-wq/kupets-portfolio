@@ -1,0 +1,682 @@
+<!-- =========================================================
+TEMPLATE — PART 2 / 3
+КОНТЕНТ САЙТА / HTML
+
+PART 2 отвечает за то, ЧТО находится на сайте.
+
+Здесь меняются:
+— название;
+— подписи;
+— папки;
+— иконки;
+— проекты;
+— тексты;
+— ссылки;
+— контакты;
+— заметки;
+— цены;
+— музыка;
+— юридическая информация.
+
+ВАЖНО:
+YOUR_... = место, куда нужно вставить свой контент.
+========================================================= -->
+
+
+<!-- DEVICE FRAME -->
+<div id="ilnurDeviceFrame" aria-hidden="true"></div>
+
+
+<!-- FULL DESKTOP -->
+<div id="ilnurDesktop" aria-label="Главный экран">
+
+  <div class="ilnur-scene-bg"></div>
+  <div class="ilnur-scene-vignette"></div>
+
+
+  <!-- LEGAL LINKS -->
+  <nav class="ilnur-legal">
+    <a href="#" class="privacy-trigger">Privacy Policy</a>
+    <a href="#" class="terms-trigger">Terms of Service</a>
+  </nav>
+
+
+  <!-- NAME / DESCRIPTION -->
+  <section class="ilnur-identity">
+
+    <h1 class="ilnur-identity-title">
+      KUPETS.STUDIO
+    </h1>
+
+    <div class="ilnur-identity-sub">
+      ВЕБ-ДИЗАЙНЕР И РАЗРАБОТЧИК САЙТОВ
+    </div>
+
+  </section>
+
+
+  <!-- MAIN FOLDERS -->
+  <section class="ilnur-folders" aria-label="Основные разделы">
+
+    <button class="ilnur-folder about-trigger" type="button">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 80' width='100' height='80'%3E%3Cpath d='M8 12C8 7.58 11.58 4 16 4H36C39.5 4 42.6 6.3 43.6 9.6L46 16H84C88.42 16 92 19.58 92 24V68C92 72.42 88.42 76 84 76H16C11.58 76 8 72.42 8 68V12Z' fill='%235aa7ff'/%3E%3Cpath d='M8 26C8 21.58 11.58 18 16 18H84C88.42 18 92 21.58 92 26V68C92 72.42 88.42 76 84 76H16C11.58 76 8 72.42 8 68V26Z' fill='%233b82f6'/%3E%3Cpath d='M8 32H92V68C92 72.42 88.42 76 84 76H16C11.58 76 8 72.42 8 68V32Z' fill='%232563eb' fill-opacity='0.25'/%3E%3C/svg%3E" alt="Обо мне">
+      <span>ОБО МНЕ</span>
+    </button>
+
+    <button class="ilnur-folder works-trigger" type="button">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 80' width='100' height='80'%3E%3Cpath d='M8 12C8 7.58 11.58 4 16 4H36C39.5 4 42.6 6.3 43.6 9.6L46 16H84C88.42 16 92 19.58 92 24V68C92 72.42 88.42 76 84 76H16C11.58 76 8 72.42 8 68V12Z' fill='%235aa7ff'/%3E%3Cpath d='M8 26C8 21.58 11.58 18 16 18H84C88.42 18 92 21.58 92 26V68C92 72.42 88.42 76 84 76H16C11.58 76 8 72.42 8 68V26Z' fill='%233b82f6'/%3E%3Cpath d='M8 32H92V68C92 72.42 88.42 76 84 76H16C11.58 76 8 72.42 8 68V32Z' fill='%232563eb' fill-opacity='0.25'/%3E%3C/svg%3E" alt="Портфолио">
+      <span>ПОРТФОЛИО</span>
+    </button>
+
+    <button class="ilnur-folder process-trigger" type="button">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 80' width='100' height='80'%3E%3Cpath d='M8 12C8 7.58 11.58 4 16 4H36C39.5 4 42.6 6.3 43.6 9.6L46 16H84C88.42 16 92 19.58 92 24V68C92 72.42 88.42 76 84 76H16C11.58 76 8 72.42 8 68V12Z' fill='%235aa7ff'/%3E%3Cpath d='M8 26C8 21.58 11.58 18 16 18H84C88.42 18 92 21.58 92 26V68C92 72.42 88.42 76 84 76H16C11.58 76 8 72.42 8 68V26Z' fill='%233b82f6'/%3E%3Cpath d='M8 32H92V68C92 72.42 88.42 76 84 76H16C11.58 76 8 72.42 8 68V32Z' fill='%232563eb' fill-opacity='0.25'/%3E%3C/svg%3E" alt="Прайс и Услуги">
+      <span>ПРАЙС И УСЛУГИ</span>
+    </button>
+
+    <button class="ilnur-folder notes-trigger" type="button">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 80' width='100' height='80'%3E%3Cpath d='M8 12C8 7.58 11.58 4 16 4H36C39.5 4 42.6 6.3 43.6 9.6L46 16H84C88.42 16 92 19.58 92 24V68C92 72.42 88.42 76 84 76H16C11.58 76 8 72.42 8 68V12Z' fill='%235aa7ff'/%3E%3Cpath d='M8 26C8 21.58 11.58 18 16 18H84C88.42 18 92 21.58 92 26V68C92 72.42 88.42 76 84 76H16C11.58 76 8 72.42 8 68V26Z' fill='%233b82f6'/%3E%3Cpath d='M8 32H92V68C92 72.42 88.42 76 84 76H16C11.58 76 8 72.42 8 68V32Z' fill='%232563eb' fill-opacity='0.25'/%3E%3C/svg%3E" alt="Заметки">
+      <span>ЗАМЕТКИ</span>
+    </button>
+
+  </section>
+
+
+  <!-- DOCK -->
+  <div class="ilnur-dock" aria-label="Приложения">
+
+    <button class="ilnur-dock-item telegram-trigger" type="button" title="Telegram">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' width='64' height='64'%3E%3Crect width='64' height='64' rx='16' fill='%2329b6f6'/%3E%3Cpath d='M48 16L12 30.5L24 35.5L42 23L27.5 38.5L27 48L34 41.5L43 47.5L48 16Z' fill='%23ffffff'/%3E%3C/svg%3E" alt="Telegram">
+    </button>
+
+    <button class="ilnur-dock-item instagram-trigger" type="button" title="WhatsApp">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' width='64' height='64'%3E%3Crect width='64' height='64' rx='16' fill='%2325d366'/%3E%3Cpath d='M32 14C22.06 14 14 22.06 14 32C14 35.43 14.97 38.64 16.65 41.38L14.5 49.5L22.88 47.38C25.52 48.97 28.65 49.9 32 49.9C41.94 49.9 50 41.84 50 31.9C50 21.96 41.94 14 32 14ZM39.84 38.7C39.42 39.88 37.69 40.85 36.63 40.99C35.91 41.08 34.98 41.14 31.84 39.83C27.83 38.16 25.24 34.08 25.04 33.81C24.85 33.55 23.42 31.65 23.42 29.68C23.42 27.71 24.42 26.75 24.82 26.34C25.15 26.01 25.69 25.86 26.21 25.86C26.38 25.86 26.53 25.87 26.66 25.88C27.06 25.89 27.26 25.92 27.52 26.54C27.85 27.33 28.65 29.28 28.75 29.48C28.85 29.68 28.95 29.95 28.81 30.22C28.68 30.49 28.57 30.61 28.37 30.84C28.17 31.08 27.97 31.25 27.77 31.49C27.59 31.69 27.38 31.9 27.61 32.3C27.84 32.69 28.64 34 29.82 35.05C31.35 36.41 32.59 36.85 33.03 37.03C33.36 37.17 33.75 37.13 33.99 36.88C34.29 36.55 34.66 36.03 35.04 35.5C35.31 35.12 35.65 35.07 36 35.2C36.36 35.33 38.29 36.28 38.69 36.48C39.09 36.68 39.35 36.78 39.45 36.95C39.55 37.12 39.55 37.98 39.84 38.7Z' fill='%23ffffff'/%3E%3C/svg%3E" alt="WhatsApp">
+    </button>
+
+    <button class="ilnur-dock-item notes-trigger" type="button" title="Notes">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' width='64' height='64'%3E%3Crect width='64' height='64' rx='16' fill='%23fbbf24'/%3E%3Crect x='18' y='16' width='28' height='32' rx='4' fill='%23ffffff'/%3E%3Cpath d='M24 24H40M24 30H40M24 36H34' stroke='%23d97706' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E" alt="Notes">
+    </button>
+
+    <button class="ilnur-dock-item music-trigger" type="button" title="Music">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' width='64' height='64'%3E%3Crect width='64' height='64' rx='16' fill='%23fb7185'/%3E%3Ccircle cx='26' cy='42' r='6' fill='%23ffffff'/%3E%3Ccircle cx='42' cy='36' r='6' fill='%23ffffff'/%3E%3Cpath d='M32 42V20L48 14V36' stroke='%23ffffff' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" alt="Music">
+    </button>
+
+    <button class="ilnur-dock-item safari-trigger" type="button" title="Safari">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' width='64' height='64'%3E%3Crect width='64' height='64' rx='16' fill='%233b82f6'/%3E%3Ccircle cx='32' cy='32' r='20' fill='%23ffffff'/%3E%3Cpath d='M32 14L37 27L50 32L37 37L32 50L27 37L14 32L27 27Z' fill='%23ef4444'/%3E%3Cpath d='M32 14L37 27L50 32L37 37L32 32Z' fill='%23dc2626'/%3E%3C/svg%3E" alt="Safari">
+    </button>
+
+    <span class="ilnur-dock-separator"></span>
+
+    <button class="ilnur-dock-item trash-trigger" type="button" title="Trash">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' width='64' height='64'%3E%3Crect width='64' height='64' rx='16' fill='%2364748b'/%3E%3Cpath d='M22 24H42M26 24V42C26 43.1 26.9 44 28 44H36C37.1 44 38 43.1 38 42V24M28 24V20C28 18.9 28.9 18 30 18H34C35.1 18 36 18.9 36 20V24' stroke='%23ffffff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" alt="Trash">
+    </button>
+
+  </div>
+
+
+  <div class="ilnur-desktop-hint">
+    ПРАВЫЙ КЛИК — СИСТЕМНОЕ МЕНЮ<br>
+    ПЕРЕТАСКИВАНИЕ ПАПОК АКТИВНО
+  </div>
+
+</div>
+
+
+<!-- НАВИГАЦИЯ BAR -->
+<div id="ilnurSystemBar">
+
+  <div class="ilnur-menu-left">
+
+    <span class="ilnur-menu-logo">●</span>
+
+    <span class="ilnur-menu-item ilnur-menu-app">
+      KUPETS.STUDIO
+    </span>
+
+    <span class="ilnur-menu-item" data-open="worksModal">
+      Портфолио
+    </span>
+
+    <span class="ilnur-menu-item" data-open="processModal">
+      Услуги и Прайс
+    </span>
+
+    <span class="ilnur-menu-item" data-open="contactModal">
+      Контакты
+    </span>
+
+  </div>
+
+
+  <div class="ilnur-menu-right">
+
+    <span class="ilnur-status-dot"></span>
+
+    <span class="menu-hide-mobile">
+      ДОСТУПЕН ДЛЯ ПРОЕКТОВ
+    </span>
+
+    <span>⌁</span>
+    <span>▰</span>
+
+    <span id="systemClock">00:00</span>
+
+  </div>
+
+</div>
+
+
+<!-- NOTIFICATIONS -->
+<div id="ilnurNotifications"></div>
+
+
+<!-- CONTEXT MENU -->
+<div id="ilnurContext">
+
+  <div class="context-item" data-open="worksModal">
+    <span>Портфолио</span>
+    <span>↗</span>
+  </div>
+
+  <div class="context-item" data-open="contactModal">
+    <span>Контакты</span>
+    <span>⌘K</span>
+  </div>
+
+  <div class="context-divider"></div>
+
+  <div
+    class="context-item"
+    data-open="processModal">
+
+    <span>Услуги и Прайс</span>
+    <span>⌁</span>
+
+  </div>
+
+  <div
+    class="context-item"
+    data-open="notesModal">
+
+    <span>Заметки и принципы</span>
+    <span>⌘R</span>
+
+  </div>
+
+  <div class="context-divider"></div>
+
+  <div class="context-item" data-open="trashModal">
+    <span>Очистить систему...</span>
+    <span>⌫</span>
+  </div>
+
+</div>
+
+
+<!-- ABOUT -->
+<div class="ios-modal" id="aboutModal">
+
+  <div class="ios-window">
+
+    <div class="ios-top">
+
+      <div class="ios-dots">
+        <span class="ios-dot ios-close" data-close="aboutModal"></span>
+        <span class="ios-dot ios-yellow"></span>
+        <span class="ios-dot ios-green"></span>
+      </div>
+
+      ОБО МНЕ — ДМИТРИЙ ИНЯКИН
+
+    </div>
+
+
+    <div class="about-system">
+
+      <div class="about-card">
+
+        <div class="about-avatar"></div>
+
+
+        <div class="about-data">
+
+          <h1>Дмитрий Инякин</h1>
+
+          <div class="about-role">
+            Full-Stack Web Developer & UI Designer • Kupets Studio
+          </div>
+
+
+          <div class="about-specs">
+
+            <div class="about-spec">
+              <span class="about-spec-name">Дизайн (UI/UX)</span>
+              <span>YOUR TEXT</span>
+            </div>
+
+            <div class="about-spec">
+              <span class="about-spec-name">Верстка (Frontend)</span>
+              <span>YOUR TEXT</span>
+            </div>
+
+            <div class="about-spec">
+              <span class="about-spec-name">Кодинг (Backend)</span>
+              <span>YOUR TEXT</span>
+            </div>
+
+            <div class="about-spec">
+              <span class="about-spec-name">Category 04</span>
+              <span>YOUR TEXT</span>
+            </div>
+
+            <div class="about-spec">
+              <span class="about-spec-name">Category 05</span>
+              <span>YOUR TEXT</span>
+            </div>
+
+            <div class="about-spec">
+              <span class="about-spec-name">Status</span>
+              <span>ДОСТУПЕН ДЛЯ ПРОЕКТОВ</span>
+            </div>
+
+          </div>
+
+
+          <div class="about-bio">
+            Создаю быстрые, отзывчивые и продуманные до мелочей сайты и сервисы. Делаю упор на надежную архитектуру, чистый код без лишних зависимостей и внимание к деталям UX/UI.
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- WORKS / FINDER -->
+<div class="ios-modal" id="worksModal">
+
+  <div class="ios-window finder-window">
+
+    <div class="ios-top">
+
+      <div class="ios-dots">
+        <span class="ios-dot ios-close" data-close="worksModal"></span>
+        <span class="ios-dot ios-yellow"></span>
+        <span class="ios-dot ios-green"></span>
+      </div>
+
+      ПОРТФОЛИО — КЕЙСЫ И ПРОЕКТЫ
+
+    </div>
+
+
+    <div class="finder-body">
+
+      <aside class="finder-sidebar">
+
+        <div class="finder-side-title">
+          КАТЕГОРИИ
+        </div>
+
+        <div class="finder-side-item is-active">
+          <span class="finder-side-icon">▣</span>
+          <span>Все проекты</span>
+        </div>
+
+        <div class="finder-side-item">
+          <span class="finder-side-icon">⌘</span>
+          <span>Category 01</span>
+        </div>
+
+        <div class="finder-side-item">
+          <span class="finder-side-icon">◫</span>
+          <span>Category 02</span>
+        </div>
+
+        <div class="finder-side-item">
+          <span class="finder-side-icon">✦</span>
+          <span>Category 03</span>
+        </div>
+
+
+        <div class="finder-side-title" style="margin-top:20px;">
+          SYSTEM
+        </div>
+
+        <div class="finder-side-item" data-open="aboutModal">
+          <span class="finder-side-icon">◉</span>
+          <span>Обо мне</span>
+        </div>
+
+        <div class="finder-side-item" data-open="processModal">
+          <span class="finder-side-icon">≡</span>
+          <span>Процесс и цены</span>
+        </div>
+
+        <div class="finder-side-item" data-open="contactModal">
+          <span class="finder-side-icon">✉</span>
+          <span>Контакты</span>
+        </div>
+
+      </aside>
+
+
+      <main class="finder-main">
+
+        <div class="finder-heading">
+          <h2>Реализованные проекты</h2>
+          <span>4 кейса</span>
+        </div>
+
+
+        <div class="finder-grid">
+
+          <a class="project-file" href="https://analytics.b2b-saas.io" target="_blank" rel="noopener" data-category="design all">
+            <div class="project-preview"><img src="/portfolio/saas-dashboard.webp" alt="SaaS Analytics Dashboard"></div>
+            <div class="project-info">
+              <div class="project-name">B2B SaaS Analytics & Revenue Dashboard</div>
+              <div class="project-meta">Панель бизнес-аналитики для агрегации финансовых потоков и визуализации KPI</div>
+            </div>
+            <span class="project-open">↗</span>
+          </a>
+
+          <a class="project-file" href="https://monolith-audio.swiss" target="_blank" rel="noopener" data-category="design all">
+            <div class="project-preview"><img src="/portfolio/monolith-audio.webp" alt="Monolith Audio"></div>
+            <div class="project-info">
+              <div class="project-name">Monolith Audio Landing</div>
+              <div class="project-meta">Концептуальный промо-лендинг премиального звукового оборудования в строгой швейцарской типографике</div>
+            </div>
+            <span class="project-open">↗</span>
+          </a>
+
+          <a class="project-file" href="https://vortex.editorial-store.com" target="_blank" rel="noopener" data-category="layout all">
+            <div class="project-preview"><img src="/portfolio/vortex-ecommerce.webp" alt="VORTEX E-Commerce"></div>
+            <div class="project-info">
+              <div class="project-name">VORTEX // Editorial E-Commerce Showcase</div>
+              <div class="project-meta">Журнальный промо-интернет-магазин стритвир-одежды с многослойным Hero-блоком</div>
+            </div>
+            <span class="project-open">↗</span>
+          </a>
+
+          <a class="project-file" href="https://audit-core.engine.internal" target="_blank" rel="noopener" data-category="coding all">
+            <div class="project-preview"><img src="/portfolio/lead-engine.webp" alt="Lead Engine"></div>
+            <div class="project-info">
+              <div class="project-name">B2B Lead Automation & Enrichment Engine</div>
+              <div class="project-meta">Асинхронный парсер гео-сервисов и автоматизация обогащения лидов</div>
+            </div>
+            <span class="project-open">↗</span>
+          </a>
+
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+
+<!-- PROCESS -->
+<div class="ios-modal" id="processModal">
+  <div class="ios-window">
+    <div class="ios-top">
+      <div class="ios-dots">
+        <span class="ios-dot ios-close" data-close="processModal"></span>
+        <span class="ios-dot ios-yellow"></span>
+        <span class="ios-dot ios-green"></span>
+      </div>
+      ПРОЦЕСС И СТОИМОСТЬ
+    </div>
+    <div class="process-body">
+      <h2 class="ios-title">От идеи до запуска.</h2>
+      <div class="process-intro">Я веду проект целиком: помогаю сформулировать задачу, собираю структуру, создаю визуальную концепцию, разрабатываю сайт, подключаю нужные сервисы и проверяю всё перед публикацией.</div>
+      <div class="process-steps">
+        <div class="process-step"><div class="process-step-num">01</div><div class="process-step-name">Брифинг</div><div class="process-step-text">Обсуждаем бизнес, аудиторию, задачи и ограничения.</div></div>
+        <div class="process-step"><div class="process-step-num">02</div><div class="process-step-name">Структура</div><div class="process-step-text">Выстраиваю понятный путь от первого экрана до заявки или покупки.</div></div>
+        <div class="process-step"><div class="process-step-num">03</div><div class="process-step-name">Концепция</div><div class="process-step-text">Предлагаю визуальное направление и ключевые интерактивы.</div></div>
+        <div class="process-step"><div class="process-step-num">04</div><div class="process-step-name">Разработка</div><div class="process-step-text">Адаптив, анимации, код, каталог, формы и интеграции.</div></div>
+        <div class="process-step"><div class="process-step-num">05</div><div class="process-step-name">Запуск</div><div class="process-step-text">Тестирование, подключение домена и поддержка после сдачи.</div></div>
+      </div>
+      <h3 class="price-title">Ориентировочная стоимость</h3>
+      <div class="price-list">
+        <div class="price-row"><span>Мелкие правки, дизайн или код</span><span class="price-value">от 2 000 ₽</span></div>
+        <div class="price-row"><span>Одностраничный сайт</span><span class="price-value">от 5 000 ₽</span></div>
+        <div class="price-row"><span>Многостраничный сайт</span><span class="price-value">от 10 000 ₽</span></div>
+        <div class="price-row"><span>Интернет-магазин</span><span class="price-value">от 15 000 ₽</span></div>
+        <div class="price-row"><span>Сложный авторский проект</span><span class="price-value">индивидуально</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACTS -->
+<div class="ios-modal" id="contactModal">
+  <div class="ios-window">
+    <div class="ios-top">
+      <div class="ios-dots">
+        <span class="ios-dot ios-close" data-close="contactModal"></span>
+        <span class="ios-dot ios-yellow"></span>
+        <span class="ios-dot ios-green"></span>
+      </div>
+      CONTACTS — AIRDROP
+    </div>
+    <div class="contact-body">
+      <div class="contact-left">
+        <h2 class="ios-title">Обсудим проект.</h2>
+        <p>Напишите, какой сайт вам нужен, чем занимается ваш проект и есть ли примеры, которые вам нравятся. Я задам уточняющие вопросы и предложу следующий шаг.</p>
+        <div class="contact-list">
+          <a class="contact-link telegram-trigger" href="https://t.me/kupetsnovgorodny">
+            <span class="contact-name">Telegram</span><span class="contact-value">@kupetsnovgorodny</span><span>↗</span>
+          </a>
+          <a class="contact-link instagram-trigger" href="https://wa.me/79316117082">
+            <span class="contact-name">WhatsApp</span><span class="contact-value">+7 (931) 611-70-82</span><span>↗</span>
+          </a>
+          <a class="contact-link" href="mailto:inyakindmitry1@gmail.com">
+            <span class="contact-name">Email</span><span class="contact-value">inyakindmitry1@gmail.com</span><span>↗</span>
+          </a>
+        </div>
+      </div>
+      <div class="contact-right">
+        <div class="airdrop-radar"><div class="airdrop-user">KUPETS</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NOTES -->
+<div class="ios-modal" id="notesModal">
+  <div class="ios-window">
+    <div class="ios-top">
+      <div class="ios-dots">
+        <span class="ios-dot ios-close" data-close="notesModal"></span>
+        <span class="ios-dot ios-yellow"></span>
+        <span class="ios-dot ios-green"></span>
+      </div>
+      ЗАМЕТКИ И ПРИНЦИПЫ
+    </div>
+    <div class="notes-body">
+      <div class="notes-heading"><h2>Стандарты разработки</h2><span>•••</span></div>
+      <div class="notes-search">⌕ &nbsp; Search</div>
+      <div class="notes-section">Закреплено</div>
+      <div class="notes-card">
+        <div class="notes-item"><strong>Чистый код — основа стабильности</strong><span>Понятная модульная структура, типизация и отсутствие оверинжиниринга.</span></div>
+        <div class="notes-item"><strong>Работа на бизнес-результат</strong><span>Красивый интерфейс без четко работающей конверсии не имеет смысла. Главное — результат.</span></div>
+      </div>
+      <div class="notes-section">Принципы</div>
+      <div class="notes-card">
+        <div class="notes-item"><strong>Производительность</strong><span>Оптимизация бандла, сжатие медиа и Lighthouse 95+ обеспечивают мгновенную загрузку.</span></div>
+        <div class="notes-item"><strong>Внимание к UX/UI</strong><span>Плавные анимации, тактильный отклик и выверенная типографика формируют доверие.</span></div>
+        <div class="notes-item"><strong>Надежность</strong><span>Официальная работа по договору, поэтапное согласование и гарантийная поддержка.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SAFARI / STORE -->
+<div class="ios-modal" id="safariModal">
+  <div class="ios-window">
+    <div class="ios-top">
+      <div class="ios-dots">
+        <span class="ios-dot ios-close" data-close="safariModal"></span>
+        <span class="ios-dot ios-yellow"></span>
+        <span class="ios-dot ios-green"></span>
+      </div>
+      KUPETS.SEARCH — БРАУЗЕР
+    </div>
+    <div class="safari-toolbar">
+      <span class="safari-nav">‹ &nbsp;› &nbsp;↻</span>
+      <div class="safari-address">🔒 &nbsp;<span id="safariTyped"></span></div>
+    </div>
+    <div class="safari-content">
+      <h2 class="ios-title">Kupets Studio Search</h2>
+      <div class="ios-copy">Разработка сайтов и веб-приложений под ключ.</div>
+      <div class="safari-card">Оставьте заявку на разработку в Telegram: @kupetsnovgorodny или ознакомьтесь с кейсами в портфолио.</div>
+      <a class="ios-btn ios-btn-dark" href="https://t.me/kupetsnovgorodny" target="_blank" rel="noopener" style="display:inline-block;text-decoration:none;">НАПИСАТЬ В TELEGRAM ↗</a>
+    </div>
+  </div>
+</div>
+
+<!-- PRIVACY -->
+<div class="ios-modal" id="privacyModal">
+  <div class="ios-window">
+    <div class="ios-top">
+      <div class="ios-dots">
+        <span class="ios-dot ios-close" data-close="privacyModal"></span>
+        <span class="ios-dot ios-yellow"></span>
+        <span class="ios-dot ios-green"></span>
+      </div>
+      PRIVACY POLICY
+    </div>
+    <div class="legal-body">
+      <h2 class="ios-title">Privacy Policy</h2>
+      <div class="legal-copy">
+        <p>Настоящая Политика конфиденциальности определяет порядок обработки и защиты персональных данных пользователей сайта kupetsportfolio.ru.</p>
+        <h3>1. Общие положения</h3><p>Оператор обрабатывает персональные данные исключительно в целях обратной связи и согласования условий разработки проектов.</p>
+        <h3>2. Перечень данных</h3><p>Имя, контактный номер телефона, адрес электронной почты, логин в Telegram, предоставленные пользователем добровольно.</p>
+        <h3>3. Безопасность</h3><p>Данные хранятся конфиденциально и не передаются третьим лицам без законных оснований.</p>
+        <h3>4. Contacts</h3><p>YOUR EMAIL</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TERMS -->
+<div class="ios-modal" id="termsModal">
+  <div class="ios-window">
+    <div class="ios-top">
+      <div class="ios-dots">
+        <span class="ios-dot ios-close" data-close="termsModal"></span>
+        <span class="ios-dot ios-yellow"></span>
+        <span class="ios-dot ios-green"></span>
+      </div>
+      TERMS OF SERVICE
+    </div>
+    <div class="legal-body">
+      <h2 class="ios-title">Terms of Service</h2>
+      <div class="legal-copy">
+        <p>Договор публичной оферты на оказание услуг по разработке сайтов, веб-сервисов и графического дизайна.</p>
+        <h3>1. Предмет договора</h3><p>Исполнитель обязуется выполнить работы по веб-разработке и веб-дизайну согласно согласованному с Заказчиком техническому заданию.</p>
+        <h3>2. Порядок расчетов</h3><p>Оплата производится поэтапно или по факту сдачи согласованных этапов с формированием электронных чеков самозанятого.</p>
+        <h3>3. Гарантии</h3><p>Исполнитель гарантирует качество программного кода и устранение выявленных недочетов в гарантийный период.</p>
+        <h3>4. Contact</h3><p>YOUR EMAIL</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TRASH -->
+<div class="ios-modal" id="trashModal">
+  <div class="ios-window" style="width:min(620px,90vw);height:min(390px,76vh);">
+    <div class="ios-top">
+      <div class="ios-dots">
+        <span class="ios-dot ios-close" data-close="trashModal"></span>
+        <span class="ios-dot ios-yellow"></span>
+        <span class="ios-dot ios-green"></span>
+      </div>
+      TRASH
+    </div>
+    <div class="confirm-body">
+      <h2 class="ios-title">Очистить систему?</h2>
+      <div class="ios-copy">Вы действительно хотите перезагрузить рабочий стол и симулировать сброс данных?</div>
+      <div class="confirm-actions">
+        <button class="ios-btn ios-btn-light" data-close="trashModal" type="button">Отмена</button>
+        <button class="ios-btn ios-btn-dark" id="deleteSite" type="button">Сбросить</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TELEGRAM CONFIRM -->
+<div class="ios-modal" id="telegramConfirm">
+  <div class="ios-window" style="width:min(590px,90vw);height:min(350px,72vh);">
+    <div class="ios-top">
+      <div class="ios-dots">
+        <span class="ios-dot ios-close" data-close="telegramConfirm"></span>
+        <span class="ios-dot ios-yellow"></span>
+        <span class="ios-dot ios-green"></span>
+      </div>
+      OPEN TELEGRAM
+    </div>
+    <div class="confirm-body">
+      <h2 class="ios-title">Перейти в Telegram?</h2>
+      <div class="ios-copy">Чат @kupetsnovgorodny откроется в новой вкладке.</div>
+      <div class="confirm-actions">
+        <button class="ios-btn ios-btn-light" data-close="telegramConfirm" type="button">Отмена</button>
+        <button class="ios-btn ios-btn-dark" id="telegramOpen" type="button">Открыть</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- INSTAGRAM CONFIRM -->
+<div class="ios-modal" id="instagramConfirm">
+  <div class="ios-window" style="width:min(590px,90vw);height:min(350px,72vh);">
+    <div class="ios-top">
+      <div class="ios-dots">
+        <span class="ios-dot ios-close" data-close="instagramConfirm"></span>
+        <span class="ios-dot ios-yellow"></span>
+        <span class="ios-dot ios-green"></span>
+      </div>
+      ОТКРЫТЬ WHATSAPP
+    </div>
+    <div class="confirm-body">
+      <h2 class="ios-title">Перейти в WhatsApp?</h2>
+      <div class="ios-copy">Диалог +7 (931) 611-70-82 откроется в новой вкладке.</div>
+      <div class="confirm-actions">
+        <button class="ios-btn ios-btn-light" data-close="instagramConfirm" type="button">Отмена</button>
+        <button class="ios-btn ios-btn-dark" id="instagramOpen" type="button">Открыть</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MUSIC PLAYER -->
+<div id="ilnurMusic">
+  <button class="music-close" id="musicClose" type="button">×</button>
+  <div class="music-cover"></div>
+  <div class="music-main">
+    <div class="music-title">Kupets Coding Beats</div>
+    <div class="music-sub">Lo-Fi Chill Focus Stream</div>
+    <div class="music-progress" id="musicProgressBar">
+      <div class="music-progress-fill" id="musicProgressFill"></div>
+    </div>
+  </div>
+  <div class="music-controls">
+    <button class="music-btn" type="button">‹‹</button>
+    <button class="music-btn" id="musicPlay" type="button">▶</button>
+    <button class="music-btn" type="button">››</button>
+  </div>
+</div>
+
+<!-- AUDIO -->
+<audio id="siteMusic" loop preload="metadata">
+  <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3" type="audio/mpeg">
+</audio>
+
+<!-- 404 -->
+<div id="errorScreen">
+  <div class="error-code">404</div>
+  <div class="error-text">PAGE NOT FOUND.</div>
+  <div class="error-sub">restoring system...</div>
+</div>

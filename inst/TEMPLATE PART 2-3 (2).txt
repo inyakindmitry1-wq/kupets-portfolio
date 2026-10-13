@@ -1,0 +1,711 @@
+<!-- =========================================================
+TEMPLATE — PART 2 / 3
+КОНТЕНТ САЙТА / HTML
+
+PART 2 отвечает за то, ЧТО находится на сайте.
+
+Здесь меняются:
+— название;
+— подписи;
+— папки;
+— иконки;
+— проекты;
+— тексты;
+— ссылки;
+— контакты;
+— заметки;
+— цены;
+— музыка;
+— юридическая информация.
+
+ВАЖНО:
+YOUR_... = место, куда нужно вставить свой контент.
+========================================================= -->
+
+
+<!-- DEVICE FRAME -->
+<div id="ilnurDeviceFrame" aria-hidden="true"></div>
+
+
+<!-- FULL DESKTOP -->
+<div id="ilnurDesktop" aria-label="Главный экран">
+
+  <div class="ilnur-scene-bg"></div>
+  <div class="ilnur-scene-vignette"></div>
+
+
+  <!-- LEGAL LINKS -->
+  <nav class="ilnur-legal">
+    <a href="#" class="privacy-trigger">Privacy Policy</a>
+    <a href="#" class="terms-trigger">Terms of Service</a>
+  </nav>
+
+
+  <!-- NAME / DESCRIPTION -->
+  <section class="ilnur-identity">
+
+    <h1 class="ilnur-identity-title">
+      YOUR.STUDIO
+    </h1>
+
+    <div class="ilnur-identity-sub">
+      YOUR DESCRIPTION
+    </div>
+
+  </section>
+
+
+  <!-- MAIN FOLDERS -->
+  <section class="ilnur-folders" aria-label="Основные разделы">
+
+    <button class="ilnur-folder about-trigger" type="button">
+      <img src="YOUR_FOLDER_ICON_URL" alt="">
+      <span>ABOUT</span>
+    </button>
+
+    <button class="ilnur-folder works-trigger" type="button">
+      <img src="YOUR_FOLDER_ICON_URL" alt="">
+      <span>WORKS</span>
+    </button>
+
+    <button class="ilnur-folder process-trigger" type="button">
+      <img src="YOUR_FOLDER_ICON_URL" alt="">
+      <span>PROCESS</span>
+    </button>
+
+    <button class="ilnur-folder contact-trigger" type="button">
+      <img src="YOUR_FOLDER_ICON_URL" alt="">
+      <span>CONTACTS</span>
+    </button>
+
+  </section>
+
+
+  <!-- DOCK -->
+  <div class="ilnur-dock" aria-label="Приложения">
+
+    <button class="ilnur-dock-item telegram-trigger" type="button" title="Telegram">
+      <img src="YOUR_TELEGRAM_ICON_URL" alt="Telegram">
+    </button>
+
+    <button class="ilnur-dock-item instagram-trigger" type="button" title="Instagram">
+      <img src="YOUR_INSTAGRAM_ICON_URL" alt="Instagram">
+    </button>
+
+    <button class="ilnur-dock-item notes-trigger" type="button" title="Notes">
+      <img src="YOUR_NOTES_ICON_URL" alt="Notes">
+    </button>
+
+    <button class="ilnur-dock-item music-trigger" type="button" title="Music">
+      <img src="YOUR_MUSIC_ICON_URL" alt="Music">
+    </button>
+
+    <button class="ilnur-dock-item safari-trigger" type="button" title="Safari">
+      <img src="YOUR_SAFARI_ICON_URL" alt="Safari">
+    </button>
+
+    <span class="ilnur-dock-separator"></span>
+
+    <button class="ilnur-dock-item trash-trigger" type="button" title="Trash">
+      <img src="YOUR_TRASH_ICON_URL" alt="Trash">
+    </button>
+
+  </div>
+
+
+  <div class="ilnur-desktop-hint">
+    RIGHT CLICK — SYSTEM MENU<br>
+    FOLDERS CAN BE DRAGGED
+  </div>
+
+</div>
+
+
+<!-- SYSTEM BAR -->
+<div id="ilnurSystemBar">
+
+  <div class="ilnur-menu-left">
+
+    <span class="ilnur-menu-logo">●</span>
+
+    <span class="ilnur-menu-item ilnur-menu-app">
+      YOUR.STUDIO
+    </span>
+
+    <span class="ilnur-menu-item" data-open="worksModal">
+      Works
+    </span>
+
+    <span class="ilnur-menu-item" data-open="processModal">
+      Process
+    </span>
+
+    <span class="ilnur-menu-item" data-open="contactModal">
+      Contacts
+    </span>
+
+  </div>
+
+
+  <div class="ilnur-menu-right">
+
+    <span class="ilnur-status-dot"></span>
+
+    <span class="menu-hide-mobile">
+      YOUR STATUS
+    </span>
+
+    <span>⌁</span>
+    <span>▰</span>
+
+    <span id="systemClock">00:00</span>
+
+  </div>
+
+</div>
+
+
+<!-- NOTIFICATIONS -->
+<div id="ilnurNotifications"></div>
+
+
+<!-- CONTEXT MENU -->
+<div id="ilnurContext">
+
+  <div class="context-item" data-open="worksModal">
+    <span>Open works</span>
+    <span>↗</span>
+  </div>
+
+  <div class="context-item" data-open="contactModal">
+    <span>Open contacts</span>
+    <span>⌘K</span>
+  </div>
+
+  <div class="context-divider"></div>
+
+  <div
+    class="context-item"
+    data-toast="YOUR CUSTOM NOTIFICATION TEXT">
+
+    <span>Custom action</span>
+    <span>⌁</span>
+
+  </div>
+
+  <div
+    class="context-item"
+    data-toast="YOUR SECOND CUSTOM NOTIFICATION">
+
+    <span>Second action</span>
+    <span>⌘R</span>
+
+  </div>
+
+  <div class="context-divider"></div>
+
+  <div class="context-item" data-open="trashModal">
+    <span>Delete...</span>
+    <span>⌫</span>
+  </div>
+
+</div>
+
+
+<!-- ABOUT -->
+<div class="ios-modal" id="aboutModal">
+
+  <div class="ios-window">
+
+    <div class="ios-top">
+
+      <div class="ios-dots">
+        <span class="ios-dot ios-close" data-close="aboutModal"></span>
+        <span class="ios-dot ios-yellow"></span>
+        <span class="ios-dot ios-green"></span>
+      </div>
+
+      ABOUT
+
+    </div>
+
+
+    <div class="about-system">
+
+      <div class="about-card">
+
+        <div class="about-avatar"></div>
+
+
+        <div class="about-data">
+
+          <h1>YOUR NAME</h1>
+
+          <div class="about-role">
+            YOUR ROLE
+          </div>
+
+
+          <div class="about-specs">
+
+            <div class="about-spec">
+              <span class="about-spec-name">Category 01</span>
+              <span>YOUR TEXT</span>
+            </div>
+
+            <div class="about-spec">
+              <span class="about-spec-name">Category 02</span>
+              <span>YOUR TEXT</span>
+            </div>
+
+            <div class="about-spec">
+              <span class="about-spec-name">Category 03</span>
+              <span>YOUR TEXT</span>
+            </div>
+
+            <div class="about-spec">
+              <span class="about-spec-name">Category 04</span>
+              <span>YOUR TEXT</span>
+            </div>
+
+            <div class="about-spec">
+              <span class="about-spec-name">Category 05</span>
+              <span>YOUR TEXT</span>
+            </div>
+
+            <div class="about-spec">
+              <span class="about-spec-name">Status</span>
+              <span>YOUR STATUS</span>
+            </div>
+
+          </div>
+
+
+          <div class="about-bio">
+            YOUR ABOUT TEXT. REPLACE THIS PARAGRAPH WITH YOUR OWN
+            DESCRIPTION, BIOGRAPHY OR PROJECT INFORMATION.
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- WORKS / FINDER -->
+<div class="ios-modal" id="worksModal">
+
+  <div class="ios-window finder-window">
+
+    <div class="ios-top">
+
+      <div class="ios-dots">
+        <span class="ios-dot ios-close" data-close="worksModal"></span>
+        <span class="ios-dot ios-yellow"></span>
+        <span class="ios-dot ios-green"></span>
+      </div>
+
+      WORKS — FINDER
+
+    </div>
+
+
+    <div class="finder-body">
+
+      <aside class="finder-sidebar">
+
+        <div class="finder-side-title">
+          FAVORITES
+        </div>
+
+        <div class="finder-side-item is-active">
+          <span class="finder-side-icon">▣</span>
+          <span>All projects</span>
+        </div>
+
+        <div class="finder-side-item">
+          <span class="finder-side-icon">⌘</span>
+          <span>Category 01</span>
+        </div>
+
+        <div class="finder-side-item">
+          <span class="finder-side-icon">◫</span>
+          <span>Category 02</span>
+        </div>
+
+        <div class="finder-side-item">
+          <span class="finder-side-icon">✦</span>
+          <span>Category 03</span>
+        </div>
+
+
+        <div class="finder-side-title" style="margin-top:20px;">
+          SYSTEM
+        </div>
+
+        <div class="finder-side-item" data-open="aboutModal">
+          <span class="finder-side-icon">◉</span>
+          <span>About</span>
+        </div>
+
+        <div class="finder-side-item" data-open="processModal">
+          <span class="finder-side-icon">≡</span>
+          <span>Process</span>
+        </div>
+
+        <div class="finder-side-item" data-open="contactModal">
+          <span class="finder-side-icon">✉</span>
+          <span>Contacts</span>
+        </div>
+
+      </aside>
+
+
+      <main class="finder-main">
+
+        <div class="finder-heading">
+          <h2>Your works</h2>
+          <span>7 items</span>
+        </div>
+
+
+        <div class="finder-grid">
+
+          <a class="project-file" href="#" target="_blank" rel="noopener" data-category="fashion shop experiment">
+            <div class="project-preview"></div>
+            <div class="project-info">
+              <div class="project-name">PROJECT 01</div>
+              <div class="project-meta">YOUR PROJECT DESCRIPTION</div>
+            </div>
+            <span class="project-open">↗</span>
+          </a>
+
+          <a class="project-file" href="#" target="_blank" rel="noopener" data-category="fashion shop">
+            <div class="project-preview"></div>
+            <div class="project-info">
+              <div class="project-name">PROJECT 02</div>
+              <div class="project-meta">YOUR PROJECT DESCRIPTION</div>
+            </div>
+            <span class="project-open">↗</span>
+          </a>
+
+          <a class="project-file" href="#" target="_blank" rel="noopener" data-category="fashion">
+            <div class="project-preview"></div>
+            <div class="project-info">
+              <div class="project-name">PROJECT 03</div>
+              <div class="project-meta">YOUR PROJECT DESCRIPTION</div>
+            </div>
+            <span class="project-open">↗</span>
+          </a>
+
+          <a class="project-file" href="#" target="_blank" rel="noopener" data-category="shop">
+            <div class="project-preview"></div>
+            <div class="project-info">
+              <div class="project-name">PROJECT 04</div>
+              <div class="project-meta">YOUR PROJECT DESCRIPTION</div>
+            </div>
+            <span class="project-open">↗</span>
+          </a>
+
+          <a class="project-file" href="#" target="_blank" rel="noopener" data-category="fashion shop">
+            <div class="project-preview"></div>
+            <div class="project-info">
+              <div class="project-name">PROJECT 05</div>
+              <div class="project-meta">YOUR PROJECT DESCRIPTION</div>
+            </div>
+            <span class="project-open">↗</span>
+          </a>
+
+          <a class="project-file" href="#" target="_blank" rel="noopener" data-category="shop">
+            <div class="project-preview"></div>
+            <div class="project-info">
+              <div class="project-name">PROJECT 06</div>
+              <div class="project-meta">YOUR PROJECT DESCRIPTION</div>
+            </div>
+            <span class="project-open">↗</span>
+          </a>
+
+          <a class="project-file" href="#" target="_blank" rel="noopener" data-category="experiment">
+            <div class="project-preview"></div>
+            <div class="project-info">
+              <div class="project-name">PROJECT 07</div>
+              <div class="project-meta">YOUR PROJECT DESCRIPTION</div>
+            </div>
+            <span class="project-open">↗</span>
+          </a>
+
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+
+<!-- PROCESS -->
+<div class="ios-modal" id="processModal">
+  <div class="ios-window">
+    <div class="ios-top">
+      <div class="ios-dots">
+        <span class="ios-dot ios-close" data-close="processModal"></span>
+        <span class="ios-dot ios-yellow"></span>
+        <span class="ios-dot ios-green"></span>
+      </div>
+      PROCESS
+    </div>
+    <div class="process-body">
+      <h2 class="ios-title">YOUR PROCESS TITLE</h2>
+      <div class="process-intro">YOUR PROCESS DESCRIPTION.</div>
+      <div class="process-steps">
+        <div class="process-step"><div class="process-step-num">01</div><div class="process-step-name">STEP 01</div><div class="process-step-text">YOUR TEXT</div></div>
+        <div class="process-step"><div class="process-step-num">02</div><div class="process-step-name">STEP 02</div><div class="process-step-text">YOUR TEXT</div></div>
+        <div class="process-step"><div class="process-step-num">03</div><div class="process-step-name">STEP 03</div><div class="process-step-text">YOUR TEXT</div></div>
+        <div class="process-step"><div class="process-step-num">04</div><div class="process-step-name">STEP 04</div><div class="process-step-text">YOUR TEXT</div></div>
+        <div class="process-step"><div class="process-step-num">05</div><div class="process-step-name">STEP 05</div><div class="process-step-text">YOUR TEXT</div></div>
+      </div>
+      <h3 class="price-title">YOUR PRICE TITLE</h3>
+      <div class="price-list">
+        <div class="price-row"><span>SERVICE 01</span><span class="price-value">YOUR PRICE</span></div>
+        <div class="price-row"><span>SERVICE 02</span><span class="price-value">YOUR PRICE</span></div>
+        <div class="price-row"><span>SERVICE 03</span><span class="price-value">YOUR PRICE</span></div>
+        <div class="price-row"><span>SERVICE 04</span><span class="price-value">YOUR PRICE</span></div>
+        <div class="price-row"><span>SERVICE 05</span><span class="price-value">YOUR PRICE</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACTS -->
+<div class="ios-modal" id="contactModal">
+  <div class="ios-window">
+    <div class="ios-top">
+      <div class="ios-dots">
+        <span class="ios-dot ios-close" data-close="contactModal"></span>
+        <span class="ios-dot ios-yellow"></span>
+        <span class="ios-dot ios-green"></span>
+      </div>
+      CONTACTS — AIRDROP
+    </div>
+    <div class="contact-body">
+      <div class="contact-left">
+        <h2 class="ios-title">YOUR CONTACT TITLE</h2>
+        <p>YOUR CONTACT DESCRIPTION.</p>
+        <div class="contact-list">
+          <a class="contact-link telegram-trigger" href="https://t.me/YOUR_USERNAME">
+            <span class="contact-name">Telegram</span><span class="contact-value">@YOUR_USERNAME</span><span>↗</span>
+          </a>
+          <a class="contact-link instagram-trigger" href="https://www.instagram.com/YOUR_USERNAME">
+            <span class="contact-name">Instagram</span><span class="contact-value">@YOUR_USERNAME</span><span>↗</span>
+          </a>
+          <a class="contact-link" href="mailto:YOUR_EMAIL">
+            <span class="contact-name">Email</span><span class="contact-value">YOUR_EMAIL</span><span>↗</span>
+          </a>
+        </div>
+      </div>
+      <div class="contact-right">
+        <div class="airdrop-radar"><div class="airdrop-user">YOU</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NOTES -->
+<div class="ios-modal" id="notesModal">
+  <div class="ios-window">
+    <div class="ios-top">
+      <div class="ios-dots">
+        <span class="ios-dot ios-close" data-close="notesModal"></span>
+        <span class="ios-dot ios-yellow"></span>
+        <span class="ios-dot ios-green"></span>
+      </div>
+      NOTES
+    </div>
+    <div class="notes-body">
+      <div class="notes-heading"><h2>Notes</h2><span>•••</span></div>
+      <div class="notes-search">⌕ &nbsp; Search</div>
+      <div class="notes-section">Pinned</div>
+      <div class="notes-card">
+        <div class="notes-item"><strong>YOUR NOTE TITLE</strong><span>YOUR NOTE DESCRIPTION</span></div>
+        <div class="notes-item"><strong>YOUR NOTE TITLE</strong><span>YOUR NOTE DESCRIPTION</span></div>
+      </div>
+      <div class="notes-section">Recent</div>
+      <div class="notes-card">
+        <div class="notes-item"><strong>YOUR NOTE 01</strong><span>YOUR TEXT</span></div>
+        <div class="notes-item"><strong>YOUR NOTE 02</strong><span>YOUR TEXT</span></div>
+        <div class="notes-item"><strong>YOUR NOTE 03</strong><span>YOUR TEXT</span></div>
+        <div class="notes-item"><strong>YOUR NOTE 04</strong><span>YOUR TEXT</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SAFARI / STORE -->
+<div class="ios-modal" id="safariModal">
+  <div class="ios-window">
+    <div class="ios-top">
+      <div class="ios-dots">
+        <span class="ios-dot ios-close" data-close="safariModal"></span>
+        <span class="ios-dot ios-yellow"></span>
+        <span class="ios-dot ios-green"></span>
+      </div>
+      SAFARI
+    </div>
+    <div class="safari-toolbar">
+      <span class="safari-nav">‹ &nbsp;› &nbsp;↻</span>
+      <div class="safari-address">🔒 &nbsp;<span id="safariTyped"></span></div>
+    </div>
+    <div class="safari-content">
+      <h2 class="ios-title">YOUR PAGE TITLE</h2>
+      <div class="ios-copy">YOUR TEXT.</div>
+      <div class="safari-card">YOUR DESCRIPTION.</div>
+      <a class="ios-btn ios-btn-dark" href="https://example.com" target="_blank" rel="noopener" style="display:inline-block;text-decoration:none;">OPEN ↗</a>
+    </div>
+  </div>
+</div>
+
+<!-- PRIVACY -->
+<div class="ios-modal" id="privacyModal">
+  <div class="ios-window">
+    <div class="ios-top">
+      <div class="ios-dots">
+        <span class="ios-dot ios-close" data-close="privacyModal"></span>
+        <span class="ios-dot ios-yellow"></span>
+        <span class="ios-dot ios-green"></span>
+      </div>
+      PRIVACY POLICY
+    </div>
+    <div class="legal-body">
+      <h2 class="ios-title">Privacy Policy</h2>
+      <div class="legal-copy">
+        <p>ADD YOUR PRIVACY POLICY HERE.</p>
+        <h3>1. Section</h3><p>YOUR LEGAL TEXT.</p>
+        <h3>2. Section</h3><p>YOUR LEGAL TEXT.</p>
+        <h3>3. Section</h3><p>YOUR LEGAL TEXT.</p>
+        <h3>4. Contacts</h3><p>YOUR EMAIL</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TERMS -->
+<div class="ios-modal" id="termsModal">
+  <div class="ios-window">
+    <div class="ios-top">
+      <div class="ios-dots">
+        <span class="ios-dot ios-close" data-close="termsModal"></span>
+        <span class="ios-dot ios-yellow"></span>
+        <span class="ios-dot ios-green"></span>
+      </div>
+      TERMS OF SERVICE
+    </div>
+    <div class="legal-body">
+      <h2 class="ios-title">Terms of Service</h2>
+      <div class="legal-copy">
+        <p>ADD YOUR TERMS OF SERVICE HERE.</p>
+        <h3>1. Section</h3><p>YOUR LEGAL TEXT.</p>
+        <h3>2. Section</h3><p>YOUR LEGAL TEXT.</p>
+        <h3>3. Section</h3><p>YOUR LEGAL TEXT.</p>
+        <h3>4. Contact</h3><p>YOUR EMAIL</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TRASH -->
+<div class="ios-modal" id="trashModal">
+  <div class="ios-window" style="width:min(620px,90vw);height:min(390px,76vh);">
+    <div class="ios-top">
+      <div class="ios-dots">
+        <span class="ios-dot ios-close" data-close="trashModal"></span>
+        <span class="ios-dot ios-yellow"></span>
+        <span class="ios-dot ios-green"></span>
+      </div>
+      TRASH
+    </div>
+    <div class="confirm-body">
+      <h2 class="ios-title">Delete?</h2>
+      <div class="ios-copy">YOUR CONFIRMATION TEXT.</div>
+      <div class="confirm-actions">
+        <button class="ios-btn ios-btn-light" data-close="trashModal" type="button">Cancel</button>
+        <button class="ios-btn ios-btn-dark" id="deleteSite" type="button">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TELEGRAM CONFIRM -->
+<div class="ios-modal" id="telegramConfirm">
+  <div class="ios-window" style="width:min(590px,90vw);height:min(350px,72vh);">
+    <div class="ios-top">
+      <div class="ios-dots">
+        <span class="ios-dot ios-close" data-close="telegramConfirm"></span>
+        <span class="ios-dot ios-yellow"></span>
+        <span class="ios-dot ios-green"></span>
+      </div>
+      OPEN TELEGRAM
+    </div>
+    <div class="confirm-body">
+      <h2 class="ios-title">Open Telegram?</h2>
+      <div class="ios-copy">The link will open in a new tab.</div>
+      <div class="confirm-actions">
+        <button class="ios-btn ios-btn-light" data-close="telegramConfirm" type="button">Cancel</button>
+        <button class="ios-btn ios-btn-dark" id="telegramOpen" type="button">Open</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- INSTAGRAM CONFIRM -->
+<div class="ios-modal" id="instagramConfirm">
+  <div class="ios-window" style="width:min(590px,90vw);height:min(350px,72vh);">
+    <div class="ios-top">
+      <div class="ios-dots">
+        <span class="ios-dot ios-close" data-close="instagramConfirm"></span>
+        <span class="ios-dot ios-yellow"></span>
+        <span class="ios-dot ios-green"></span>
+      </div>
+      OPEN INSTAGRAM
+    </div>
+    <div class="confirm-body">
+      <h2 class="ios-title">Open Instagram?</h2>
+      <div class="ios-copy">The link will open in a new tab.</div>
+      <div class="confirm-actions">
+        <button class="ios-btn ios-btn-light" data-close="instagramConfirm" type="button">Cancel</button>
+        <button class="ios-btn ios-btn-dark" id="instagramOpen" type="button">Open</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MUSIC PLAYER -->
+<div id="ilnurMusic">
+  <button class="music-close" id="musicClose" type="button">×</button>
+  <div class="music-cover"></div>
+  <div class="music-main">
+    <div class="music-title">YOUR TRACK TITLE</div>
+    <div class="music-sub">YOUR ARTIST / PLAYLIST</div>
+    <div class="music-progress" id="musicProgressBar">
+      <div class="music-progress-fill" id="musicProgressFill"></div>
+    </div>
+  </div>
+  <div class="music-controls">
+    <button class="music-btn" type="button">‹‹</button>
+    <button class="music-btn" id="musicPlay" type="button">▶</button>
+    <button class="music-btn" type="button">››</button>
+  </div>
+</div>
+
+<!-- AUDIO -->
+<audio id="siteMusic" loop preload="metadata">
+  <source src="YOUR_AUDIO_URL" type="audio/mpeg">
+</audio>
+
+<!-- 404 -->
+<div id="errorScreen">
+  <div class="error-code">404</div>
+  <div class="error-text">PAGE NOT FOUND.</div>
+  <div class="error-sub">restoring system...</div>
+</div>

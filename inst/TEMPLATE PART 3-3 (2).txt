@@ -1,0 +1,4096 @@
+<!-- =========================================================
+TEMPLATE — PART 3 / 3
+ЛОГИКА САЙТА / JAVASCRIPT
+
+PART 3 отвечает за то, КАК сайт работает.
+
+Самое важное находится в CONFIG:
+— ссылки;
+— Desktop Video;
+— Mobile Video;
+— Safari domain;
+— скорость intro;
+— уведомления.
+
+YOUR_... = вставьте свои данные.
+========================================================= -->
+
+<script>
+(function(){
+  "use strict";
+
+
+  /* =========================================================
+     01. CONFIG
+  ========================================================= */
+
+  const CONFIG = {
+
+    telegram:
+      "https://t.me/YOUR_USERNAME",
+
+    instagram:
+      "https://www.instagram.com/YOUR_USERNAME",
+
+    safariDomain:
+      "YOUR-DOMAIN.COM",
+
+    desktopVideo:
+      "YOUR_DESKTOP_VIDEO_URL",
+
+    mobileVideo:
+      "YOUR_MOBILE_VIDEO_URL",
+
+    intro:{
+      firstDelay:480,
+      folderDelay:145,
+      chromeDelay:150,
+      dockDelay:115,
+      finishDelay:520
+    },
+
+    notifications:true,
+
+    notificationTimes:{
+      system:1800,
+      client:7200,
+      phone:10800,
+      figma:14500
+    },
+
+    mobileBreakpoint:768
+
+  };
+
+
+  /* =========================================================
+     02. START
+  ========================================================= */
+
+  function init(){
+
+    const desktop =
+      document.getElementById("ilnurDesktop");
+
+    if(!desktop){
+      console.warn("TEMPLATE: #ilnurDesktop not found.");
+      return;
+    }
+
+    initSystem();
+
+  }
+
+
+  if(document.readyState === "loading"){
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      init,
+      {once:true}
+    );
+
+  }else{
+
+    init();
+
+  }
+
+
+  /* =========================================================
+     03. MAIN SYSTEM
+  ========================================================= */
+
+  function initSystem(){
+
+    const body =
+      document.body;
+
+    const desktop =
+      document.getElementById("ilnurDesktop");
+
+    const folders =
+      Array.from(
+        document.querySelectorAll(".ilnur-folder")
+      );
+
+    const dock =
+      document.querySelector(".ilnur-dock");
+
+    const dockItems =
+      Array.from(
+        document.querySelectorAll(".ilnur-dock-item")
+      );
+
+    const trashDock =
+      document.querySelector(
+        ".ilnur-dock-item.trash-trigger"
+      );
+
+    const notifications =
+      document.getElementById("ilnurNotifications");
+
+    const contextMenu =
+      document.getElementById("ilnurContext");
+
+    const clock =
+      document.getElementById("systemClock");
+
+
+    const wait = ms =>
+      new Promise(
+        resolve => setTimeout(resolve,ms)
+      );
+
+
+    const isMobile = () =>
+      window.innerWidth <= CONFIG.mobileBreakpoint;
+
+
+    function q(selector){
+      return document.querySelector(selector);
+    }
+
+
+    function qa(selector){
+      return Array.from(
+        document.querySelectorAll(selector)
+      );
+    }
+
+
+    /* =======================================================
+       04. SYSTEM SOUNDS
+    ======================================================= */
+
+    let audioContext = null;
+
+
+    function systemSound(type){
+
+      try{
+
+        const AudioCtx =
+          window.AudioContext ||
+          window.webkitAudioContext;
+
+        if(!AudioCtx) return;
+
+
+        if(!audioContext){
+          audioContext = new AudioCtx();
+        }
+
+
+        if(audioContext.state === "suspended"){
+          audioContext.resume();
+        }
+
+
+        const oscillator =
+          audioContext.createOscillator();
+
+        const gain =
+          audioContext.createGain();
+
+        const now =
+          audioContext.currentTime;
+
+
+        let frequency = 520;
+
+
+        if(type === "close"){
+          frequency = 330;
+        }
+
+
+        if(type === "secret"){
+          frequency = 720;
+        }
+
+
+        oscillator.type = "sine";
+
+        oscillator.frequency.setValueAtTime(
+          frequency,
+          now
+        );
+
+
+        if(type === "secret"){
+
+          oscillator.frequency
+            .exponentialRampToValueAtTime(
+              980,
+              now + .09
+            );
+
+        }
+
+
+        gain.gain.setValueAtTime(
+          .0001,
+          now
+        );
+
+        gain.gain.exponentialRampToValueAtTime(
+          .012,
+          now + .008
+        );
+
+        gain.gain.exponentialRampToValueAtTime(
+          .0001,
+          now + .11
+        );
+
+
+        oscillator.connect(gain);
+
+        gain.connect(
+          audioContext.destination
+        );
+
+
+        oscillator.start(now);
+
+        oscillator.stop(
+          now + .13
+        );
+
+
+      }catch(error){}
+
+    }
+
+
+    /* =======================================================
+       05. MODALS
+    ======================================================= */
+
+    function openModal(id){
+
+      const modal =
+        document.getElementById(id);
+
+      if(!modal) return;
+
+
+      qa(".ios-modal.is-open")
+        .forEach(function(item){
+
+          if(item !== modal){
+            item.classList.remove("is-open");
+          }
+
+        });
+
+
+      modal.classList.add("is-open");
+
+
+      if(id === "safariModal"){
+        typeSafari();
+      }
+
+
+      syncDockWithModal(id);
+
+    }
+
+
+    function closeModal(id){
+
+      const modal =
+        document.getElementById(id);
+
+      if(modal){
+        modal.classList.remove("is-open");
+      }
+
+
+      clearDockState();
+
+    }
+
+
+    const triggerMap = {
+
+      "about-trigger":"aboutModal",
+      "works-trigger":"worksModal",
+      "process-trigger":"processModal",
+      "contact-trigger":"contactModal",
+      "notes-trigger":"notesModal",
+      "safari-trigger":"safariModal",
+      "trash-trigger":"trashModal",
+      "privacy-trigger":"privacyModal",
+      "terms-trigger":"termsModal"
+
+    };
+
+
+    Object.entries(triggerMap)
+      .forEach(function(entry){
+
+        const className =
+          entry[0];
+
+        const modalID =
+          entry[1];
+
+
+        qa("." + className)
+          .forEach(function(element){
+
+            element.addEventListener(
+              "click",
+              function(event){
+
+                if(
+                  element.dataset.justDragged === "1"
+                ){
+                  return;
+                }
+
+
+                event.preventDefault();
+                event.stopPropagation();
+
+                systemSound("open");
+
+                openModal(modalID);
+
+              }
+            );
+
+          });
+
+      });
+
+
+    qa("[data-open]")
+      .forEach(function(element){
+
+        element.addEventListener(
+          "click",
+          function(event){
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            systemSound("open");
+
+            openModal(
+              element.getAttribute("data-open")
+            );
+
+            closeContextMenu();
+
+          }
+        );
+
+      });
+
+
+    qa("[data-close]")
+      .forEach(function(element){
+
+        element.addEventListener(
+          "click",
+          function(event){
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            systemSound("close");
+
+            closeModal(
+              element.getAttribute("data-close")
+            );
+
+          }
+        );
+
+      });
+
+
+    qa(".ios-modal")
+      .forEach(function(modal){
+
+        modal.addEventListener(
+          "click",
+          function(event){
+
+            if(event.target === modal){
+
+              modal.classList.remove("is-open");
+
+              clearDockState();
+
+              systemSound("close");
+
+            }
+
+          }
+        );
+
+      });
+
+
+    document.addEventListener(
+      "keydown",
+      function(event){
+
+        if(event.key === "Escape"){
+
+          const opened =
+            qa(".ios-modal.is-open");
+
+
+          if(opened.length){
+
+            opened[
+              opened.length - 1
+            ].classList.remove("is-open");
+
+          }
+
+
+          closeContextMenu();
+
+          clearDockState();
+
+        }
+
+
+        if(
+          (event.metaKey || event.ctrlKey) &&
+          event.key.toLowerCase() === "k"
+        ){
+
+          event.preventDefault();
+
+          openModal("contactModal");
+
+        }
+
+      }
+    );
+
+
+    /* =======================================================
+       06. SOCIALS
+    ======================================================= */
+
+    qa(".telegram-trigger")
+      .forEach(function(element){
+
+        element.addEventListener(
+          "click",
+          function(event){
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            activateDock("telegram-trigger");
+
+            openModal("telegramConfirm");
+
+          },
+          true
+        );
+
+      });
+
+
+    qa(".instagram-trigger")
+      .forEach(function(element){
+
+        element.addEventListener(
+          "click",
+          function(event){
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            activateDock("instagram-trigger");
+
+            openModal("instagramConfirm");
+
+          },
+          true
+        );
+
+      });
+
+
+    const telegramOpen =
+      q("#telegramOpen");
+
+
+    if(telegramOpen){
+
+      telegramOpen.addEventListener(
+        "click",
+        function(){
+
+          window.open(
+            CONFIG.telegram,
+            "_blank",
+            "noopener"
+          );
+
+          closeModal("telegramConfirm");
+
+        }
+      );
+
+    }
+
+
+    const instagramOpen =
+      q("#instagramOpen");
+
+
+    if(instagramOpen){
+
+      instagramOpen.addEventListener(
+        "click",
+        function(){
+
+          window.open(
+            CONFIG.instagram,
+            "_blank",
+            "noopener"
+          );
+
+          closeModal("instagramConfirm");
+
+        }
+      );
+
+    }
+
+
+    /* =======================================================
+       07. SAFARI TYPING
+    ======================================================= */
+
+    let safariTimer = null;
+
+
+    function typeSafari(){
+
+      const target =
+        q("#safariTyped");
+
+      if(!target) return;
+
+
+      clearInterval(safariTimer);
+
+      target.textContent = "";
+
+
+      let index = 0;
+
+
+      safariTimer =
+        setInterval(
+          function(){
+
+            target.textContent +=
+              CONFIG.safariDomain[index] || "";
+
+
+            index++;
+
+
+            if(
+              index >=
+              CONFIG.safariDomain.length
+            ){
+
+              clearInterval(safariTimer);
+
+            }
+
+          },
+          55
+        );
+
+    }
+
+
+    /* =======================================================
+       08. CLOCK
+    ======================================================= */
+
+    function updateClock(){
+
+      if(!clock) return;
+
+
+      const now =
+        new Date();
+
+
+      clock.textContent =
+        String(now.getHours()).padStart(2,"0") +
+        ":" +
+        String(now.getMinutes()).padStart(2,"0");
+
+    }
+
+
+    updateClock();
+
+
+    setInterval(
+      updateClock,
+      15000
+    );
+
+
+    /* =======================================================
+       09. CALENDAR
+    ======================================================= */
+
+    const calendar =
+      document.createElement("div");
+
+    calendar.id =
+      "ihCalendar";
+
+    document.body.appendChild(calendar);
+
+
+    function renderCalendar(){
+
+      const now =
+        new Date();
+
+
+      const months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+      ];
+
+
+      const first =
+        new Date(
+          now.getFullYear(),
+          now.getMonth(),
+          1
+        );
+
+
+      const totalDays =
+        new Date(
+          now.getFullYear(),
+          now.getMonth()+1,
+          0
+        ).getDate();
+
+
+      const offset =
+        (first.getDay()+6)%7;
+
+
+      let html =
+        '<div class="ih-calendar-title">' +
+        months[now.getMonth()] +
+        " " +
+        now.getFullYear() +
+        "</div>";
+
+
+      html +=
+        '<div class="ih-calendar-grid">';
+
+
+      ["Mo","Tu","We","Th","Fr","Sa","Su"]
+        .forEach(function(day){
+
+          html +=
+            '<div class="ih-calendar-day">' +
+            day +
+            "</div>";
+
+        });
+
+
+      for(let i=0;i<offset;i++){
+
+        html +=
+          '<div class="ih-calendar-day"></div>';
+
+      }
+
+
+      for(let day=1;day<=totalDays;day++){
+
+        html +=
+          '<div class="ih-calendar-day' +
+          (
+            day === now.getDate()
+            ? " is-today"
+            : ""
+          ) +
+          '">' +
+          day +
+          "</div>";
+
+      }
+
+
+      html += "</div>";
+
+
+      calendar.innerHTML =
+        html;
+
+    }
+
+
+    renderCalendar();
+
+
+    if(clock){
+
+      clock.style.cursor =
+        "pointer";
+
+
+      clock.addEventListener(
+        "click",
+        function(event){
+
+          event.stopPropagation();
+
+          calendar.classList.toggle("is-open");
+
+          systemSound("open");
+
+        }
+      );
+
+    }
+
+
+    document.addEventListener(
+      "click",
+      function(event){
+
+        if(
+          !event.target.closest("#ihCalendar") &&
+          event.target !== clock
+        ){
+
+          calendar.classList.remove("is-open");
+
+        }
+
+      }
+    );
+
+
+    /* =======================================================
+       10. DOCK ACTIVE STATE
+    ======================================================= */
+
+    function clearDockState(){
+
+      dockItems.forEach(
+        function(button){
+
+          button.classList.remove("is-active");
+
+        }
+      );
+
+    }
+
+
+    function activateDock(className){
+
+      clearDockState();
+
+
+      const button =
+        q(
+          ".ilnur-dock-item." +
+          className
+        );
+
+
+      if(button){
+
+        button.classList.add("is-active");
+
+      }
+
+    }
+
+
+    function syncDockWithModal(id){
+
+      const map = {
+
+        notesModal:"notes-trigger",
+        safariModal:"safari-trigger",
+        trashModal:"trash-trigger",
+        telegramConfirm:"telegram-trigger",
+        instagramConfirm:"instagram-trigger"
+
+      };
+
+
+      if(map[id]){
+
+        activateDock(
+          map[id]
+        );
+
+      }
+
+    }
+
+
+    /* =======================================================
+       11. DOCK — STATIC
+    ======================================================= */
+
+    if(dock){
+
+      dockItems.forEach(function(item){
+
+        item.style.removeProperty("--ih-dock-scale");
+        item.style.removeProperty("--ih-dock-lift");
+        item.style.removeProperty("--ih-dock-glow");
+
+        item.style.transform = "";
+
+      });
+
+    }
+
+
+    /* =======================================================
+       12. FINDER FILTERS
+    ======================================================= */
+
+    const finder =
+      q("#worksModal");
+
+
+    if(finder){
+
+      const filters =
+        Array.from(
+          finder.querySelectorAll(".finder-side-item")
+        ).slice(0,4);
+
+
+      const projects =
+        Array.from(
+          finder.querySelectorAll(".project-file")
+        );
+
+
+      const filterKeys = [
+        "all",
+        "fashion",
+        "shop",
+        "experiment"
+      ];
+
+
+      filters.forEach(
+        function(filter,index){
+
+          filter.addEventListener(
+            "click",
+            function(event){
+
+              event.preventDefault();
+
+
+              filters.forEach(
+                function(item){
+
+                  item.classList.remove("is-active");
+
+                }
+              );
+
+
+              filter.classList.add("is-active");
+
+
+              const key =
+                filterKeys[index];
+
+
+              projects.forEach(
+                function(project){
+
+                  const categories =
+                    (
+                      project.dataset.category ||
+                      project.dataset.categories ||
+                      ""
+                    )
+                    .split(" ")
+                    .filter(Boolean);
+
+
+                  const hidden =
+                    key !== "all" &&
+                    !categories.includes(key);
+
+
+                  project.classList.toggle(
+                    "is-filter-hidden",
+                    hidden
+                  );
+
+                }
+              );
+
+            }
+          );
+
+        }
+      );
+
+    }
+
+
+    /* =======================================================
+       13. MUSIC
+    ======================================================= */
+
+    const musicPlayer =
+      q("#ilnurMusic");
+
+    const audio =
+      q("#siteMusic");
+
+    const playButton =
+      q("#musicPlay");
+
+    const musicClose =
+      q("#musicClose");
+
+    const progressBar =
+      q("#musicProgressBar");
+
+    const progressFill =
+      q("#musicProgressFill");
+
+
+    qa(".music-trigger")
+      .forEach(function(element){
+
+        element.addEventListener(
+          "click",
+          function(event){
+
+            event.preventDefault();
+            event.stopPropagation();
+
+
+            if(!musicPlayer) return;
+
+
+            musicPlayer.classList.toggle("is-open");
+
+
+            if(
+              musicPlayer.classList.contains("is-open")
+            ){
+
+              activateDock("music-trigger");
+
+            }else{
+
+              clearDockState();
+
+            }
+
+
+            systemSound("open");
+
+          }
+        );
+
+      });
+
+
+    if(musicClose){
+
+      musicClose.addEventListener(
+        "click",
+        function(){
+
+          if(musicPlayer){
+
+            musicPlayer.classList.remove("is-open");
+
+          }
+
+          clearDockState();
+
+          systemSound("close");
+
+        }
+      );
+
+    }
+
+
+    if(playButton && audio){
+
+      playButton.addEventListener(
+        "click",
+        function(){
+
+          if(audio.paused){
+
+            audio.play()
+              .then(function(){
+
+                playButton.textContent =
+                  "❚❚";
+
+              })
+              .catch(function(){
+
+                notify(
+                  "Music",
+                  "Add a valid audio URL to enable playback.",
+                  "♫",
+                  3300
+                );
+
+              });
+
+          }else{
+
+            audio.pause();
+
+            playButton.textContent =
+              "▶";
+
+          }
+
+        }
+      );
+
+
+      audio.addEventListener(
+        "timeupdate",
+        function(){
+
+          if(
+            audio.duration &&
+            progressFill
+          ){
+
+            progressFill.style.width =
+              (
+                audio.currentTime /
+                audio.duration *
+                100
+              ) +
+              "%";
+
+          }
+
+        }
+      );
+
+    }
+
+
+    if(progressBar && audio){
+
+      progressBar.addEventListener(
+        "click",
+        function(event){
+
+          if(!audio.duration) return;
+
+
+          const rect =
+            progressBar.getBoundingClientRect();
+
+
+          const ratio =
+            Math.max(
+              0,
+              Math.min(
+                1,
+                (
+                  event.clientX -
+                  rect.left
+                ) /
+                rect.width
+              )
+            );
+
+
+          audio.currentTime =
+            ratio *
+            audio.duration;
+
+        }
+      );
+
+    }
+
+
+    /* =======================================================
+       14. NOTIFICATIONS
+    ======================================================= */
+
+    function notify(
+      app,
+      text,
+      icon,
+      duration
+    ){
+
+      if(!notifications) return;
+
+
+      const item =
+        document.createElement("div");
+
+
+      item.className =
+        "ilnur-notification";
+
+
+      item.innerHTML =
+        '<div class="notification-icon">' +
+        (icon || "✦") +
+        "</div>" +
+        "<div>" +
+        '<div class="notification-app">' +
+        app +
+        "</div>" +
+        '<div class="notification-text">' +
+        text +
+        "</div>" +
+        "</div>";
+
+
+      notifications.appendChild(item);
+
+
+      enhanceNotification(item);
+
+      makeNotificationClickable(item);
+
+      updateNotificationStack();
+
+
+      requestAnimationFrame(
+        function(){
+
+          requestAnimationFrame(
+            function(){
+
+              item.classList.add("is-visible");
+
+            }
+          );
+
+        }
+      );
+
+
+      setTimeout(
+        function(){
+
+          if(
+            item.dataset.dismissed !== "1"
+          ){
+
+            dismissNotification(
+              item,
+              "right"
+            );
+
+          }
+
+        },
+        duration || 4300
+      );
+
+    }
+
+
+    function updateNotificationStack(){
+
+      if(!notifications) return;
+
+
+      const items =
+        Array.from(
+          notifications.querySelectorAll(
+            ".ilnur-notification"
+          )
+        ).filter(
+          item =>
+            item.dataset.dismissed !== "1"
+        );
+
+
+      items.forEach(
+        function(item,index){
+
+          const depth =
+            Math.min(
+              items.length - 1 - index,
+              3
+            );
+
+
+          item.style.setProperty(
+            "--stack-y",
+            depth * 9 + "px"
+          );
+
+
+          item.style.setProperty(
+            "--stack-scale",
+            String(
+              1 - depth * .035
+            )
+          );
+
+
+          item.style.setProperty(
+            "--stack-opacity",
+            String(
+              1 - depth * .14
+            )
+          );
+
+
+          item.style.zIndex =
+            String(
+              100 + index
+            );
+
+        }
+      );
+
+
+      notifications.style.height =
+        items.length
+        ?
+        (
+          56 +
+          Math.min(
+            items.length - 1,
+            3
+          ) *
+          9
+        ) +
+        "px"
+        :
+        "0px";
+
+    }
+
+
+    function dismissNotification(
+      item,
+      direction
+    ){
+
+      if(
+        !item ||
+        item.dataset.dismissed === "1"
+      ){
+        return;
+      }
+
+
+      item.dataset.dismissed =
+        "1";
+
+
+      item.style.setProperty(
+        "--ih-dismiss-x",
+        direction === "left"
+        ?
+        "-115%"
+        :
+        "115%"
+      );
+
+
+      item.classList.remove("ih-swiping");
+
+      item.classList.add("ih-dismissing");
+
+
+      setTimeout(
+        function(){
+
+          item.classList.add("ih-collapsing");
+
+          updateNotificationStack();
+
+        },
+        220
+      );
+
+
+      setTimeout(
+        function(){
+
+          if(item.parentNode){
+
+            item.remove();
+
+          }
+
+          updateNotificationStack();
+
+        },
+        560
+      );
+
+    }
+
+
+    function enhanceNotification(item){
+
+      if(
+        !item ||
+        item.dataset.dismissReady === "1"
+      ){
+        return;
+      }
+
+
+      item.dataset.dismissReady =
+        "1";
+
+
+      const close =
+        document.createElement("button");
+
+
+      close.type =
+        "button";
+
+      close.className =
+        "ih-notification-close";
+
+      close.setAttribute(
+        "aria-label",
+        "Close notification"
+      );
+
+      close.textContent =
+        "×";
+
+
+      close.addEventListener(
+        "click",
+        function(event){
+
+          event.preventDefault();
+          event.stopPropagation();
+
+          dismissNotification(
+            item,
+            "right"
+          );
+
+        }
+      );
+
+
+      item.appendChild(close);
+
+
+      let startX = 0;
+      let currentX = 0;
+      let dragging = false;
+
+
+      item.addEventListener(
+        "pointerdown",
+        function(event){
+
+          if(
+            event.target.closest(
+              ".ih-notification-close"
+            )
+          ){
+            return;
+          }
+
+
+          startX =
+            event.clientX;
+
+          currentX =
+            0;
+
+          dragging =
+            true;
+
+
+          item.classList.add(
+            "ih-swiping"
+          );
+
+
+          try{
+
+            item.setPointerCapture(
+              event.pointerId
+            );
+
+          }catch(error){}
+
+        }
+      );
+
+
+      item.addEventListener(
+        "pointermove",
+        function(event){
+
+          if(!dragging) return;
+
+
+          currentX =
+            event.clientX -
+            startX;
+
+
+          const resistance =
+            Math.abs(currentX) > 140
+            ?
+            .72
+            :
+            1;
+
+
+          const x =
+            currentX *
+            resistance;
+
+
+          item.style.transform =
+            "translateX(" +
+            x +
+            "px)";
+
+
+          item.style.opacity =
+            Math.max(
+              .35,
+              1 -
+              Math.abs(x) /
+              230
+            );
+
+        }
+      );
+
+
+      function finishSwipe(){
+
+        if(!dragging) return;
+
+
+        dragging =
+          false;
+
+
+        const threshold =
+          Math.min(
+            90,
+            item.offsetWidth *
+            .24
+          );
+
+
+        if(
+          Math.abs(currentX) >= threshold
+        ){
+
+          dismissNotification(
+            item,
+            currentX < 0
+            ?
+            "left"
+            :
+            "right"
+          );
+
+        }else{
+
+          item.classList.remove("ih-swiping");
+
+          item.style.transform =
+            "";
+
+          item.style.opacity =
+            "";
+
+          updateNotificationStack();
+
+        }
+
+      }
+
+
+      item.addEventListener(
+        "pointerup",
+        finishSwipe
+      );
+
+
+      item.addEventListener(
+        "pointercancel",
+        finishSwipe
+      );
+
+    }
+
+
+    function makeNotificationClickable(item){
+
+      const text =
+        (
+          item.textContent ||
+          ""
+        ).toLowerCase();
+
+
+      let targetModal =
+        "";
+
+
+      if(text.includes("project")){
+
+        targetModal =
+          "worksModal";
+
+      }else if(text.includes("note")){
+
+        targetModal =
+          "notesModal";
+
+      }else if(text.includes("process")){
+
+        targetModal =
+          "processModal";
+
+      }
+
+
+      if(!targetModal) return;
+
+
+      item.classList.add(
+        "is-clickable"
+      );
+
+
+      item.addEventListener(
+        "click",
+        function(event){
+
+          if(
+            event.target.closest(
+              ".ih-notification-close"
+            )
+          ){
+            return;
+          }
+
+
+          openModal(
+            targetModal
+          );
+
+        }
+      );
+
+    }
+
+
+    qa("[data-toast]")
+      .forEach(function(element){
+
+        element.addEventListener(
+          "click",
+          function(event){
+
+            event.preventDefault();
+
+            notify(
+              "SYSTEM",
+              element.getAttribute(
+                "data-toast"
+              ),
+              "✦",
+              4500
+            );
+
+            closeContextMenu();
+
+          }
+        );
+
+      });
+
+
+    function scheduleNotifications(){
+
+      if(!CONFIG.notifications){
+        return;
+      }
+
+
+      setTimeout(
+        function(){
+
+          notify(
+            "System",
+            "Projects loaded.",
+            "⌘",
+            4800
+          );
+
+        },
+        CONFIG.notificationTimes.system
+      );
+
+
+      setTimeout(
+        function(){
+
+          notify(
+            "Message",
+            "YOUR CUSTOM NOTIFICATION.",
+            "✉",
+            5200
+          );
+
+        },
+        CONFIG.notificationTimes.client
+      );
+
+
+      setTimeout(
+        function(){
+
+          notify(
+            "Phone",
+            "YOUR CUSTOM MESSAGE.",
+            "✉",
+            4700
+          );
+
+        },
+        CONFIG.notificationTimes.phone
+      );
+
+
+      setTimeout(
+        function(){
+
+          notify(
+            "System",
+            "YOUR CUSTOM SYSTEM MESSAGE.",
+            "F",
+            4800
+          );
+
+        },
+        CONFIG.notificationTimes.figma
+      );
+
+    }
+
+
+    /* =======================================================
+       15. CONTEXT MENU
+    ======================================================= */
+
+    function closeContextMenu(){
+
+      if(contextMenu){
+
+        contextMenu.classList.remove(
+          "is-open"
+        );
+
+      }
+
+    }
+
+
+    if(contextMenu){
+
+      document.addEventListener(
+        "contextmenu",
+        function(event){
+
+          if(isMobile()) return;
+
+
+          if(
+            event.target.closest(
+              ".ios-modal,#ilnurSystemBar,#ilnurMusic"
+            )
+          ){
+            return;
+          }
+
+
+          event.preventDefault();
+
+
+          const menuWidth =
+            218;
+
+          const menuHeight =
+            300;
+
+
+          const left =
+            Math.min(
+              event.clientX,
+              window.innerWidth -
+              menuWidth -
+              10
+            );
+
+
+          const top =
+            Math.min(
+              event.clientY,
+              window.innerHeight -
+              menuHeight -
+              10
+            );
+
+
+          contextMenu.style.left =
+            Math.max(
+              8,
+              left
+            ) +
+            "px";
+
+
+          contextMenu.style.top =
+            Math.max(
+              35,
+              top
+            ) +
+            "px";
+
+
+          contextMenu.classList.add(
+            "is-open"
+          );
+
+        }
+      );
+
+
+      document.addEventListener(
+        "click",
+        function(event){
+
+          if(
+            !event.target.closest(
+              "#ilnurContext"
+            )
+          ){
+
+            closeContextMenu();
+
+          }
+
+        }
+      );
+
+    }
+
+
+    /* =======================================================
+       16. LIGHT MODES
+    ======================================================= */
+
+    const roomOverlay =
+      document.createElement("div");
+
+    roomOverlay.className =
+      "ih-room-overlay";
+
+
+    const focusOverlay =
+      document.createElement("div");
+
+    focusOverlay.className =
+      "ih-focus-vignette";
+
+
+    desktop.appendChild(
+      roomOverlay
+    );
+
+    desktop.appendChild(
+      focusOverlay
+    );
+
+
+    let lightMode =
+      0;
+
+
+    function cycleLight(){
+
+      lightMode =
+        (lightMode + 1) % 3;
+
+
+      body.classList.toggle(
+        "ih-night-mode",
+        lightMode === 1
+      );
+
+
+      body.classList.toggle(
+        "ih-focus-mode",
+        lightMode === 2
+      );
+
+
+      const names = [
+        "normal mode",
+        "night mode",
+        "focus mode"
+      ];
+
+
+      notify(
+        "Lighting",
+        names[lightMode],
+        "◐",
+        2800
+      );
+
+
+      systemSound("open");
+
+    }
+
+
+    /* =======================================================
+       17. OBJECT HOTSPOTS
+    ======================================================= */
+
+    function makeHotspot(
+      className,
+      label
+    ){
+
+      const button =
+        document.createElement("button");
+
+
+      button.type =
+        "button";
+
+
+      button.className =
+        "ih-object-hotspot " +
+        className;
+
+
+      button.setAttribute(
+        "data-label",
+        label
+      );
+
+
+      desktop.appendChild(
+        button
+      );
+
+
+      return button;
+
+    }
+
+
+    const lamp =
+      makeHotspot(
+        "ih-lamp-hotspot",
+        "CHANGE LIGHT"
+      );
+
+
+    const airpods =
+      makeHotspot(
+        "ih-airpods-hotspot",
+        "PLAY MUSIC"
+      );
+
+
+    const redbull =
+      makeHotspot(
+        "ih-redbull-hotspot",
+        "CUSTOM ACTION"
+      );
+
+
+    lamp.addEventListener(
+      "click",
+      cycleLight
+    );
+
+
+    airpods.addEventListener(
+      "click",
+      function(){
+
+        if(musicPlayer){
+
+          musicPlayer.classList.add(
+            "is-open"
+          );
+
+        }
+
+
+        activateDock(
+          "music-trigger"
+        );
+
+
+        if(
+          audio &&
+          audio.paused
+        ){
+
+          audio.play()
+            .then(function(){
+
+              if(playButton){
+
+                playButton.textContent =
+                  "❚❚";
+
+              }
+
+            })
+            .catch(function(){
+
+              notify(
+                "Music",
+                "Add your audio URL.",
+                "♫",
+                3300
+              );
+
+            });
+
+        }
+
+
+        systemSound("open");
+
+      }
+    );
+
+
+    redbull.addEventListener(
+      "click",
+      function(){
+
+        notify(
+          "SYSTEM",
+          "YOUR CUSTOM INTERACTION TEXT.",
+          "⚡",
+          3600
+        );
+
+
+        if(document.body.animate){
+
+          document.body.animate(
+            [
+              {filter:"brightness(1)"},
+              {filter:"brightness(1.12)"},
+              {filter:"brightness(1)"}
+            ],
+            {
+              duration:420,
+              easing:"ease-out"
+            }
+          );
+
+        }
+
+
+        systemSound("secret");
+
+      }
+    );
+
+
+    /* =======================================================
+       18. MONITOR PORTAL
+    ======================================================= */
+
+    let monitorGlow =
+      null;
+
+    let monitorBurst =
+      null;
+
+    let monitorCRT =
+      null;
+
+
+    if(!isMobile()){
+
+      monitorGlow =
+        document.createElement("button");
+
+
+      monitorGlow.type =
+        "button";
+
+
+      monitorGlow.className =
+        "ilnur-monitor-glow";
+
+
+      monitorGlow.setAttribute(
+        "aria-label",
+        "Open works"
+      );
+
+
+      monitorBurst =
+        document.createElement("div");
+
+      monitorBurst.className =
+        "ilnur-monitor-burst";
+
+
+      monitorCRT =
+        document.createElement("div");
+
+      monitorCRT.className =
+        "ih-monitor-crt";
+
+
+      desktop.appendChild(
+        monitorCRT
+      );
+
+
+      desktop.appendChild(
+        monitorBurst
+      );
+
+
+      desktop.appendChild(
+        monitorGlow
+      );
+
+
+      monitorGlow.addEventListener(
+        "click",
+        function(event){
+
+          event.preventDefault();
+          event.stopPropagation();
+
+
+          body.classList.add(
+            "ih-monitor-opening"
+          );
+
+
+          systemSound(
+            "secret"
+          );
+
+
+          setTimeout(
+            function(){
+
+              openModal(
+                "worksModal"
+              );
+
+
+              body.classList.remove(
+                "ih-monitor-opening"
+              );
+
+            },
+            420
+          );
+
+        }
+      );
+
+    }
+
+
+    /* =======================================================
+       19. DRAG FOLDERS
+    ======================================================= */
+
+    let activeDrag =
+      null;
+
+
+    folders.forEach(
+      function(folder){
+
+        let moved =
+          false;
+
+        let startX =
+          0;
+
+        let startY =
+          0;
+
+        let baseX =
+          0;
+
+        let baseY =
+          0;
+
+
+        folder.addEventListener(
+          "pointerdown",
+          function(event){
+
+            if(
+              event.button !== undefined &&
+              event.button !== 0
+            ){
+              return;
+            }
+
+
+            moved =
+              false;
+
+
+            startX =
+              event.clientX;
+
+            startY =
+              event.clientY;
+
+
+            baseX =
+              parseFloat(
+                folder.dataset.dragX ||
+                "0"
+              );
+
+
+            baseY =
+              parseFloat(
+                folder.dataset.dragY ||
+                "0"
+              );
+
+
+            activeDrag =
+              folder;
+
+
+            folder.classList.add(
+              "is-dragging"
+            );
+
+
+            try{
+
+              folder.setPointerCapture(
+                event.pointerId
+              );
+
+            }catch(error){}
+
+          }
+        );
+
+
+        folder.addEventListener(
+          "pointermove",
+          function(event){
+
+            if(
+              activeDrag !== folder
+            ){
+              return;
+            }
+
+
+            const dx =
+              event.clientX -
+              startX;
+
+
+            const dy =
+              event.clientY -
+              startY;
+
+
+            if(
+              Math.abs(dx) +
+              Math.abs(dy) >
+              7
+            ){
+
+              moved =
+                true;
+
+            }
+
+
+            const x =
+              baseX +
+              dx;
+
+
+            const y =
+              baseY +
+              dy;
+
+
+            folder.dataset.dragX =
+              x;
+
+
+            folder.dataset.dragY =
+              y;
+
+
+            folder.style.translate =
+              x +
+              "px " +
+              y +
+              "px";
+
+
+            if(trashDock){
+
+              const folderRect =
+                folder
+                  .getBoundingClientRect();
+
+
+              const trashRect =
+                trashDock
+                  .getBoundingClientRect();
+
+
+              const overlap =
+                !(
+                  folderRect.right <
+                    trashRect.left - 30 ||
+
+                  folderRect.left >
+                    trashRect.right + 30 ||
+
+                  folderRect.bottom <
+                    trashRect.top - 30 ||
+
+                  folderRect.top >
+                    trashRect.bottom + 30
+                );
+
+
+              trashDock.classList.toggle(
+                "is-receiving",
+                overlap
+              );
+
+            }
+
+
+            updateHotspotPriority();
+
+          }
+        );
+
+
+        folder.addEventListener(
+          "pointerup",
+          function(){
+
+            if(
+              activeDrag !== folder
+            ){
+              return;
+            }
+
+
+            folder.classList.remove(
+              "is-dragging"
+            );
+
+
+            activeDrag =
+              null;
+
+
+            let dropped =
+              false;
+
+
+            if(
+              trashDock &&
+              trashDock.classList.contains(
+                "is-receiving"
+              )
+            ){
+
+              dropped =
+                true;
+
+
+              trashDock.classList.remove(
+                "is-receiving"
+              );
+
+
+              folder.style.translate =
+                "0px 0px";
+
+
+              folder.dataset.dragX =
+                "0";
+
+
+              folder.dataset.dragY =
+                "0";
+
+
+              openModal(
+                "trashModal"
+              );
+
+
+              notify(
+                "Trash",
+                "Protected item. Confirmation required.",
+                "⌫",
+                3800
+              );
+
+
+              systemSound(
+                "close"
+              );
+
+            }
+
+
+            if(
+              moved ||
+              dropped
+            ){
+
+              folder.dataset.justDragged =
+                "1";
+
+
+              setTimeout(
+                function(){
+
+                  delete folder.dataset.justDragged;
+
+                },
+                700
+              );
+
+            }
+
+
+            updateHotspotPriority();
+
+          }
+        );
+
+
+        folder.addEventListener(
+          "pointercancel",
+          function(){
+
+            folder.classList.remove(
+              "is-dragging"
+            );
+
+
+            activeDrag =
+              null;
+
+
+            if(trashDock){
+
+              trashDock.classList.remove(
+                "is-receiving"
+              );
+
+            }
+
+
+            updateHotspotPriority();
+
+          }
+        );
+
+
+        folder.addEventListener(
+          "click",
+          function(event){
+
+            if(
+              folder.dataset.justDragged === "1"
+            ){
+
+              event.preventDefault();
+              event.stopPropagation();
+              event.stopImmediatePropagation();
+
+            }
+
+          },
+          true
+        );
+
+      }
+    );
+
+
+    /* =======================================================
+       20. FOLDER RESTORE / SHUFFLE
+    ======================================================= */
+
+    function restoreFolders(){
+
+      folders.forEach(
+        function(folder){
+
+          folder.style.translate =
+            "0px 0px";
+
+
+          folder.dataset.dragX =
+            "0";
+
+
+          folder.dataset.dragY =
+            "0";
+
+        }
+      );
+
+
+      updateHotspotPriority();
+
+
+      notify(
+        "Desktop",
+        "Folder positions restored.",
+        "⌘",
+        2700
+      );
+
+    }
+
+
+    function shuffleFolders(){
+
+      folders.forEach(
+        function(folder){
+
+          const x =
+            (
+              Math.random() -
+              .5
+            ) *
+            180;
+
+
+          const y =
+            (
+              Math.random() -
+              .5
+            ) *
+            100;
+
+
+          folder.dataset.dragX =
+            x.toFixed(1);
+
+
+          folder.dataset.dragY =
+            y.toFixed(1);
+
+
+          folder.style.translate =
+            x +
+            "px " +
+            y +
+            "px";
+
+        }
+      );
+
+
+      updateHotspotPriority();
+
+
+      notify(
+        "Desktop",
+        "Folders shuffled.",
+        "⌁",
+        2700
+      );
+
+    }
+
+
+    /* =======================================================
+       21. HOTSPOT PRIORITY
+    ======================================================= */
+
+    function overlaps(a,b){
+
+      return !(
+        a.right <= b.left ||
+        a.left >= b.right ||
+        a.bottom <= b.top ||
+        a.top >= b.bottom
+      );
+
+    }
+
+
+    function updateHotspotPriority(){
+
+      const hotspots =
+        qa(".ih-object-hotspot");
+
+
+      hotspots.forEach(
+        function(hotspot){
+
+          const hotRect =
+            hotspot
+              .getBoundingClientRect();
+
+
+          const covered =
+            folders.some(
+              function(folder){
+
+                return overlaps(
+                  folder.getBoundingClientRect(),
+                  hotRect
+                );
+
+              }
+            );
+
+
+          hotspot.classList.toggle(
+            "ih-covered-by-folder",
+            covered
+          );
+
+        }
+      );
+
+    }
+
+
+    setInterval(
+      updateHotspotPriority,
+      220
+    );
+
+
+    /* =======================================================
+       22. DELETE / 404
+    ======================================================= */
+
+    const deleteSite =
+      q("#deleteSite");
+
+    const errorScreen =
+      q("#errorScreen");
+
+
+    if(
+      deleteSite &&
+      errorScreen
+    ){
+
+      deleteSite.addEventListener(
+        "click",
+        function(){
+
+          closeModal(
+            "trashModal"
+          );
+
+
+          setTimeout(
+            function(){
+
+              errorScreen.classList.add(
+                "is-open"
+              );
+
+            },
+            220
+          );
+
+
+          setTimeout(
+            function(){
+
+              errorScreen.classList.remove(
+                "is-open"
+              );
+
+
+              notify(
+                "SYSTEM",
+                "Deletion cancelled. System restored.",
+                "⌫",
+                4300
+              );
+
+            },
+            3900
+          );
+
+        }
+      );
+
+    }
+
+
+    /* =======================================================
+       23. DEVELOPER MODE
+    ======================================================= */
+
+    const experiments =
+      document.createElement("button");
+
+
+    experiments.type =
+      "button";
+
+
+    experiments.className =
+      "ih-experiments-folder";
+
+
+    experiments.innerHTML =
+      '<img src="YOUR_FOLDER_ICON_URL" alt="">' +
+      "<span>EXPERIMENTS</span>";
+
+
+    desktop.appendChild(
+      experiments
+    );
+
+
+    const terminal =
+      document.createElement("div");
+
+
+    terminal.id =
+      "ihTerminal";
+
+
+    terminal.innerHTML =
+      "<div>&gt; boot developer_tools</div>" +
+      "<div>&gt; experiments mounted</div>" +
+      "<div>&gt; status: active</div>" +
+      "<div>&gt; items found: 00</div>" +
+      "<div>&gt; finished: 00</div>" +
+      '<div>&gt; waiting for input<span class="ih-terminal-caret"></span></div>';
+
+
+    document.body.appendChild(
+      terminal
+    );
+
+
+    const experimentsModal =
+      document.createElement("div");
+
+
+    experimentsModal.className =
+      "ios-modal";
+
+
+    experimentsModal.id =
+      "experimentsModal";
+
+
+    experimentsModal.innerHTML =
+      '<div class="ios-window">' +
+
+        '<div class="ios-top">' +
+
+          '<div class="ios-dots">' +
+
+            '<span class="ios-dot ios-close" data-close="experimentsModal"></span>' +
+
+            '<span class="ios-dot ios-yellow"></span>' +
+
+            '<span class="ios-dot ios-green"></span>' +
+
+          "</div>" +
+
+          "EXPERIMENTS" +
+
+        "</div>" +
+
+        '<div class="process-body">' +
+
+          '<h2 class="ios-title">YOUR SECRET SECTION</h2>' +
+
+          '<div class="process-intro">' +
+            "YOUR DESCRIPTION." +
+          "</div>" +
+
+          '<div class="process-steps" style="grid-template-columns:repeat(3,1fr)">' +
+
+            '<div class="process-step">' +
+              '<div class="process-step-num">01</div>' +
+              '<div class="process-step-name">EXPERIMENT 01</div>' +
+              '<div class="process-step-text">YOUR TEXT.</div>' +
+            "</div>" +
+
+            '<div class="process-step">' +
+              '<div class="process-step-num">02</div>' +
+              '<div class="process-step-name">EXPERIMENT 02</div>' +
+              '<div class="process-step-text">YOUR TEXT.</div>' +
+            "</div>" +
+
+            '<div class="process-step">' +
+              '<div class="process-step-num">03</div>' +
+              '<div class="process-step-name">EXPERIMENT 03</div>' +
+              '<div class="process-step-text">YOUR TEXT.</div>' +
+            "</div>" +
+
+          "</div>" +
+
+        "</div>" +
+
+      "</div>";
+
+
+    document.body.appendChild(
+      experimentsModal
+    );
+
+
+    experiments.addEventListener(
+      "click",
+      function(){
+
+        openModal(
+          "experimentsModal"
+        );
+
+        systemSound(
+          "secret"
+        );
+
+      }
+    );
+
+
+    const experimentClose =
+      experimentsModal.querySelector(
+        "[data-close]"
+      );
+
+
+    if(experimentClose){
+
+      experimentClose.addEventListener(
+        "click",
+        function(){
+
+          experimentsModal.classList.remove(
+            "is-open"
+          );
+
+        }
+      );
+
+    }
+
+
+    experimentsModal.addEventListener(
+      "click",
+      function(event){
+
+        if(
+          event.target === experimentsModal
+        ){
+
+          experimentsModal.classList.remove(
+            "is-open"
+          );
+
+        }
+
+      }
+    );
+
+
+    const title =
+      q(".ilnur-identity-title");
+
+
+    let titleClicks =
+      0;
+
+
+    let clickTimer =
+      null;
+
+
+    function toggleDeveloperMode(){
+
+      body.classList.toggle(
+        "ih-dev-mode"
+      );
+
+
+      const enabled =
+        body.classList.contains(
+          "ih-dev-mode"
+        );
+
+
+      notify(
+        "Developer Mode",
+        enabled
+        ?
+        "Developer tools enabled."
+        :
+        "Developer tools disabled.",
+        "</>",
+        3600
+      );
+
+
+      systemSound(
+        "secret"
+      );
+
+    }
+
+
+    if(title){
+
+      title.style.cursor =
+        "pointer";
+
+
+      title.title =
+        "system identity";
+
+
+      title.addEventListener(
+        "click",
+        function(){
+
+          titleClicks++;
+
+
+          clearTimeout(
+            clickTimer
+          );
+
+
+          clickTimer =
+            setTimeout(
+              function(){
+
+                titleClicks =
+                  0;
+
+              },
+              1600
+            );
+
+
+          if(
+            titleClicks >= 5
+          ){
+
+            titleClicks =
+              0;
+
+            toggleDeveloperMode();
+
+          }
+
+        }
+      );
+
+    }
+
+
+    /* =======================================================
+       24. CONTEXT MENU EXTENSIONS
+    ======================================================= */
+
+    if(contextMenu){
+
+      const divider =
+        document.createElement("div");
+
+      divider.className =
+        "context-divider";
+
+
+      const lighting =
+        document.createElement("div");
+
+      lighting.className =
+        "context-item";
+
+      lighting.innerHTML =
+        "<span>Change lighting</span><span>◐</span>";
+
+
+      const shuffle =
+        document.createElement("div");
+
+      shuffle.className =
+        "context-item";
+
+      shuffle.innerHTML =
+        "<span>Shuffle folders</span><span>⌁</span>";
+
+
+      const restore =
+        document.createElement("div");
+
+      restore.className =
+        "context-item";
+
+      restore.innerHTML =
+        "<span>Restore folders</span><span>↺</span>";
+
+
+      const dev =
+        document.createElement("div");
+
+      dev.className =
+        "context-item";
+
+      dev.innerHTML =
+        "<span>Developer mode</span><span>&lt;/&gt;</span>";
+
+
+      contextMenu.appendChild(
+        divider
+      );
+
+      contextMenu.appendChild(
+        lighting
+      );
+
+      contextMenu.appendChild(
+        shuffle
+      );
+
+      contextMenu.appendChild(
+        restore
+      );
+
+      contextMenu.appendChild(
+        dev
+      );
+
+
+      lighting.addEventListener(
+        "click",
+        function(){
+
+          cycleLight();
+
+          closeContextMenu();
+
+        }
+      );
+
+
+      shuffle.addEventListener(
+        "click",
+        function(){
+
+          shuffleFolders();
+
+          closeContextMenu();
+
+        }
+      );
+
+
+      restore.addEventListener(
+        "click",
+        function(){
+
+          restoreFolders();
+
+          closeContextMenu();
+
+        }
+      );
+
+
+      dev.addEventListener(
+        "click",
+        function(){
+
+          toggleDeveloperMode();
+
+          closeContextMenu();
+
+        }
+      );
+
+    }
+
+
+    /* =======================================================
+       25. VIDEO INTRO
+    ======================================================= */
+
+    function createLoader(){
+
+      const existing =
+        q("#ilnurVideoLoader");
+
+
+      if(existing){
+        existing.remove();
+      }
+
+
+      const loader =
+        document.createElement("div");
+
+
+      loader.id =
+        "ilnurVideoLoader";
+
+
+      loader.innerHTML =
+        '<div class="ivl-center">' +
+
+          '<div class="ivl-logo">' +
+            "YOUR.STUDIO" +
+          "</div>" +
+
+          '<div class="ivl-status" id="ivlStatus">' +
+            "loading video..." +
+          "</div>" +
+
+          '<div class="ivl-track">' +
+
+            '<div class="ivl-bar" id="ivlBar"></div>' +
+
+          "</div>" +
+
+        "</div>";
+
+
+      document.body.appendChild(
+        loader
+      );
+
+
+      return loader;
+
+    }
+
+
+    function createVideo(){
+
+      const bg =
+        q("#ilnurDesktop .ilnur-scene-bg");
+
+
+      if(!bg) return null;
+
+
+      bg.querySelectorAll(
+        "video"
+      ).forEach(
+        function(video){
+
+          video.remove();
+
+        }
+      );
+
+
+      const video =
+        document.createElement("video");
+
+
+      video.id =
+        "ilnurVideoFinal";
+
+
+      video.muted =
+        true;
+
+      video.defaultMuted =
+        true;
+
+      video.autoplay =
+        false;
+
+      video.loop =
+        false;
+
+      video.controls =
+        false;
+
+      video.playsInline =
+        true;
+
+      video.preload =
+        "auto";
+
+      video.disablePictureInPicture =
+        true;
+
+
+      video.setAttribute(
+        "muted",
+        ""
+      );
+
+
+      video.setAttribute(
+        "playsinline",
+        ""
+      );
+
+
+      video.setAttribute(
+        "webkit-playsinline",
+        ""
+      );
+
+
+      video.setAttribute(
+        "preload",
+        "auto"
+      );
+
+
+      video.setAttribute(
+        "controlslist",
+        "nodownload nofullscreen noremoteplayback"
+      );
+
+
+      bg.prepend(
+        video
+      );
+
+
+      return video;
+
+    }
+
+
+    let progress =
+      0;
+
+
+    let progressTimer =
+      null;
+
+
+    function setProgress(
+      value,
+      text
+    ){
+
+      progress =
+        Math.max(
+          progress,
+          Math.min(
+            100,
+            value
+          )
+        );
+
+
+      const bar =
+        q("#ivlBar");
+
+
+      const status =
+        q("#ivlStatus");
+
+
+      if(bar){
+
+        bar.style.width =
+          progress +
+          "%";
+
+      }
+
+
+      if(
+        status &&
+        text
+      ){
+
+        status.textContent =
+          text;
+
+      }
+
+    }
+
+
+    function startProgress(){
+
+      progressTimer =
+        setInterval(
+          function(){
+
+            if(progress < 40){
+
+              setProgress(
+                progress + 1.7
+              );
+
+            }else if(progress < 72){
+
+              setProgress(
+                progress + .52
+              );
+
+            }else if(progress < 88){
+
+              setProgress(
+                progress + .15
+              );
+
+            }
+
+          },
+          110
+        );
+
+    }
+
+
+    function stopProgress(){
+
+      clearInterval(
+        progressTimer
+      );
+
+    }
+
+
+    function waitForVideo(
+      video
+    ){
+
+      return new Promise(
+        function(resolve){
+
+          let finished =
+            false;
+
+
+          function complete(ok){
+
+            if(finished) return;
+
+
+            finished =
+              true;
+
+
+            cleanup();
+
+            resolve(ok);
+
+          }
+
+
+          function ready(){
+
+            if(
+              video.readyState >= 3
+            ){
+
+              complete(true);
+
+            }
+
+          }
+
+
+          function fail(){
+
+            complete(false);
+
+          }
+
+
+          function cleanup(){
+
+            clearTimeout(
+              timeout
+            );
+
+
+            video.removeEventListener(
+              "canplay",
+              ready
+            );
+
+
+            video.removeEventListener(
+              "loadeddata",
+              ready
+            );
+
+
+            video.removeEventListener(
+              "error",
+              fail
+            );
+
+          }
+
+
+          const timeout =
+            setTimeout(
+              function(){
+
+                complete(
+                  video.readyState >= 2
+                );
+
+              },
+              12000
+            );
+
+
+          video.addEventListener(
+            "canplay",
+            ready
+          );
+
+
+          video.addEventListener(
+            "loadeddata",
+            ready
+          );
+
+
+          video.addEventListener(
+            "error",
+            fail,
+            {once:true}
+          );
+
+
+          ready();
+
+        }
+      );
+
+    }
+
+
+    function startPlayback(
+      video
+    ){
+
+      return new Promise(
+        function(resolve){
+
+          let completed =
+            false;
+
+
+          function finish(ok){
+
+            if(completed) return;
+
+
+            completed =
+              true;
+
+            cleanup();
+
+            resolve(ok);
+
+          }
+
+
+          function playing(){
+
+            finish(true);
+
+          }
+
+
+          function timeUpdate(){
+
+            if(
+              video.currentTime > 0
+            ){
+
+              finish(true);
+
+            }
+
+          }
+
+
+          function error(){
+
+            finish(false);
+
+          }
+
+
+          function cleanup(){
+
+            clearTimeout(
+              timeout
+            );
+
+
+            video.removeEventListener(
+              "playing",
+              playing
+            );
+
+
+            video.removeEventListener(
+              "timeupdate",
+              timeUpdate
+            );
+
+
+            video.removeEventListener(
+              "error",
+              error
+            );
+
+          }
+
+
+          const timeout =
+            setTimeout(
+              function(){
+
+                finish(
+                  !video.paused &&
+                  video.readyState >= 2
+                );
+
+              },
+              5000
+            );
+
+
+          video.addEventListener(
+            "playing",
+            playing,
+            {once:true}
+          );
+
+
+          video.addEventListener(
+            "timeupdate",
+            timeUpdate
+          );
+
+
+          video.addEventListener(
+            "error",
+            error,
+            {once:true}
+          );
+
+
+          try{
+
+            video.currentTime =
+              0;
+
+          }catch(error){}
+
+
+          video.muted =
+            true;
+
+          video.defaultMuted =
+            true;
+
+
+          try{
+
+            const promise =
+              video.play();
+
+
+            if(
+              promise &&
+              promise.catch
+            ){
+
+              promise.catch(
+                function(){
+
+                  finish(false);
+
+                }
+              );
+
+            }
+
+          }catch(error){
+
+            finish(false);
+
+          }
+
+        }
+      );
+
+    }
+
+
+    async function runIntro(){
+
+      body.classList.remove(
+        "ivl-waiting",
+        "ivl-done"
+      );
+
+
+      body.classList.add(
+        "ivl-running",
+        "ih-monitor-start"
+      );
+
+
+      await wait(
+        CONFIG.intro.firstDelay
+      );
+
+
+      body.classList.add(
+        "ih-monitor-bursting"
+      );
+
+
+      for(
+        let index = 0;
+        index < folders.length;
+        index++
+      ){
+
+        folders[index].classList.add(
+          "ivl-launched"
+        );
+
+
+        await wait(
+          CONFIG.intro.folderDelay
+        );
+
+      }
+
+
+      body.classList.add(
+        "ivl-chrome"
+      );
+
+
+      await wait(
+        CONFIG.intro.chromeDelay
+      );
+
+
+      body.classList.add(
+        "ivl-dock"
+      );
+
+
+      await wait(
+        CONFIG.intro.dockDelay
+      );
+
+
+      body.classList.add(
+        "ivl-bar"
+      );
+
+
+      await wait(
+        CONFIG.intro.finishDelay
+      );
+
+
+      body.classList.remove(
+        "ivl-running",
+        "ivl-chrome",
+        "ivl-dock",
+        "ivl-bar",
+        "ih-monitor-start",
+        "ih-monitor-bursting"
+      );
+
+
+      body.classList.add(
+        "ivl-done",
+        "ih-folders-launched",
+        "ilnur-os-ready"
+      );
+
+
+      folders.forEach(
+        function(folder){
+
+          folder.classList.remove(
+            "ivl-launched"
+          );
+
+        }
+      );
+
+
+      updateHotspotPriority();
+
+    }
+
+
+    function closeLoader(
+      loader
+    ){
+
+      loader.classList.add(
+        "is-hidden"
+      );
+
+
+      setTimeout(
+        function(){
+
+          if(loader.parentNode){
+
+            loader.remove();
+
+          }
+
+        },
+        560
+      );
+
+    }
+
+
+    function freezeLastFrame(
+      video
+    ){
+
+      video.pause();
+
+
+      try{
+
+        if(
+          Number.isFinite(
+            video.duration
+          ) &&
+          video.duration > 0
+        ){
+
+          video.currentTime =
+            Math.max(
+              0,
+              video.duration - .04
+            );
+
+        }
+
+      }catch(error){}
+
+
+      video.classList.add(
+        "is-visible"
+      );
+
+    }
+
+
+    async function installIntro(){
+
+      body.classList.add(
+        "ivl-waiting"
+      );
+
+
+      body.classList.remove(
+        "ivl-done"
+      );
+
+
+      const loader =
+        createLoader();
+
+
+      const video =
+        createVideo();
+
+
+      startProgress();
+
+
+      let finished =
+        false;
+
+
+      const hardTimeout =
+        setTimeout(
+          function(){
+
+            if(finished) return;
+
+
+            finished =
+              true;
+
+
+            stopProgress();
+
+
+            setProgress(
+              100,
+              "launching desktop..."
+            );
+
+
+            runIntro();
+
+
+            closeLoader(
+              loader
+            );
+
+          },
+          16000
+        );
+
+
+      if(!video){
+
+        clearTimeout(
+          hardTimeout
+        );
+
+
+        finished =
+          true;
+
+
+        stopProgress();
+
+
+        await runIntro();
+
+
+        closeLoader(
+          loader
+        );
+
+
+        startAfterIntro();
+
+
+        return;
+
+      }
+
+
+      video.addEventListener(
+        "ended",
+        function(){
+
+          freezeLastFrame(
+            video
+          );
+
+        }
+      );
+
+
+      video.src =
+        isMobile()
+        ?
+        CONFIG.mobileVideo
+        :
+        CONFIG.desktopVideo;
+
+
+      video.load();
+
+
+      const loaded =
+        await waitForVideo(
+          video
+        );
+
+
+      if(!loaded){
+
+        clearTimeout(
+          hardTimeout
+        );
+
+
+        if(!finished){
+
+          finished =
+            true;
+
+
+          stopProgress();
+
+
+          setProgress(
+            100,
+            "launching desktop..."
+          );
+
+
+          await runIntro();
+
+
+          closeLoader(
+            loader
+          );
+
+
+          startAfterIntro();
+
+        }
+
+
+        return;
+
+      }
+
+
+      setProgress(
+        88,
+        "starting video..."
+      );
+
+
+      const playing =
+        await startPlayback(
+          video
+        );
+
+
+      clearTimeout(
+        hardTimeout
+      );
+
+
+      if(finished) return;
+
+
+      finished =
+        true;
+
+
+      stopProgress();
+
+
+      setProgress(
+        100,
+        "launching desktop..."
+      );
+
+
+      if(playing){
+
+        video.classList.add(
+          "is-visible"
+        );
+
+      }
+
+
+      runIntro();
+
+
+      await wait(90);
+
+
+      closeLoader(
+        loader
+      );
+
+
+      if(!playing){
+
+        const retry =
+          function(){
+
+            video.muted =
+              true;
+
+
+            video.play()
+              .then(function(){
+
+                video.classList.add(
+                  "is-visible"
+                );
+
+              })
+              .catch(function(){});
+
+          };
+
+
+        document.addEventListener(
+          "pointerdown",
+          retry,
+          {once:true}
+        );
+
+
+        document.addEventListener(
+          "touchstart",
+          retry,
+          {
+            once:true,
+            passive:true
+          }
+        );
+
+      }
+
+
+      startAfterIntro();
+
+    }
+
+
+    /* =======================================================
+       26. AFTER INTRO
+    ======================================================= */
+
+    let afterIntroStarted =
+      false;
+
+
+    function startAfterIntro(){
+
+      if(afterIntroStarted){
+        return;
+      }
+
+
+      afterIntroStarted =
+        true;
+
+
+      scheduleNotifications();
+
+      updateHotspotPriority();
+
+    }
+
+
+    /* =======================================================
+       27. INITIAL
+    ======================================================= */
+
+    folders.forEach(
+      function(folder){
+
+        folder.style.visibility =
+          "visible";
+
+      }
+    );
+
+
+    installIntro();
+
+  }
+
+})();
+</script>

@@ -1,0 +1,7278 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>KUPETS.STUDIO — Дмитрий Инякин</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <style>
+
+
+<style>
+
+/* =========================================================
+   01. ROOT / SYSTEM
+========================================================= */
+
+:root{
+  --ios-font:"Departure Mono",monospace;
+  --ios-black:#070707;
+  --ios-white:#f5f5f5;
+  --ios-muted:rgba(255,255,255,.58);
+  --ios-glass:rgba(22,22,24,.68);
+  --ios-line:rgba(255,255,255,.14);
+  --ios-panel:#f3f3f3;
+  --ios-text:#111;
+  --ios-accent:#ef80ae;
+  --ios-red:#ff5f57;
+  --ios-yellow:#febc2e;
+  --ios-green:#28c840;
+  --ios-shadow:0 26px 90px rgba(0,0,0,.48);
+  --ios-ease:cubic-bezier(.16,1,.3,1);
+  --ios-window-w:min(940px,88vw);
+  --ios-window-h:min(650px,82vh);
+  --ios-top-h:40px;
+}
+
+html,
+body{
+  overflow:hidden!important;
+  height:100%!important;
+  overscroll-behavior:none!important;
+}
+
+#allrecords,
+.t-records{
+  overflow:hidden!important;
+}
+
+body.ilnur-os-ready{
+  cursor:default;
+}
+
+
+/* =========================================================
+   02. WINDOWS — COMMON
+========================================================= */
+
+.ios-modal{
+  position:fixed;
+  inset:0;
+  z-index:1000000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:34px 18px;
+  box-sizing:border-box;
+  background:rgba(0,0,0,.38);
+  backdrop-filter:blur(5px);
+  -webkit-backdrop-filter:blur(5px);
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition:opacity .45s ease,visibility .45s ease;
+  font-family:var(--ios-font);
+}
+
+.ios-modal.is-open{
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+}
+
+.ios-window{
+  width:var(--ios-window-w);
+  height:var(--ios-window-h);
+  max-width:100%;
+  max-height:100%;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  border-radius:14px;
+  background:var(--ios-panel);
+  color:var(--ios-text);
+  box-shadow:var(--ios-shadow);
+  opacity:0;
+  transform:translateY(28px) scale(.94);
+  filter:blur(7px);
+  transition:opacity .48s ease,transform .64s var(--ios-ease),filter .55s ease;
+}
+
+.ios-modal.is-open .ios-window{
+  opacity:1;
+  transform:none;
+  filter:none;
+}
+
+.ios-top{
+  height:var(--ios-top-h);
+  min-height:var(--ios-top-h);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  box-sizing:border-box;
+  border-bottom:1px solid rgba(0,0,0,.14);
+  background:linear-gradient(#f7f7f7,#dedede);
+  font-size:12px;
+  color:#111;
+}
+
+.ios-dots{
+  position:absolute;
+  left:14px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.ios-dot{
+  width:13px;
+  height:13px;
+  border-radius:50%;
+}
+
+.ios-close{
+  position:relative;
+  background:var(--ios-red);
+  cursor:pointer;
+}
+
+.ios-close::before,
+.ios-close::after{
+  content:"";
+  position:absolute;
+  left:3px;
+  top:5.7px;
+  width:7px;
+  height:1.4px;
+  background:#5a0000;
+  opacity:0;
+  transition:.18s ease;
+}
+
+.ios-close:hover::before,
+.ios-close:hover::after{
+  opacity:1;
+}
+
+.ios-close::before{transform:rotate(45deg);}
+.ios-close::after{transform:rotate(-45deg);}
+
+.ios-yellow{background:var(--ios-yellow);}
+.ios-green{background:var(--ios-green);}
+
+.ios-title{
+  margin:0 0 17px;
+  font-size:clamp(25px,3.2vw,40px);
+  line-height:1.08;
+  font-weight:400;
+  letter-spacing:-1px;
+}
+
+.ios-line{
+  width:110px;
+  height:1px;
+  margin:0 0 21px;
+  background:rgba(0,0,0,.16);
+}
+
+.ios-copy{
+  font-size:12px;
+  line-height:1.7;
+  color:rgba(0,0,0,.7);
+}
+
+.ios-copy p{
+  margin:0 0 12px;
+}
+
+.ios-btn{
+  border:0;
+  border-radius:10px;
+  padding:11px 18px;
+  font-family:var(--ios-font);
+  font-size:11px;
+  cursor:pointer;
+  transition:transform .22s ease,opacity .22s ease;
+}
+
+.ios-btn:hover{
+  transform:translateY(-2px);
+}
+
+.ios-btn-dark{
+  background:#111;
+  color:#fff;
+}
+
+.ios-btn-light{
+  background:#e8e8e8;
+  color:#111;
+}
+
+
+/* =========================================================
+   03. FINDER / WORKS
+========================================================= */
+
+.finder-window{background:#f5f5f5;}
+
+.finder-body{
+  flex:1;
+  min-height:0;
+  display:grid;
+  grid-template-columns:210px 1fr;
+}
+
+.finder-sidebar{
+  padding:22px 13px;
+  box-sizing:border-box;
+  background:rgba(225,225,228,.78);
+  border-right:1px solid rgba(0,0,0,.11);
+  overflow-y:auto;
+}
+
+.finder-side-title{
+  margin:0 10px 9px;
+  font-size:10px;
+  color:rgba(0,0,0,.42);
+}
+
+.finder-side-item{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  min-height:32px;
+  padding:0 10px;
+  border-radius:7px;
+  font-size:11px;
+  cursor:pointer;
+  transition:.18s ease;
+  user-select:none;
+}
+
+.finder-side-item:hover{background:rgba(0,0,0,.055);}
+.finder-side-item.is-active{background:rgba(0,0,0,.1);}
+
+.finder-side-icon{
+  width:17px;
+  text-align:center;
+}
+
+.finder-main{
+  min-width:0;
+  overflow-y:auto;
+  padding:25px 28px 32px;
+  box-sizing:border-box;
+  -webkit-overflow-scrolling:touch;
+}
+
+.finder-heading{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:20px;
+  margin-bottom:22px;
+}
+
+.finder-heading h2{
+  margin:0;
+  font-size:29px;
+  font-weight:400;
+}
+
+.finder-heading span{
+  font-size:10px;
+  color:rgba(0,0,0,.45);
+}
+
+.finder-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px;
+}
+
+.project-file{
+  position:relative;
+  overflow:hidden;
+  min-height:180px;
+  border:1px solid rgba(0,0,0,.11);
+  border-radius:12px;
+  background:#fff;
+  color:#111!important;
+  text-decoration:none!important;
+  box-shadow:0 6px 18px rgba(0,0,0,.045);
+  transition:
+    opacity .28s ease,
+    transform .34s var(--ios-ease),
+    box-shadow .32s ease,
+    border-color .32s ease;
+}
+
+.project-file:hover{
+  transform:translateY(-5px);
+  border-color:rgba(0,0,0,.24);
+  box-shadow:0 16px 34px rgba(0,0,0,.12);
+}
+
+.project-file.is-filter-hidden{display:none!important;}
+
+.project-preview{
+  height:105px;
+  position:relative;
+  overflow:hidden;
+  background:
+    linear-gradient(135deg,rgba(255,255,255,.08),transparent 65%),
+    #111;
+}
+
+.project-preview::before{
+  content:"";
+  position:absolute;
+  inset:15px;
+  border:1px solid rgba(255,255,255,.16);
+  background:
+    linear-gradient(rgba(255,255,255,.2),rgba(255,255,255,.2)) 12px 14px/42% 5px no-repeat,
+    linear-gradient(rgba(255,255,255,.08),rgba(255,255,255,.08)) 12px 28px/72% 4px no-repeat,
+    linear-gradient(rgba(255,255,255,.08),rgba(255,255,255,.08)) 12px 39px/55% 4px no-repeat,
+    linear-gradient(90deg,rgba(239,128,174,.45),rgba(255,255,255,.08)) 12px 58px/calc(100% - 24px) 24px no-repeat;
+  transition:transform .45s var(--ios-ease);
+}
+
+.project-file:hover .project-preview::before{transform:scale(1.04);}
+
+.project-file:nth-child(2) .project-preview{background:#ebe6df;}
+.project-file:nth-child(2) .project-preview::before{filter:invert(1);}
+.project-file:nth-child(3) .project-preview{background:linear-gradient(135deg,#c9d7df,#efefef);}
+.project-file:nth-child(4) .project-preview{background:linear-gradient(135deg,#111,#2a181d);}
+.project-file:nth-child(5) .project-preview{background:linear-gradient(135deg,#e7d6c4,#fff);}
+
+.project-info{padding:12px 13px 14px;}
+
+.project-name{
+  margin-bottom:5px;
+  font-size:12px;
+  text-transform:uppercase;
+}
+
+.project-meta{
+  font-size:9.5px;
+  line-height:1.45;
+  color:rgba(0,0,0,.5);
+}
+
+.project-open{
+  position:absolute;
+  right:11px;
+  bottom:11px;
+  font-size:13px;
+  opacity:.42;
+  transition:.2s ease;
+}
+
+.project-file:hover .project-open{
+  transform:translate(2px,-2px);
+  opacity:1;
+}
+
+
+/* =========================================================
+   04. ABOUT
+========================================================= */
+
+.about-system{
+  flex:1;
+  min-height:0;
+  overflow-y:auto;
+  padding:38px 44px;
+  box-sizing:border-box;
+  background:linear-gradient(135deg,#fbfbfb,#ececec);
+  -webkit-overflow-scrolling:touch;
+}
+
+.about-card{
+  display:grid;
+  grid-template-columns:190px 1fr;
+  gap:34px;
+  align-items:start;
+}
+
+.about-avatar{
+  aspect-ratio:1;
+  border-radius:28px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  overflow:hidden;
+  color:#fff;
+
+  /* ВСТАВЬТЕ ССЫЛКУ НА СВОЁ ФОТО */
+  background-image:
+    linear-gradient(180deg,rgba(0,0,0,.02),rgba(0,0,0,.18)),
+    url("/avatar.png");
+
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.15),
+    0 14px 35px rgba(0,0,0,.19);
+}
+
+.about-avatar::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(180deg,transparent 58%,rgba(0,0,0,.34) 100%);
+}
+
+.about-data h1{
+  margin:0 0 5px;
+  font-size:34px;
+  font-weight:400;
+}
+
+.about-role{
+  margin-bottom:25px;
+  font-size:12px;
+  color:rgba(0,0,0,.5);
+}
+
+.about-specs{border-top:1px solid rgba(0,0,0,.12);}
+
+.about-spec{
+  display:grid;
+  grid-template-columns:180px 1fr;
+  gap:18px;
+  padding:10px 0;
+  border-bottom:1px solid rgba(0,0,0,.1);
+  font-size:11px;
+}
+
+.about-spec-name{color:rgba(0,0,0,.46);}
+
+.about-bio{
+  margin-top:24px;
+  max-width:600px;
+  font-size:11.5px;
+  line-height:1.75;
+  color:rgba(0,0,0,.68);
+}
+
+
+/* =========================================================
+   05. PROCESS
+========================================================= */
+
+.process-body{
+  flex:1;
+  min-height:0;
+  overflow-y:auto;
+  padding:34px 40px 38px;
+  box-sizing:border-box;
+  background:linear-gradient(135deg,#fff,#efefef);
+  -webkit-overflow-scrolling:touch;
+}
+
+.process-intro{
+  max-width:650px;
+  margin-bottom:27px;
+  font-size:11.5px;
+  line-height:1.7;
+  color:rgba(0,0,0,.65);
+}
+
+.process-steps{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:9px;
+  margin-bottom:31px;
+}
+
+.process-step{
+  min-height:128px;
+  padding:15px 13px;
+  box-sizing:border-box;
+  border:1px solid rgba(0,0,0,.11);
+  border-radius:11px;
+  background:#fff;
+  transition:transform .25s var(--ios-ease),box-shadow .25s ease;
+}
+
+.process-step:hover{
+  transform:translateY(-4px);
+  box-shadow:0 12px 24px rgba(0,0,0,.09);
+}
+
+.process-step-num{
+  margin-bottom:18px;
+  font-size:10px;
+  color:rgba(0,0,0,.36);
+}
+
+.process-step-name{
+  margin-bottom:7px;
+  font-size:11px;
+}
+
+.process-step-text{
+  font-size:9.5px;
+  line-height:1.5;
+  color:rgba(0,0,0,.52);
+}
+
+.price-title{
+  margin:0 0 10px;
+  font-size:16px;
+  font-weight:400;
+}
+
+.price-list{border-top:1px solid rgba(0,0,0,.13);}
+
+.price-row{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:20px;
+  padding:12px 0;
+  border-bottom:1px solid rgba(0,0,0,.11);
+  font-size:11px;
+}
+
+.price-value{
+  color:rgba(0,0,0,.56);
+  white-space:nowrap;
+}
+
+
+/* =========================================================
+   06. CONTACT / AIRDROP
+========================================================= */
+
+.contact-body{
+  flex:1;
+  min-height:0;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  background:linear-gradient(135deg,#fff,#ececec);
+}
+
+.contact-left{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:42px;
+  box-sizing:border-box;
+}
+
+.contact-left p{
+  max-width:420px;
+  margin:0 0 24px;
+  font-size:11.5px;
+  line-height:1.7;
+  color:rgba(0,0,0,.62);
+}
+
+.contact-list{border-top:1px solid rgba(0,0,0,.12);}
+
+.contact-link{
+  display:grid;
+  grid-template-columns:125px 1fr auto;
+  gap:15px;
+  align-items:center;
+  padding:12px 0;
+  border-bottom:1px solid rgba(0,0,0,.11);
+  color:#111!important;
+  text-decoration:none!important;
+  transition:padding .22s ease,background .22s ease;
+}
+
+.contact-link:hover{
+  padding-left:7px;
+  padding-right:7px;
+  background:rgba(0,0,0,.035);
+}
+
+.contact-name{
+  font-size:11px;
+  text-transform:uppercase;
+}
+
+.contact-value{
+  font-size:10px;
+  color:rgba(0,0,0,.56);
+}
+
+.contact-right{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  overflow:hidden;
+  border-left:1px solid rgba(0,0,0,.09);
+  background:radial-gradient(circle at center,rgba(80,152,255,.14),transparent 58%);
+}
+
+.airdrop-radar{
+  width:min(280px,70%);
+  aspect-ratio:1;
+  position:relative;
+  border-radius:50%;
+  border:1px solid rgba(45,114,255,.16);
+  background:
+    radial-gradient(circle,transparent 0 24%,rgba(45,114,255,.1) 25% 25.5%,transparent 26% 49%,rgba(45,114,255,.1) 50% 50.5%,transparent 51% 74%,rgba(45,114,255,.1) 75% 75.5%,transparent 76%);
+}
+
+.airdrop-radar::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  background:conic-gradient(from 0deg,rgba(45,114,255,.35),transparent 24%);
+  animation:airdropSpin 4s linear infinite;
+}
+
+.airdrop-user{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:72px;
+  height:72px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  color:#fff;
+  background:#111;
+  box-shadow:0 0 0 8px rgba(255,255,255,.9),0 8px 20px rgba(0,0,0,.2);
+  font-size:12px;
+  z-index:2;
+}
+
+
+/* =========================================================
+   07. NOTES
+========================================================= */
+
+.notes-body{
+  flex:1;
+  min-height:0;
+  overflow-y:auto;
+  padding:30px 38px;
+  box-sizing:border-box;
+  background:#f2f2f6;
+  -webkit-overflow-scrolling:touch;
+}
+
+.notes-heading{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:16px;
+}
+
+.notes-heading h2{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",Arial,sans-serif;
+  font-size:36px;
+  letter-spacing:-1.4px;
+}
+
+.notes-search{
+  height:38px;
+  display:flex;
+  align-items:center;
+  padding:0 13px;
+  margin-bottom:20px;
+  border-radius:11px;
+  background:#dddde4;
+  color:rgba(0,0,0,.42);
+  font-family:-apple-system,BlinkMacSystemFont,Arial,sans-serif;
+  font-size:13px;
+}
+
+.notes-section{
+  margin:0 0 10px;
+  font-family:-apple-system,BlinkMacSystemFont,Arial,sans-serif;
+  font-size:16px;
+  font-weight:700;
+}
+
+.notes-card{
+  margin-bottom:20px;
+  overflow:hidden;
+  border-radius:14px;
+  background:#fff;
+}
+
+.notes-item{
+  padding:13px 16px;
+  border-bottom:1px solid rgba(0,0,0,.08);
+}
+
+.notes-item:last-child{border-bottom:0;}
+
+.notes-item strong{
+  display:block;
+  margin-bottom:3px;
+  font-family:-apple-system,BlinkMacSystemFont,Arial,sans-serif;
+  font-size:13px;
+}
+
+.notes-item span{
+  font-family:-apple-system,BlinkMacSystemFont,Arial,sans-serif;
+  font-size:11px;
+  color:rgba(0,0,0,.42);
+}
+
+
+/* =========================================================
+   08. SAFARI
+========================================================= */
+
+.safari-toolbar{
+  height:52px;
+  min-height:52px;
+  display:flex;
+  align-items:center;
+  gap:15px;
+  padding:0 17px;
+  box-sizing:border-box;
+  border-bottom:1px solid rgba(0,0,0,.12);
+  background:#ececec;
+}
+
+.safari-nav{
+  color:rgba(0,0,0,.48);
+  font-size:17px;
+}
+
+.safari-address{
+  flex:1;
+  height:30px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid rgba(0,0,0,.1);
+  border-radius:9px;
+  background:#fff;
+  font-size:10px;
+}
+
+.safari-content{
+  flex:1;
+  min-height:0;
+  overflow-y:auto;
+  padding:40px 46px;
+  box-sizing:border-box;
+  background:linear-gradient(135deg,#fff,#efefef);
+  -webkit-overflow-scrolling:touch;
+}
+
+.safari-card{
+  margin:22px 0;
+  padding:17px 0;
+  border-top:1px solid rgba(0,0,0,.13);
+  border-bottom:1px solid rgba(0,0,0,.13);
+  font-size:11px;
+  line-height:1.7;
+  color:rgba(0,0,0,.62);
+}
+
+
+/* =========================================================
+   09. LEGAL
+========================================================= */
+
+.legal-body{
+  flex:1;
+  min-height:0;
+  overflow-y:auto;
+  padding:34px 42px;
+  box-sizing:border-box;
+  background:linear-gradient(135deg,#fff,#efefef);
+  -webkit-overflow-scrolling:touch;
+}
+
+.legal-copy{
+  font-size:11px;
+  line-height:1.72;
+  color:rgba(0,0,0,.7);
+}
+
+.legal-copy h3{
+  margin:21px 0 7px;
+  font-size:12px;
+  color:#111;
+  font-weight:400;
+}
+
+
+/* =========================================================
+   10. MUSIC PLAYER
+========================================================= */
+
+#ilnurMusic{
+  position:fixed;
+  top:44px;
+  left:50%;
+  z-index:1100000;
+  width:min(700px,88vw);
+  min-height:76px;
+  display:flex;
+  align-items:center;
+  gap:16px;
+  padding:14px 18px;
+  box-sizing:border-box;
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:22px;
+  color:#fff;
+  background:rgba(22,22,24,.72);
+  box-shadow:0 20px 70px rgba(0,0,0,.36);
+  backdrop-filter:blur(26px) saturate(160%);
+  -webkit-backdrop-filter:blur(26px) saturate(160%);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",Arial,sans-serif;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transform:translate(-50%,-18px) scale(.96);
+  transition:.45s var(--ios-ease);
+}
+
+#ilnurMusic.is-open{
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+  transform:translate(-50%,0) scale(1);
+}
+
+.music-cover{
+  width:48px;
+  height:48px;
+  flex:0 0 auto;
+  border-radius:50%;
+  background:radial-gradient(circle,#d8ab90 0 10%,#261513 11% 25%,#050505 26% 70%);
+}
+
+.music-main{flex:1;min-width:0;}
+.music-title{margin-bottom:3px;font-size:13px;}
+.music-sub{margin-bottom:9px;font-size:10px;opacity:.5;}
+
+.music-progress{
+  height:4px;
+  position:relative;
+  overflow:hidden;
+  border-radius:999px;
+  background:rgba(255,255,255,.18);
+  cursor:pointer;
+}
+
+.music-progress-fill{width:0;height:100%;background:#fff;}
+
+.music-controls{
+  display:flex;
+  align-items:center;
+  gap:13px;
+}
+
+.music-btn{
+  border:0;
+  color:#fff;
+  background:none;
+  cursor:pointer;
+  font-size:18px;
+}
+
+.music-close{
+  position:absolute;
+  right:10px;
+  top:8px;
+  width:22px;
+  height:22px;
+  border:0;
+  border-radius:50%;
+  color:#fff;
+  background:rgba(255,255,255,.1);
+  cursor:pointer;
+}
+
+
+/* =========================================================
+   11. NOTIFICATIONS
+========================================================= */
+
+#ilnurNotifications{
+  position:fixed;
+  right:max(18px,calc((100vw - 1220px)/2 + 18px));
+  top:42px;
+  z-index:950000;
+  width:min(300px,calc(100vw - 24px));
+  display:block!important;
+  pointer-events:none;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",Arial,sans-serif;
+}
+
+.ilnur-notification{
+  position:absolute!important;
+  top:0!important;
+  right:0!important;
+  width:100%!important;
+  min-height:56px!important;
+  display:grid;
+  grid-template-columns:32px 1fr!important;
+  gap:9px!important;
+  align-items:center;
+  padding:9px 11px!important;
+  box-sizing:border-box;
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:15px!important;
+  color:#fff;
+  background:rgba(25,25,27,.73);
+  box-shadow:0 16px 42px rgba(0,0,0,.28);
+  backdrop-filter:blur(24px) saturate(160%);
+  -webkit-backdrop-filter:blur(24px) saturate(160%);
+  pointer-events:auto!important;
+  touch-action:pan-y!important;
+  transform:translateY(var(--stack-y,0px)) scale(var(--stack-scale,1))!important;
+  opacity:var(--stack-opacity,1)!important;
+  transition:
+    opacity .36s ease,
+    transform .38s var(--ios-ease),
+    height .34s ease,
+    margin .34s ease,
+    padding .34s ease,
+    border-width .34s ease!important;
+}
+
+.ilnur-notification.is-clickable{cursor:pointer;}
+
+.notification-icon{
+  width:30px!important;
+  height:30px!important;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:8px!important;
+  background:linear-gradient(145deg,#ef80ae,#9e3d69);
+  font-size:13px!important;
+}
+
+.notification-app{
+  margin-bottom:2px!important;
+  font-size:9px!important;
+  font-weight:600;
+  padding-right:24px!important;
+}
+
+.notification-text{
+  font-size:10px!important;
+  line-height:1.3!important;
+  opacity:.82;
+  padding-right:22px!important;
+}
+
+.ih-notification-close{
+  position:absolute;
+  right:8px!important;
+  top:8px!important;
+  z-index:4;
+  width:20px!important;
+  height:20px!important;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:0;
+  border-radius:50%;
+  color:rgba(255,255,255,.82);
+  background:rgba(255,255,255,.1);
+  font-family:-apple-system,BlinkMacSystemFont,Arial,sans-serif;
+  font-size:14px!important;
+  line-height:1;
+  cursor:pointer;
+}
+
+.ilnur-notification.ih-dismissing{
+  opacity:0!important;
+  transform:translateX(var(--ih-dismiss-x,110%)) scale(.96)!important;
+  pointer-events:none!important;
+}
+
+.ilnur-notification.ih-collapsing{
+  height:0!important;
+  min-height:0!important;
+  margin:0!important;
+  padding-top:0!important;
+  padding-bottom:0!important;
+  border-width:0!important;
+}
+
+.ilnur-notification.ih-swiping{transition:none!important;}
+
+
+/* =========================================================
+   12. CONTEXT MENU
+========================================================= */
+
+#ilnurContext{
+  position:fixed;
+  z-index:1300000;
+  width:218px;
+  padding:6px;
+  box-sizing:border-box;
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:11px;
+  color:#fff;
+  background:rgba(30,30,32,.78);
+  box-shadow:0 16px 40px rgba(0,0,0,.38);
+  backdrop-filter:blur(24px) saturate(150%);
+  -webkit-backdrop-filter:blur(24px) saturate(150%);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",Arial,sans-serif;
+  font-size:12px;
+  opacity:0;
+  visibility:hidden;
+  transform:scale(.95);
+  transform-origin:top left;
+  transition:.16s ease;
+}
+
+#ilnurContext.is-open{
+  opacity:1;
+  visibility:visible;
+  transform:none;
+}
+
+.context-item{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  min-height:29px;
+  padding:0 9px;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+.context-item:hover{background:#3478f6;}
+
+.context-divider{
+  height:1px;
+  margin:5px 3px;
+  background:rgba(255,255,255,.1);
+}
+
+
+/* =========================================================
+   13. CONFIRM / ERROR
+========================================================= */
+
+.confirm-body{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:38px 42px;
+  box-sizing:border-box;
+  background:linear-gradient(135deg,#fff,#ececec);
+}
+
+.confirm-actions{
+  display:flex;
+  gap:11px;
+  margin-top:22px;
+}
+
+#errorScreen{
+  position:fixed;
+  inset:0;
+  z-index:2100000;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  background:#030303;
+  font-family:var(--ios-font);
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition:.32s ease;
+}
+
+#errorScreen.is-open{
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+}
+
+.error-code{
+  margin-bottom:13px;
+  font-size:clamp(70px,12vw,135px);
+  line-height:1;
+}
+
+.error-text{font-size:15px;opacity:.75;}
+.error-sub{margin-top:16px;font-size:10px;opacity:.35;}
+
+
+/* =========================================================
+   14. DESKTOP
+========================================================= */
+
+#ilnurDesktop{
+  position:fixed;
+  inset:10px 10px 16px;
+  z-index:800000;
+  overflow:hidden;
+  font-family:var(--ios-font);
+  color:#fff;
+  background:#050505;
+  border-radius:10px;
+  opacity:1;
+  visibility:visible;
+
+  --monitor-x:50.7%;
+  --monitor-y:25.2%;
+  --monitor-w:13.8%;
+  --monitor-h:15.5%;
+
+  --face-x:31.7%;
+  --face-y:34.8%;
+  --lamp-x:63.8%;
+  --lamp-y:29.5%;
+  --airpods-x:74.3%;
+  --airpods-y:84.5%;
+  --redbull-x:81.3%;
+  --redbull-y:70.2%;
+}
+
+.ilnur-scene-bg{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+
+  /* ВСТАВЬТЕ СВОЙ DESKTOP BACKGROUND */
+  background-image:
+    linear-gradient(180deg,rgba(0,0,0,.015),rgba(0,0,0,.07)),
+    url("/wallpaper.png");
+
+  background-size:cover;
+  background-position:center center;
+  background-repeat:no-repeat;
+  transform:none;
+  filter:
+    contrast(1.035)
+    saturate(.96)
+    brightness(1.015);
+}
+
+.ilnur-scene-vignette{
+  position:absolute;
+  inset:0;
+  z-index:2;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 52% 28%,rgba(255,255,255,.16),transparent 24%),
+    radial-gradient(circle at 66% 33%,rgba(255,203,144,.13),transparent 20%),
+    linear-gradient(90deg,rgba(0,0,0,.08),transparent 22%,transparent 78%,rgba(0,0,0,.08)),
+    linear-gradient(180deg,rgba(255,255,255,.025),transparent 60%,rgba(0,0,0,.12));
+}
+
+#ilnurDesktop::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:2;
+  pointer-events:none;
+  background:
+    linear-gradient(115deg,rgba(255,255,255,.06),transparent 22%),
+    radial-gradient(circle at 50% 26%,rgba(255,255,255,.1),transparent 23%);
+  mix-blend-mode:screen;
+  opacity:.75;
+}
+
+
+/* =========================================================
+   15. LEGAL LINKS
+========================================================= */
+
+.ilnur-legal{
+  position:absolute;
+  left:clamp(48px,4.8vw,92px);
+  top:clamp(70px,8vh,92px);
+  z-index:18;
+  display:flex;
+  gap:24px;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",Arial,sans-serif;
+  font-size:clamp(11px,.85vw,15px);
+}
+
+.ilnur-legal a{
+  display:inline-flex!important;
+  align-items:center!important;
+  min-height:32px!important;
+  padding:0 12px!important;
+  border:1px solid rgba(0,0,0,.09)!important;
+  border-radius:999px!important;
+  color:#111!important;
+  background:rgba(255,255,255,.68)!important;
+  box-shadow:
+    0 7px 24px rgba(0,0,0,.07),
+    inset 0 1px 0 rgba(255,255,255,.85)!important;
+  backdrop-filter:blur(14px) saturate(120%)!important;
+  -webkit-backdrop-filter:blur(14px) saturate(120%)!important;
+  opacity:.88!important;
+  text-shadow:none!important;
+  text-decoration:none!important;
+}
+
+
+/* =========================================================
+   16. IDENTITY
+========================================================= */
+
+.ilnur-identity{
+  position:absolute;
+  left:clamp(48px,4.8vw,92px);
+  top:clamp(330px,38vh,430px);
+  z-index:4;
+  width:min(390px,28vw);
+  padding:18px 22px 19px;
+  box-sizing:border-box;
+  border:1px solid rgba(255,255,255,.48);
+  border-radius:18px;
+  color:#111;
+  background:
+    linear-gradient(135deg,rgba(255,255,255,.84),rgba(255,255,255,.52));
+  box-shadow:
+    0 18px 48px rgba(0,0,0,.09),
+    inset 0 1px 0 rgba(255,255,255,.82);
+  backdrop-filter:blur(18px) saturate(120%);
+  -webkit-backdrop-filter:blur(18px) saturate(120%);
+}
+
+.ilnur-identity::before{
+  display:none!important;
+  content:none!important;
+}
+
+.ilnur-identity-title{
+  margin:0 0 10px;
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif!important;
+  font-size:clamp(32px,3.15vw,52px);
+  line-height:.95;
+  font-weight:300;
+  letter-spacing:-.045em;
+  white-space:nowrap;
+  color:#111;
+}
+
+.ilnur-identity-title::after{
+  content:"";
+  display:inline-block;
+  width:7px;
+  height:7px;
+  margin-left:13px;
+  border-radius:50%;
+  vertical-align:middle;
+  background:var(--ios-accent);
+  box-shadow:0 0 18px rgba(239,128,174,.52);
+}
+
+.ilnur-identity-sub{
+  max-width:330px;
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  font-size:clamp(10px,.83vw,14px);
+  line-height:1.45;
+  font-weight:500;
+  letter-spacing:.11em;
+  color:rgba(0,0,0,.63);
+  text-transform:uppercase;
+}
+
+
+/* =========================================================
+   17. FOLDERS
+========================================================= */
+
+.ilnur-folders{
+  position:absolute;
+  left:50%;
+  top:54%;
+  z-index:200;
+  transform:translate(-50%,-50%);
+  display:grid;
+  grid-template-columns:repeat(4,clamp(92px,8vw,135px));
+  gap:clamp(18px,2.4vw,42px);
+  align-items:start;
+  pointer-events:none;
+}
+
+.ilnur-folder{
+  appearance:none;
+  -webkit-appearance:none;
+  position:relative;
+  z-index:201;
+  border:0;
+  margin:0;
+  padding:0;
+  background:transparent;
+  color:#fff;
+  cursor:pointer;
+  font-family:var(--ios-font);
+  text-align:center;
+  filter:drop-shadow(0 10px 14px rgba(0,0,0,.32));
+  transition:transform .32s var(--ios-ease),filter .25s ease;
+  pointer-events:auto;
+  touch-action:none;
+}
+
+.ilnur-folder:hover{
+  transform:translateY(-9px) scale(1.035);
+  filter:brightness(1.08) drop-shadow(0 16px 20px rgba(0,0,0,.38));
+}
+
+.ilnur-folder img{
+  display:block;
+  width:100%;
+  height:auto;
+  margin:0 auto 7px;
+  user-select:none;
+  -webkit-user-drag:none;
+}
+
+.ilnur-folder span{
+  display:block;
+  font-size:clamp(10px,.9vw,14px);
+  line-height:1.25;
+  letter-spacing:.03em;
+  white-space:nowrap;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  -webkit-text-stroke:.16px rgba(0,0,0,.92);
+  text-shadow:
+    0 1px 1px rgba(0,0,0,.78),
+    0 0 2px rgba(0,0,0,.40);
+}
+
+.ilnur-folder.works-trigger::after,
+.ilnur-folder.process-trigger::after{
+  position:absolute;
+  min-width:20px;
+  height:20px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:0 5px;
+  box-sizing:border-box;
+  border-radius:999px;
+  color:#fff;
+  background:#ef466f;
+  box-shadow:0 3px 10px rgba(0,0,0,.3);
+  font:10px -apple-system,BlinkMacSystemFont,Arial,sans-serif;
+}
+
+.ilnur-folder.works-trigger::after{
+  content:"0";
+  right:2%;
+  top:4%;
+}
+
+.ilnur-folder.process-trigger::after{
+  content:"0";
+  right:2%;
+  top:4%;
+}
+
+.ilnur-folder.is-dragging{
+  z-index:9999!important;
+  filter:brightness(1.12) drop-shadow(0 22px 28px rgba(0,0,0,.38))!important;
+  transition:none!important;
+}
+
+
+/* =========================================================
+   18. DOCK
+========================================================= */
+
+.ilnur-dock{
+  position:absolute;
+  left:50%;
+  bottom:clamp(18px,3.2vh,42px);
+  z-index:6;
+  transform:translateX(-50%);
+  display:flex;
+  align-items:flex-end;
+  gap:clamp(12px,1.45vw,24px);
+  padding:clamp(8px,.75vw,12px) clamp(13px,1.3vw,20px);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:clamp(18px,1.6vw,27px);
+  background:rgba(10,10,12,.18);
+  backdrop-filter:blur(16px) saturate(145%);
+  -webkit-backdrop-filter:blur(16px) saturate(145%);
+  box-shadow:0 18px 45px rgba(0,0,0,.25);
+}
+
+.ilnur-dock-item{
+  appearance:none;
+  -webkit-appearance:none;
+  position:relative;
+  border:0;
+  padding:0;
+  margin:0;
+  width:clamp(52px,5.1vw,78px);
+  aspect-ratio:1;
+  background:transparent;
+  cursor:pointer;
+  transform:none!important;
+  transition:none!important;
+}
+
+.ilnur-dock-item::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  z-index:0;
+  width:72%;
+  height:72%;
+  transform:translate(-50%,-50%) scale(.9);
+  border-radius:38%;
+  background:
+    radial-gradient(
+      circle,
+      rgba(0,0,0,.42) 0%,
+      rgba(0,0,0,.25) 38%,
+      rgba(0,0,0,.08) 62%,
+      transparent 78%
+    );
+  filter:blur(8px);
+  opacity:0;
+  pointer-events:none;
+  transition:
+    opacity .17s ease,
+    transform .19s ease;
+}
+
+.ilnur-dock-item:hover::before{
+  opacity:1;
+  transform:translate(-50%,-50%) scale(1);
+}
+
+.ilnur-dock-item:active::before{opacity:.8;}
+
+.ilnur-dock-item:hover,
+.ilnur-dock-item:active{
+  transform:none!important;
+}
+
+.ilnur-dock-item img{
+  position:relative;
+  z-index:2;
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  user-select:none;
+  -webkit-user-drag:none;
+  transform:none!important;
+  filter:drop-shadow(0 7px 8px rgba(0,0,0,.12));
+  transition:
+    filter .17s ease,
+    opacity .17s ease;
+}
+
+.ilnur-dock-item:hover img{
+  transform:none!important;
+  filter:
+    drop-shadow(0 7px 8px rgba(0,0,0,.14))
+    drop-shadow(0 0 5px rgba(0,0,0,.16));
+}
+
+.ilnur-dock-item:active img{
+  transform:none!important;
+  opacity:.95;
+}
+
+.ilnur-dock-item::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom:-7px;
+  width:4px;
+  height:4px;
+  border-radius:50%;
+  background:#fff;
+  opacity:0;
+  transform:translateX(-50%) scale(.5);
+  box-shadow:0 0 7px rgba(255,255,255,.7);
+  transition:opacity .22s ease,transform .28s var(--ios-ease);
+}
+
+.ilnur-dock-item.is-active::after{
+  opacity:1;
+  transform:translateX(-50%) scale(1);
+}
+
+.ilnur-dock-separator{
+  width:1px;
+  height:clamp(38px,3.5vw,54px);
+  margin:0 2px;
+  background:rgba(255,255,255,.24);
+}
+
+.ilnur-dock-item.trash-trigger.is-receiving{
+  transform:none!important;
+}
+
+.ilnur-dock-item.trash-trigger.is-receiving::before{
+  opacity:1;
+  transform:translate(-50%,-50%) scale(1.15);
+  background:
+    radial-gradient(
+      circle,
+      rgba(239,128,174,.42),
+      rgba(0,0,0,.28) 48%,
+      transparent 76%
+    );
+}
+
+.ilnur-dock-item.trash-trigger.is-receiving img{
+  transform:none!important;
+  filter:drop-shadow(0 0 12px rgba(239,128,174,.6))!important;
+}
+
+
+/* =========================================================
+   19. SYSTEM BAR
+========================================================= */
+
+#ilnurSystemBar{
+  position:fixed;
+  left:50%;
+  top:10px;
+  z-index:900000;
+  width:calc(min(1220px,100vw) - 20px);
+  height:28px;
+  transform:translateX(-50%);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 14px;
+  box-sizing:border-box;
+  color:#fff;
+  background:rgba(7,7,8,.46);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  backdrop-filter:blur(18px) saturate(150%);
+  -webkit-backdrop-filter:blur(18px) saturate(150%);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",Arial,sans-serif;
+  font-size:11px;
+}
+
+.ilnur-menu-left,
+.ilnur-menu-right{
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
+
+.ilnur-menu-logo{font-size:15px;}
+
+.ilnur-menu-item{
+  cursor:pointer;
+  opacity:.8;
+  transition:.2s ease;
+}
+
+.ilnur-menu-item:hover{opacity:1;}
+
+.ilnur-menu-app{
+  font-weight:600;
+  opacity:1;
+}
+
+.ilnur-status-dot{
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:#6ef19a;
+  box-shadow:0 0 8px rgba(110,241,154,.7);
+}
+
+
+/* =========================================================
+   20. DESKTOP HINT
+========================================================= */
+
+.ilnur-desktop-hint{
+  position:absolute;
+  right:clamp(24px,3vw,50px);
+  bottom:clamp(22px,3vh,42px);
+  z-index:4;
+  font-size:9px;
+  line-height:1.5;
+  color:rgba(255,255,255,.46);
+  text-align:right;
+  pointer-events:none;
+}
+
+
+/* =========================================================
+   21. ROOM OVERLAYS / HOTSPOTS
+========================================================= */
+
+.ih-room-overlay,
+.ih-focus-vignette{
+  position:absolute;
+  inset:0;
+  z-index:3;
+  pointer-events:none;
+  opacity:0;
+  transition:opacity .65s var(--ios-ease);
+}
+
+.ih-room-overlay{
+  background:
+    radial-gradient(circle at 64% 28%,rgba(255,181,100,.33),transparent 20%),
+    linear-gradient(180deg,rgba(5,9,20,.25),rgba(2,4,10,.68));
+  mix-blend-mode:multiply;
+}
+
+.ih-focus-vignette{
+  background:
+    radial-gradient(circle at 51% 33%,transparent 0 23%,rgba(0,0,0,.18) 42%,rgba(0,0,0,.72) 100%);
+}
+
+body.ih-night-mode .ih-room-overlay{opacity:.92;}
+
+body.ih-night-mode .ilnur-scene-bg{
+  filter:brightness(.62) saturate(.88) contrast(1.12)!important;
+}
+
+body.ih-focus-mode .ih-focus-vignette{opacity:.9;}
+
+body.ih-focus-mode .ilnur-scene-bg{
+  filter:brightness(.74) saturate(.72) contrast(1.08)!important;
+}
+
+.ih-object-hotspot{
+  position:absolute;
+  z-index:5;
+  border:0;
+  padding:0;
+  background:transparent;
+  cursor:pointer;
+  appearance:none;
+  -webkit-appearance:none;
+}
+
+.ih-object-hotspot::after{
+  content:attr(data-label);
+  position:absolute;
+  left:50%;
+  bottom:calc(100% + 8px);
+  transform:translate(-50%,6px);
+  white-space:nowrap;
+  padding:6px 9px;
+  border-radius:8px;
+  color:#fff;
+  background:rgba(18,18,20,.76);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  font:9px var(--ios-font);
+  opacity:0;
+  pointer-events:none;
+  transition:.2s ease;
+}
+
+.ih-object-hotspot:hover::after{
+  opacity:1;
+  transform:translate(-50%,0);
+}
+
+.ih-lamp-hotspot{
+  left:60%;
+  top:14%;
+  width:9%;
+  height:26%;
+  border-radius:50%;
+}
+
+.ih-airpods-hotspot{
+  left:70%;
+  top:78%;
+  width:10%;
+  height:11%;
+  border-radius:18px;
+}
+
+.ih-redbull-hotspot{
+  left:77%;
+  top:55%;
+  width:8%;
+  height:25%;
+  border-radius:14px;
+}
+
+.ih-covered-by-folder{
+  pointer-events:none!important;
+}
+
+
+/* =========================================================
+   22. MONITOR
+========================================================= */
+
+.ilnur-monitor-glow{
+  position:absolute;
+  left:var(--monitor-x);
+  top:var(--monitor-y);
+  width:var(--monitor-w);
+  height:var(--monitor-h);
+  z-index:8;
+  border-radius:8px;
+  border:0;
+  padding:0;
+  pointer-events:auto;
+  cursor:pointer;
+  opacity:.42;
+  transform:translate(-50%,-50%) scale(1);
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(255,255,255,.78) 0%,
+      rgba(239,128,174,.48) 25%,
+      rgba(239,128,174,.18) 48%,
+      transparent 72%
+    );
+  filter:blur(10px);
+  mix-blend-mode:screen;
+}
+
+.ilnur-monitor-burst{
+  position:absolute;
+  left:var(--monitor-x);
+  top:var(--monitor-y);
+  z-index:7;
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  pointer-events:none;
+  opacity:0;
+}
+
+.ih-monitor-crt{
+  position:absolute;
+  left:var(--monitor-x);
+  top:var(--monitor-y);
+  width:var(--monitor-w);
+  height:var(--monitor-h);
+  z-index:7;
+  transform:translate(-50%,-50%);
+  overflow:hidden;
+  border-radius:5px;
+  pointer-events:none;
+  opacity:.32;
+  mix-blend-mode:multiply;
+}
+
+
+/* =========================================================
+   23. DEV MODE
+========================================================= */
+
+body.ih-dev-mode{
+  --ios-accent:#ff4fb3;
+}
+
+body.ih-dev-mode #ilnurDesktop::after{
+  content:"DEVELOPER MODE";
+  position:absolute;
+  right:20px;
+  top:44px;
+  z-index:30;
+  color:#ff76c8;
+  font:9px var(--ios-font);
+  letter-spacing:.12em;
+  text-shadow:0 0 10px rgba(255,79,179,.8);
+}
+
+.ih-experiments-folder{
+  position:absolute;
+  right:5.5%;
+  top:16%;
+  z-index:20;
+  width:108px;
+  border:0;
+  padding:0;
+  color:#fff;
+  background:transparent;
+  font-family:var(--ios-font);
+  text-align:center;
+  cursor:pointer;
+  opacity:0;
+  visibility:hidden;
+}
+
+body.ih-dev-mode .ih-experiments-folder{
+  opacity:1;
+  visibility:visible;
+}
+
+.ih-experiments-folder img{
+  display:block;
+  width:100%;
+  margin-bottom:5px;
+  filter:hue-rotate(280deg) saturate(1.3);
+}
+
+.ih-experiments-folder span{
+  font-size:10px;
+  text-shadow:0 2px 7px rgba(0,0,0,.8);
+}
+
+#ihTerminal{
+  position:fixed;
+  left:50%;
+  bottom:28px;
+  z-index:1600000;
+  width:min(700px,90vw);
+  max-height:230px;
+  overflow:auto;
+  padding:18px;
+  box-sizing:border-box;
+  border:1px solid rgba(255,79,179,.35);
+  border-radius:12px;
+  color:#ff8ad1;
+  background:rgba(5,5,8,.88);
+  box-shadow:0 18px 60px rgba(0,0,0,.5),0 0 34px rgba(255,79,179,.12);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  font:11px/1.65 var(--ios-font);
+  opacity:0;
+  visibility:hidden;
+  transform:translate(-50%,20px) scale(.96);
+  transition:.4s var(--ios-ease);
+}
+
+body.ih-dev-mode #ihTerminal{
+  opacity:1;
+  visibility:visible;
+  transform:translate(-50%,0) scale(1);
+}
+
+.ih-terminal-caret{
+  display:inline-block;
+  width:7px;
+  height:12px;
+  margin-left:4px;
+  vertical-align:-2px;
+  background:#ff8ad1;
+}
+
+
+/* =========================================================
+   24. CALENDAR
+========================================================= */
+
+#ihCalendar{
+  position:fixed;
+  right:max(14px,calc((100vw - 1220px)/2 + 14px));
+  top:36px;
+  z-index:1500000;
+  width:250px;
+  padding:16px;
+  box-sizing:border-box;
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:16px;
+  color:#fff;
+  background:rgba(20,20,22,.82);
+  box-shadow:0 18px 50px rgba(0,0,0,.36);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  font-family:-apple-system,BlinkMacSystemFont,Arial,sans-serif;
+  opacity:0;
+  visibility:hidden;
+  transform:translateY(-8px) scale(.96);
+  transition:.28s var(--ios-ease);
+}
+
+#ihCalendar.is-open{
+  opacity:1;
+  visibility:visible;
+  transform:none;
+}
+
+.ih-calendar-title{
+  margin-bottom:12px;
+  font-size:15px;
+  font-weight:600;
+}
+
+.ih-calendar-grid{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:4px;
+  font-size:10px;
+  text-align:center;
+}
+
+.ih-calendar-day{
+  min-height:25px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:7px;
+  opacity:.68;
+}
+
+.ih-calendar-day.is-today{
+  color:#111;
+  background:#fff;
+  opacity:1;
+}
+
+
+/* =========================================================
+   25. DEVICE FRAME
+========================================================= */
+
+#ilnurDeviceFrame{
+  position:fixed;
+  inset:0;
+  z-index:850000;
+  pointer-events:none;
+  border:10px solid #0b0b0c;
+  border-bottom-width:16px;
+  border-radius:18px;
+  background:transparent;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.08),
+    inset 0 0 0 2px rgba(0,0,0,.78),
+    0 0 0 1px rgba(0,0,0,.95),
+    0 18px 55px rgba(0,0,0,.28);
+}
+
+#ilnurDeviceFrame::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:3px;
+  width:6px;
+  height:6px;
+  transform:translateX(-50%);
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 40% 35%,#34455e 0 18%,#121316 42%,#050506 70%);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.08),
+    0 0 6px rgba(72,108,170,.28);
+}
+
+#ilnurDeviceFrame::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom:-13px;
+  width:min(240px,22vw);
+  height:4px;
+  transform:translateX(-50%);
+  border-radius:999px 999px 0 0;
+  background:linear-gradient(180deg,#222326,#080809);
+  box-shadow:0 -1px 0 rgba(255,255,255,.07);
+}
+
+
+/* =========================================================
+   26. VIDEO
+========================================================= */
+
+#ilnurVideoFinal{
+  position:absolute!important;
+  inset:0!important;
+  z-index:0!important;
+  width:100%!important;
+  height:100%!important;
+  display:block!important;
+  object-fit:cover!important;
+  object-position:center!important;
+  border:0!important;
+  margin:0!important;
+  padding:0!important;
+  background:transparent!important;
+  opacity:0!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+  transform:translateZ(0)!important;
+  transition:opacity .18s ease!important;
+}
+
+#ilnurVideoFinal.is-visible{
+  opacity:1!important;
+  visibility:visible!important;
+}
+
+#ilnurVideoLoader{
+  position:fixed;
+  inset:0;
+  z-index:2147483647;
+  overflow:hidden;
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+
+  /* ВСТАВЬТЕ СВОЙ DESKTOP BACKGROUND */
+  background:
+    linear-gradient(rgba(0,0,0,.40),rgba(0,0,0,.40)),
+    url("/wallpaper.png")
+    center/cover no-repeat;
+
+  transition:opacity .5s cubic-bezier(.22,1,.36,1),visibility .5s ease;
+}
+
+#ilnurVideoLoader.is-hidden{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+}
+
+.ivl-center{
+  position:absolute;
+  left:50%;
+  top:50%;
+  z-index:2;
+  width:min(520px,82vw);
+  transform:translate(-50%,-50%);
+  color:#fff;
+  text-align:center;
+  font-family:"Departure Mono","Courier New",monospace;
+}
+
+.ivl-logo{
+  margin-bottom:16px;
+  font-size:clamp(34px,4.3vw,66px);
+  line-height:1;
+  font-weight:400;
+  letter-spacing:.12em;
+}
+
+.ivl-status{
+  margin-bottom:24px;
+  color:rgba(255,255,255,.6);
+  font-size:clamp(9px,.8vw,12px);
+  letter-spacing:.14em;
+}
+
+.ivl-track{
+  width:76%;
+  max-width:390px;
+  height:3px;
+  margin:0 auto;
+  overflow:hidden;
+  border-radius:999px;
+  background:rgba(255,255,255,.18);
+}
+
+.ivl-bar{
+  width:0;
+  height:100%;
+  border-radius:inherit;
+  background:linear-gradient(90deg,#ef80ae,#fff);
+  box-shadow:0 0 14px rgba(239,128,174,.45);
+  transition:width .18s linear;
+}
+
+
+/* =========================================================
+   27. VIDEO INTRO
+========================================================= */
+
+body.ivl-waiting .ilnur-folder,
+body.ivl-waiting .ilnur-identity,
+body.ivl-waiting .ilnur-legal,
+body.ivl-waiting .ilnur-dock,
+body.ivl-waiting #ilnurSystemBar{
+  opacity:0!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+}
+
+body.ivl-running .ilnur-folder{
+  opacity:0!important;
+  visibility:visible!important;
+  pointer-events:none!important;
+  transform:
+    translate(var(--ivl-x),var(--ivl-y))
+    scale(.06)
+    rotate(var(--ivl-r))!important;
+  transform-origin:center!important;
+  transition:
+    transform .76s cubic-bezier(.18,1.28,.34,1),
+    opacity .22s ease!important;
+}
+
+body.ivl-running .ilnur-folder:nth-child(1){
+  --ivl-x:205px;--ivl-y:-215px;--ivl-r:-18deg;
+}
+
+body.ivl-running .ilnur-folder:nth-child(2){
+  --ivl-x:68px;--ivl-y:-215px;--ivl-r:-7deg;
+}
+
+body.ivl-running .ilnur-folder:nth-child(3){
+  --ivl-x:-68px;--ivl-y:-215px;--ivl-r:7deg;
+}
+
+body.ivl-running .ilnur-folder:nth-child(4){
+  --ivl-x:-205px;--ivl-y:-215px;--ivl-r:18deg;
+}
+
+body.ivl-running .ilnur-folder.ivl-launched{
+  opacity:1!important;
+  pointer-events:auto!important;
+  transform:translate(0,0) scale(1) rotate(0)!important;
+}
+
+body.ivl-running .ilnur-identity,
+body.ivl-running .ilnur-legal,
+body.ivl-running .ilnur-dock,
+body.ivl-running #ilnurSystemBar{
+  opacity:0!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+}
+
+body.ivl-running.ivl-chrome .ilnur-identity,
+body.ivl-running.ivl-chrome .ilnur-legal{
+  opacity:1!important;
+  visibility:visible!important;
+  pointer-events:auto!important;
+}
+
+body.ivl-running.ivl-dock .ilnur-dock{
+  opacity:1!important;
+  visibility:visible!important;
+  pointer-events:auto!important;
+}
+
+body.ivl-running.ivl-bar #ilnurSystemBar{
+  opacity:1!important;
+  visibility:visible!important;
+  pointer-events:auto!important;
+}
+
+body.ivl-done .ilnur-folder,
+body.ivl-done .ilnur-folder img,
+body.ivl-done .ilnur-identity,
+body.ivl-done .ilnur-identity-title,
+body.ivl-done .ilnur-identity-sub,
+body.ivl-done .ilnur-legal,
+body.ivl-done .ilnur-dock,
+body.ivl-done #ilnurSystemBar{
+  opacity:1!important;
+  visibility:visible!important;
+}
+
+body.ivl-done .ilnur-folder{
+  transform:none!important;
+  pointer-events:auto!important;
+}
+
+
+/* =========================================================
+   28. MOBILE
+========================================================= */
+
+@media(max-width:768px){
+
+  :root{
+    --ios-window-w:92vw;
+    --ios-window-h:82vh;
+  }
+
+  #ilnurDeviceFrame{
+    border:7px solid #080809;
+    border-radius:28px;
+    box-shadow:
+      inset 0 0 0 1px rgba(255,255,255,.12),
+      inset 0 0 0 2px rgba(0,0,0,.85),
+      0 12px 38px rgba(0,0,0,.3);
+  }
+
+  #ilnurDeviceFrame::before{
+    left:50%;
+    top:6px;
+    width:78px;
+    height:20px;
+    transform:translateX(-50%);
+    border-radius:999px;
+    background:#020203;
+  }
+
+  #ilnurDeviceFrame::after{
+    right:-3px;
+    left:auto;
+    top:28%;
+    bottom:auto;
+    width:3px;
+    height:54px;
+    transform:none;
+    border-radius:0 3px 3px 0;
+    background:#151517;
+    box-shadow:none;
+  }
+
+  #ilnurDesktop{
+    inset:7px;
+    border-radius:21px;
+
+    --monitor-x:46.8%;
+    --monitor-y:31.2%;
+    --monitor-w:31%;
+    --monitor-h:15%;
+
+    --face-x:33%;
+    --face-y:31%;
+    --lamp-x:68%;
+    --lamp-y:25%;
+    --airpods-x:71%;
+    --airpods-y:84%;
+    --redbull-x:82%;
+    --redbull-y:68%;
+  }
+
+  .ilnur-scene-bg{
+    /* ВСТАВЬТЕ СВОЙ MOBILE BACKGROUND */
+    background-image:
+      linear-gradient(180deg,rgba(0,0,0,.01),rgba(0,0,0,.08)),
+      url("/wallpaper-mobile.webp");
+
+    background-size:cover;
+    background-position:center center;
+  }
+
+  #ilnurSystemBar{
+    top:7px;
+    width:calc(100vw - 14px);
+    padding:0 10px;
+    border-radius:20px 20px 8px 8px;
+  }
+
+  .ilnur-menu-left{gap:10px;}
+
+  .ilnur-menu-left .ilnur-menu-item:not(.ilnur-menu-app),
+  .ilnur-menu-right .menu-hide-mobile{
+    display:none;
+  }
+
+  .ilnur-legal{
+    top:8.2vh;
+    left:50%;
+    width:90vw;
+    justify-content:center;
+    gap:8px;
+    transform:translateX(-50%);
+  }
+
+  .ilnur-legal a{
+    min-height:28px!important;
+    padding:0 9px!important;
+    font-size:9px!important;
+  }
+
+  .ilnur-identity{
+    left:50%;
+    right:auto;
+    top:12.8vh;
+    width:92vw;
+    max-width:92vw;
+    padding:0;
+    border:0;
+    border-radius:0;
+    transform:translateX(-50%);
+    text-align:center;
+    background:transparent;
+    box-shadow:none;
+    backdrop-filter:none;
+    -webkit-backdrop-filter:none;
+  }
+
+  .ilnur-identity-title{
+    width:100%;
+    font-size:clamp(31px,9.2vw,45px);
+    text-align:center;
+  }
+
+  .ilnur-identity-title::after{
+    width:5px;
+    height:5px;
+    margin-left:9px;
+  }
+
+  .ilnur-identity-sub{
+    width:100%;
+    max-width:none;
+    font-size:10px;
+    text-align:center;
+  }
+
+  .ilnur-folders{
+    top:auto;
+    bottom:20vh;
+    width:min(330px,84vw);
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:13px 24px;
+    transform:translateX(-50%);
+  }
+
+  .ilnur-folder{width:100%;}
+
+  .ilnur-folder img{
+    width:min(94px,23vw);
+    margin-bottom:5px;
+  }
+
+  .ilnur-folder span{
+    font-size:clamp(9px,2.7vw,11px);
+    color:#fff!important;
+    -webkit-text-fill-color:#fff!important;
+    -webkit-text-stroke:.14px rgba(0,0,0,.92);
+    text-shadow:
+      0 1px 1px rgba(0,0,0,.80),
+      0 0 2px rgba(0,0,0,.38);
+  }
+
+  .ilnur-folder.works-trigger::after,
+  .ilnur-folder.process-trigger::after{
+    left:calc(50% + 24px);
+    right:auto;
+    top:-3px;
+    transform:translateX(-50%);
+  }
+
+  .ilnur-dock{
+    bottom:5.5vh;
+    gap:clamp(5px,1.8vw,10px);
+    padding:8px 10px;
+    border-radius:21px;
+  }
+
+  .ilnur-dock-item{
+    width:min(13vw,58px);
+    transform:none!important;
+  }
+
+  .ilnur-dock-item:hover,
+  .ilnur-dock-item:active,
+  .ilnur-dock-item img,
+  .ilnur-dock-item:hover img,
+  .ilnur-dock-item:active img{
+    transform:none!important;
+  }
+
+  .ilnur-dock-item::after{bottom:-5px;}
+  .ilnur-dock-separator{height:40px;}
+  .ilnur-desktop-hint{display:none;}
+
+  .ios-modal{padding:38px 10px 14px;}
+  .ios-window{border-radius:16px;}
+
+  .finder-body{grid-template-columns:1fr;}
+  .finder-sidebar{display:none;}
+  .finder-main{padding:22px 17px 28px;}
+
+  .finder-grid{
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+
+  .about-system{padding:25px 21px;}
+
+  .about-card{
+    grid-template-columns:1fr;
+    gap:20px;
+  }
+
+  .about-avatar{width:128px;}
+
+  .process-body{padding:25px 20px 30px;}
+  .process-steps{grid-template-columns:1fr 1fr;}
+
+  .contact-body{
+    grid-template-columns:1fr;
+    overflow-y:auto;
+  }
+
+  .contact-left{padding:27px 22px;}
+
+  .contact-right{
+    min-height:240px;
+    border-left:0;
+    border-top:1px solid rgba(0,0,0,.1);
+  }
+
+  #ilnurMusic{
+    top:auto;
+    bottom:24px;
+    width:91vw;
+  }
+
+  #ilnurNotifications{
+    right:12px;
+    top:38px;
+  }
+
+  .ilnur-monitor-glow,
+  .ilnur-monitor-burst,
+  .ih-monitor-crt{
+    display:none!important;
+  }
+
+  .ih-lamp-hotspot{
+    left:60%;
+    top:12%;
+    width:18%;
+    height:26%;
+  }
+
+  .ih-airpods-hotspot{
+    left:64%;
+    top:77%;
+    width:18%;
+    height:12%;
+  }
+
+  .ih-redbull-hotspot{
+    left:76%;
+    top:53%;
+    width:14%;
+    height:25%;
+  }
+
+  #ilnurVideoLoader{
+    /* ВСТАВЬТЕ СВОЙ MOBILE BACKGROUND */
+    background:
+      linear-gradient(rgba(0,0,0,.40),rgba(0,0,0,.40)),
+      url("/wallpaper-mobile.webp")
+      center/cover no-repeat;
+  }
+
+  body.ivl-running .ilnur-folder:nth-child(1){
+    --ivl-x:68px;--ivl-y:-31vh;--ivl-r:-14deg;
+  }
+
+  body.ivl-running .ilnur-folder:nth-child(2){
+    --ivl-x:-68px;--ivl-y:-31vh;--ivl-r:14deg;
+  }
+
+  body.ivl-running .ilnur-folder:nth-child(3){
+    --ivl-x:68px;--ivl-y:-19vh;--ivl-r:-10deg;
+  }
+
+  body.ivl-running .ilnur-folder:nth-child(4){
+    --ivl-x:-68px;--ivl-y:-19vh;--ivl-r:10deg;
+  }
+}
+
+@media(max-width:470px){
+
+  .finder-grid{grid-template-columns:1fr;}
+  .process-steps{grid-template-columns:1fr;}
+
+  .ilnur-folders{
+    width:min(300px,86vw);
+    gap:11px 18px;
+    bottom:21vh;
+  }
+
+  .ilnur-folder img{
+    width:min(88px,24vw);
+  }
+
+  .ilnur-folder.works-trigger::after,
+  .ilnur-folder.process-trigger::after{
+    left:calc(50% + 22px);
+    top:-2px;
+  }
+}
+
+
+/* =========================================================
+   29. ANIMATION
+========================================================= */
+
+@keyframes airdropSpin{
+  to{transform:rotate(360deg)}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *,
+  *::before,
+  *::after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    scroll-behavior:auto!important;
+  }
+}
+
+</style>
+
+/* CUSTOM ENHANCEMENTS FOR KUPETS PORTFOLIO */
+.project-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform .45s var(--ios-ease);
+}
+.project-file:hover .project-preview img {
+  transform: scale(1.05);
+}
+
+  </style>
+</head>
+<body>
+
+
+
+<!-- DEVICE FRAME -->
+<div id="ilnurDeviceFrame" aria-hidden="true"></div>
+
+
+<!-- FULL DESKTOP -->
+<div id="ilnurDesktop" aria-label="Главный экран">
+
+  <div class="ilnur-scene-bg"></div>
+  <div class="ilnur-scene-vignette"></div>
+
+
+  <!-- LEGAL LINKS -->
+  <nav class="ilnur-legal">
+    <a href="#" class="privacy-trigger">Privacy Policy</a>
+    <a href="#" class="terms-trigger">Terms of Service</a>
+  </nav>
+
+
+  <!-- NAME / DESCRIPTION -->
+  <section class="ilnur-identity">
+
+    <h1 class="ilnur-identity-title">
+      KUPETS.STUDIO
+    </h1>
+
+    <div class="ilnur-identity-sub">
+      ВЕБ-ДИЗАЙНЕР И РАЗРАБОТЧИК САЙТОВ
+    </div>
+
+  </section>
+
+
+  <!-- MAIN FOLDERS -->
+  <section class="ilnur-folders" aria-label="Основные разделы">
+
+    <button class="ilnur-folder about-trigger" type="button">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 80' width='100' height='80'%3E%3Cpath d='M8 12C8 7.58 11.58 4 16 4H36C39.5 4 42.6 6.3 43.6 9.6L46 16H84C88.42 16 92 19.58 92 24V68C92 72.42 88.42 76 84 76H16C11.58 76 8 72.42 8 68V12Z' fill='%235aa7ff'/%3E%3Cpath d='M8 26C8 21.58 11.58 18 16 18H84C88.42 18 92 21.58 92 26V68C92 72.42 88.42 76 84 76H16C11.58 76 8 72.42 8 68V26Z' fill='%233b82f6'/%3E%3Cpath d='M8 32H92V68C92 72.42 88.42 76 84 76H16C11.58 76 8 72.42 8 68V32Z' fill='%232563eb' fill-opacity='0.25'/%3E%3C/svg%3E" alt="Обо мне">
+      <span>ОБО МНЕ</span>
+    </button>
+
+    <button class="ilnur-folder works-trigger" type="button">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 80' width='100' height='80'%3E%3Cpath d='M8 12C8 7.58 11.58 4 16 4H36C39.5 4 42.6 6.3 43.6 9.6L46 16H84C88.42 16 92 19.58 92 24V68C92 72.42 88.42 76 84 76H16C11.58 76 8 72.42 8 68V12Z' fill='%235aa7ff'/%3E%3Cpath d='M8 26C8 21.58 11.58 18 16 18H84C88.42 18 92 21.58 92 26V68C92 72.42 88.42 76 84 76H16C11.58 76 8 72.42 8 68V26Z' fill='%233b82f6'/%3E%3Cpath d='M8 32H92V68C92 72.42 88.42 76 84 76H16C11.58 76 8 72.42 8 68V32Z' fill='%232563eb' fill-opacity='0.25'/%3E%3C/svg%3E" alt="Портфолио">
+      <span>ПОРТФОЛИО</span>
+    </button>
+
+    <button class="ilnur-folder process-trigger" type="button">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 80' width='100' height='80'%3E%3Cpath d='M8 12C8 7.58 11.58 4 16 4H36C39.5 4 42.6 6.3 43.6 9.6L46 16H84C88.42 16 92 19.58 92 24V68C92 72.42 88.42 76 84 76H16C11.58 76 8 72.42 8 68V12Z' fill='%235aa7ff'/%3E%3Cpath d='M8 26C8 21.58 11.58 18 16 18H84C88.42 18 92 21.58 92 26V68C92 72.42 88.42 76 84 76H16C11.58 76 8 72.42 8 68V26Z' fill='%233b82f6'/%3E%3Cpath d='M8 32H92V68C92 72.42 88.42 76 84 76H16C11.58 76 8 72.42 8 68V32Z' fill='%232563eb' fill-opacity='0.25'/%3E%3C/svg%3E" alt="Прайс и Услуги">
+      <span>ПРАЙС И УСЛУГИ</span>
+    </button>
+
+    <button class="ilnur-folder notes-trigger" type="button">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 80' width='100' height='80'%3E%3Cpath d='M8 12C8 7.58 11.58 4 16 4H36C39.5 4 42.6 6.3 43.6 9.6L46 16H84C88.42 16 92 19.58 92 24V68C92 72.42 88.42 76 84 76H16C11.58 76 8 72.42 8 68V12Z' fill='%235aa7ff'/%3E%3Cpath d='M8 26C8 21.58 11.58 18 16 18H84C88.42 18 92 21.58 92 26V68C92 72.42 88.42 76 84 76H16C11.58 76 8 72.42 8 68V26Z' fill='%233b82f6'/%3E%3Cpath d='M8 32H92V68C92 72.42 88.42 76 84 76H16C11.58 76 8 72.42 8 68V32Z' fill='%232563eb' fill-opacity='0.25'/%3E%3C/svg%3E" alt="Заметки">
+      <span>ЗАМЕТКИ</span>
+    </button>
+
+  </section>
+
+
+  <!-- DOCK -->
+  <div class="ilnur-dock" aria-label="Приложения">
+
+    <button class="ilnur-dock-item telegram-trigger" type="button" title="Telegram">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' width='64' height='64'%3E%3Crect width='64' height='64' rx='16' fill='%2329b6f6'/%3E%3Cpath d='M48 16L12 30.5L24 35.5L42 23L27.5 38.5L27 48L34 41.5L43 47.5L48 16Z' fill='%23ffffff'/%3E%3C/svg%3E" alt="Telegram">
+    </button>
+
+    <button class="ilnur-dock-item instagram-trigger" type="button" title="WhatsApp">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' width='64' height='64'%3E%3Crect width='64' height='64' rx='16' fill='%2325d366'/%3E%3Cpath d='M32 14C22.06 14 14 22.06 14 32C14 35.43 14.97 38.64 16.65 41.38L14.5 49.5L22.88 47.38C25.52 48.97 28.65 49.9 32 49.9C41.94 49.9 50 41.84 50 31.9C50 21.96 41.94 14 32 14ZM39.84 38.7C39.42 39.88 37.69 40.85 36.63 40.99C35.91 41.08 34.98 41.14 31.84 39.83C27.83 38.16 25.24 34.08 25.04 33.81C24.85 33.55 23.42 31.65 23.42 29.68C23.42 27.71 24.42 26.75 24.82 26.34C25.15 26.01 25.69 25.86 26.21 25.86C26.38 25.86 26.53 25.87 26.66 25.88C27.06 25.89 27.26 25.92 27.52 26.54C27.85 27.33 28.65 29.28 28.75 29.48C28.85 29.68 28.95 29.95 28.81 30.22C28.68 30.49 28.57 30.61 28.37 30.84C28.17 31.08 27.97 31.25 27.77 31.49C27.59 31.69 27.38 31.9 27.61 32.3C27.84 32.69 28.64 34 29.82 35.05C31.35 36.41 32.59 36.85 33.03 37.03C33.36 37.17 33.75 37.13 33.99 36.88C34.29 36.55 34.66 36.03 35.04 35.5C35.31 35.12 35.65 35.07 36 35.2C36.36 35.33 38.29 36.28 38.69 36.48C39.09 36.68 39.35 36.78 39.45 36.95C39.55 37.12 39.55 37.98 39.84 38.7Z' fill='%23ffffff'/%3E%3C/svg%3E" alt="WhatsApp">
+    </button>
+
+    <button class="ilnur-dock-item notes-trigger" type="button" title="Notes">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' width='64' height='64'%3E%3Crect width='64' height='64' rx='16' fill='%23fbbf24'/%3E%3Crect x='18' y='16' width='28' height='32' rx='4' fill='%23ffffff'/%3E%3Cpath d='M24 24H40M24 30H40M24 36H34' stroke='%23d97706' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E" alt="Notes">
+    </button>
+
+    <button class="ilnur-dock-item music-trigger" type="button" title="Music">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' width='64' height='64'%3E%3Crect width='64' height='64' rx='16' fill='%23fb7185'/%3E%3Ccircle cx='26' cy='42' r='6' fill='%23ffffff'/%3E%3Ccircle cx='42' cy='36' r='6' fill='%23ffffff'/%3E%3Cpath d='M32 42V20L48 14V36' stroke='%23ffffff' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" alt="Music">
+    </button>
+
+    <button class="ilnur-dock-item safari-trigger" type="button" title="Safari">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' width='64' height='64'%3E%3Crect width='64' height='64' rx='16' fill='%233b82f6'/%3E%3Ccircle cx='32' cy='32' r='20' fill='%23ffffff'/%3E%3Cpath d='M32 14L37 27L50 32L37 37L32 50L27 37L14 32L27 27Z' fill='%23ef4444'/%3E%3Cpath d='M32 14L37 27L50 32L37 37L32 32Z' fill='%23dc2626'/%3E%3C/svg%3E" alt="Safari">
+    </button>
+
+    <span class="ilnur-dock-separator"></span>
+
+    <button class="ilnur-dock-item trash-trigger" type="button" title="Trash">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' width='64' height='64'%3E%3Crect width='64' height='64' rx='16' fill='%2364748b'/%3E%3Cpath d='M22 24H42M26 24V42C26 43.1 26.9 44 28 44H36C37.1 44 38 43.1 38 42V24M28 24V20C28 18.9 28.9 18 30 18H34C35.1 18 36 18.9 36 20V24' stroke='%23ffffff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" alt="Trash">
+    </button>
+
+  </div>
+
+
+  <div class="ilnur-desktop-hint">
+    ПРАВЫЙ КЛИК — СИСТЕМНОЕ МЕНЮ<br>
+    ПЕРЕТАСКИВАНИЕ ПАПОК АКТИВНО
+  </div>
+
+</div>
+
+
+<!-- НАВИГАЦИЯ BAR -->
+<div id="ilnurSystemBar">
+
+  <div class="ilnur-menu-left">
+
+    <span class="ilnur-menu-logo">●</span>
+
+    <span class="ilnur-menu-item ilnur-menu-app">
+      KUPETS.STUDIO
+    </span>
+
+    <span class="ilnur-menu-item" data-open="worksModal">
+      Портфолио
+    </span>
+
+    <span class="ilnur-menu-item" data-open="processModal">
+      Услуги и Прайс
+    </span>
+
+    <span class="ilnur-menu-item" data-open="contactModal">
+      Контакты
+    </span>
+
+  </div>
+
+
+  <div class="ilnur-menu-right">
+
+    <span class="ilnur-status-dot"></span>
+
+    <span class="menu-hide-mobile">
+      ДОСТУПЕН ДЛЯ ПРОЕКТОВ
+    </span>
+
+    <span>⌁</span>
+    <span>▰</span>
+
+    <span id="systemClock">00:00</span>
+
+  </div>
+
+</div>
+
+
+<!-- NOTIFICATIONS -->
+<div id="ilnurNotifications"></div>
+
+
+<!-- CONTEXT MENU -->
+<div id="ilnurContext">
+
+  <div class="context-item" data-open="worksModal">
+    <span>Портфолио</span>
+    <span>↗</span>
+  </div>
+
+  <div class="context-item" data-open="contactModal">
+    <span>Контакты</span>
+    <span>⌘K</span>
+  </div>
+
+  <div class="context-divider"></div>
+
+  <div
+    class="context-item"
+    data-open="processModal">
+
+    <span>Услуги и Прайс</span>
+    <span>⌁</span>
+
+  </div>
+
+  <div
+    class="context-item"
+    data-open="notesModal">
+
+    <span>Заметки и принципы</span>
+    <span>⌘R</span>
+
+  </div>
+
+  <div class="context-divider"></div>
+
+  <div class="context-item" data-open="trashModal">
+    <span>Очистить систему...</span>
+    <span>⌫</span>
+  </div>
+
+</div>
+
+
+<!-- ABOUT -->
+<div class="ios-modal" id="aboutModal">
+
+  <div class="ios-window">
+
+    <div class="ios-top">
+
+      <div class="ios-dots">
+        <span class="ios-dot ios-close" data-close="aboutModal"></span>
+        <span class="ios-dot ios-yellow"></span>
+        <span class="ios-dot ios-green"></span>
+      </div>
+
+      ОБО МНЕ — ДМИТРИЙ ИНЯКИН
+
+    </div>
+
+
+    <div class="about-system">
+
+      <div class="about-card">
+
+        <div class="about-avatar"></div>
+
+
+        <div class="about-data">
+
+          <h1>Дмитрий Инякин</h1>
+
+          <div class="about-role">
+            Full-Stack Web Developer & UI Designer • Kupets Studio
+          </div>
+
+
+          <div class="about-specs">
+
+            <div class="about-spec">
+              <span class="about-spec-name">Дизайн (UI/UX)</span>
+              <span>YOUR TEXT</span>
+            </div>
+
+            <div class="about-spec">
+              <span class="about-spec-name">Верстка (Frontend)</span>
+              <span>YOUR TEXT</span>
+            </div>
+
+            <div class="about-spec">
+              <span class="about-spec-name">Кодинг (Backend)</span>
+              <span>YOUR TEXT</span>
+            </div>
+
+            <div class="about-spec">
+              <span class="about-spec-name">Category 04</span>
+              <span>YOUR TEXT</span>
+            </div>
+
+            <div class="about-spec">
+              <span class="about-spec-name">Category 05</span>
+              <span>YOUR TEXT</span>
+            </div>
+
+            <div class="about-spec">
+              <span class="about-spec-name">Status</span>
+              <span>ДОСТУПЕН ДЛЯ ПРОЕКТОВ</span>
+            </div>
+
+          </div>
+
+
+          <div class="about-bio">
+            Создаю быстрые, отзывчивые и продуманные до мелочей сайты и сервисы. Делаю упор на надежную архитектуру, чистый код без лишних зависимостей и внимание к деталям UX/UI.
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- WORKS / FINDER -->
+<div class="ios-modal" id="worksModal">
+
+  <div class="ios-window finder-window">
+
+    <div class="ios-top">
+
+      <div class="ios-dots">
+        <span class="ios-dot ios-close" data-close="worksModal"></span>
+        <span class="ios-dot ios-yellow"></span>
+        <span class="ios-dot ios-green"></span>
+      </div>
+
+      ПОРТФОЛИО — КЕЙСЫ И ПРОЕКТЫ
+
+    </div>
+
+
+    <div class="finder-body">
+
+      <aside class="finder-sidebar">
+
+        <div class="finder-side-title">
+          КАТЕГОРИИ
+        </div>
+
+        <div class="finder-side-item is-active">
+          <span class="finder-side-icon">▣</span>
+          <span>Все проекты</span>
+        </div>
+
+        <div class="finder-side-item">
+          <span class="finder-side-icon">⌘</span>
+          <span>Category 01</span>
+        </div>
+
+        <div class="finder-side-item">
+          <span class="finder-side-icon">◫</span>
+          <span>Category 02</span>
+        </div>
+
+        <div class="finder-side-item">
+          <span class="finder-side-icon">✦</span>
+          <span>Category 03</span>
+        </div>
+
+
+        <div class="finder-side-title" style="margin-top:20px;">
+          SYSTEM
+        </div>
+
+        <div class="finder-side-item" data-open="aboutModal">
+          <span class="finder-side-icon">◉</span>
+          <span>Обо мне</span>
+        </div>
+
+        <div class="finder-side-item" data-open="processModal">
+          <span class="finder-side-icon">≡</span>
+          <span>Процесс и цены</span>
+        </div>
+
+        <div class="finder-side-item" data-open="contactModal">
+          <span class="finder-side-icon">✉</span>
+          <span>Контакты</span>
+        </div>
+
+      </aside>
+
+
+      <main class="finder-main">
+
+        <div class="finder-heading">
+          <h2>Реализованные проекты</h2>
+          <span>4 кейса</span>
+        </div>
+
+
+        <div class="finder-grid">
+
+          <a class="project-file" href="https://analytics.b2b-saas.io" target="_blank" rel="noopener" data-category="design all">
+            <div class="project-preview"><img src="/portfolio/saas-dashboard.webp" alt="SaaS Analytics Dashboard"></div>
+            <div class="project-info">
+              <div class="project-name">B2B SaaS Analytics & Revenue Dashboard</div>
+              <div class="project-meta">Панель бизнес-аналитики для агрегации финансовых потоков и визуализации KPI</div>
+            </div>
+            <span class="project-open">↗</span>
+          </a>
+
+          <a class="project-file" href="https://monolith-audio.swiss" target="_blank" rel="noopener" data-category="design all">
+            <div class="project-preview"><img src="/portfolio/monolith-audio.webp" alt="Monolith Audio"></div>
+            <div class="project-info">
+              <div class="project-name">Monolith Audio Landing</div>
+              <div class="project-meta">Концептуальный промо-лендинг премиального звукового оборудования в строгой швейцарской типографике</div>
+            </div>
+            <span class="project-open">↗</span>
+          </a>
+
+          <a class="project-file" href="https://vortex.editorial-store.com" target="_blank" rel="noopener" data-category="layout all">
+            <div class="project-preview"><img src="/portfolio/vortex-ecommerce.webp" alt="VORTEX E-Commerce"></div>
+            <div class="project-info">
+              <div class="project-name">VORTEX // Editorial E-Commerce Showcase</div>
+              <div class="project-meta">Журнальный промо-интернет-магазин стритвир-одежды с многослойным Hero-блоком</div>
+            </div>
+            <span class="project-open">↗</span>
+          </a>
+
+          <a class="project-file" href="https://audit-core.engine.internal" target="_blank" rel="noopener" data-category="coding all">
+            <div class="project-preview"><img src="/portfolio/lead-engine.webp" alt="Lead Engine"></div>
+            <div class="project-info">
+              <div class="project-name">B2B Lead Automation & Enrichment Engine</div>
+              <div class="project-meta">Асинхронный парсер гео-сервисов и автоматизация обогащения лидов</div>
+            </div>
+            <span class="project-open">↗</span>
+          </a>
+
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+
+<!-- PROCESS -->
+<div class="ios-modal" id="processModal">
+  <div class="ios-window">
+    <div class="ios-top">
+      <div class="ios-dots">
+        <span class="ios-dot ios-close" data-close="processModal"></span>
+        <span class="ios-dot ios-yellow"></span>
+        <span class="ios-dot ios-green"></span>
+      </div>
+      ПРОЦЕСС И СТОИМОСТЬ
+    </div>
+    <div class="process-body">
+      <h2 class="ios-title">От идеи до запуска.</h2>
+      <div class="process-intro">Я веду проект целиком: помогаю сформулировать задачу, собираю структуру, создаю визуальную концепцию, разрабатываю сайт, подключаю нужные сервисы и проверяю всё перед публикацией.</div>
+      <div class="process-steps">
+        <div class="process-step"><div class="process-step-num">01</div><div class="process-step-name">Брифинг</div><div class="process-step-text">Обсуждаем бизнес, аудиторию, задачи и ограничения.</div></div>
+        <div class="process-step"><div class="process-step-num">02</div><div class="process-step-name">Структура</div><div class="process-step-text">Выстраиваю понятный путь от первого экрана до заявки или покупки.</div></div>
+        <div class="process-step"><div class="process-step-num">03</div><div class="process-step-name">Концепция</div><div class="process-step-text">Предлагаю визуальное направление и ключевые интерактивы.</div></div>
+        <div class="process-step"><div class="process-step-num">04</div><div class="process-step-name">Разработка</div><div class="process-step-text">Адаптив, анимации, код, каталог, формы и интеграции.</div></div>
+        <div class="process-step"><div class="process-step-num">05</div><div class="process-step-name">Запуск</div><div class="process-step-text">Тестирование, подключение домена и поддержка после сдачи.</div></div>
+      </div>
+      <h3 class="price-title">Ориентировочная стоимость</h3>
+      <div class="price-list">
+        <div class="price-row"><span>Мелкие правки, дизайн или код</span><span class="price-value">от 2 000 ₽</span></div>
+        <div class="price-row"><span>Одностраничный сайт</span><span class="price-value">от 5 000 ₽</span></div>
+        <div class="price-row"><span>Многостраничный сайт</span><span class="price-value">от 10 000 ₽</span></div>
+        <div class="price-row"><span>Интернет-магазин</span><span class="price-value">от 15 000 ₽</span></div>
+        <div class="price-row"><span>Сложный авторский проект</span><span class="price-value">индивидуально</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACTS -->
+<div class="ios-modal" id="contactModal">
+  <div class="ios-window">
+    <div class="ios-top">
+      <div class="ios-dots">
+        <span class="ios-dot ios-close" data-close="contactModal"></span>
+        <span class="ios-dot ios-yellow"></span>
+        <span class="ios-dot ios-green"></span>
+      </div>
+      CONTACTS — AIRDROP
+    </div>
+    <div class="contact-body">
+      <div class="contact-left">
+        <h2 class="ios-title">Обсудим проект.</h2>
+        <p>Напишите, какой сайт вам нужен, чем занимается ваш проект и есть ли примеры, которые вам нравятся. Я задам уточняющие вопросы и предложу следующий шаг.</p>
+        <div class="contact-list">
+          <a class="contact-link telegram-trigger" href="https://t.me/kupetsnovgorodny">
+            <span class="contact-name">Telegram</span><span class="contact-value">@kupetsnovgorodny</span><span>↗</span>
+          </a>
+          <a class="contact-link instagram-trigger" href="https://wa.me/79316117082">
+            <span class="contact-name">WhatsApp</span><span class="contact-value">+7 (931) 611-70-82</span><span>↗</span>
+          </a>
+          <a class="contact-link" href="mailto:inyakindmitry1@gmail.com">
+            <span class="contact-name">Email</span><span class="contact-value">inyakindmitry1@gmail.com</span><span>↗</span>
+          </a>
+        </div>
+      </div>
+      <div class="contact-right">
+        <div class="airdrop-radar"><div class="airdrop-user">KUPETS</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NOTES -->
+<div class="ios-modal" id="notesModal">
+  <div class="ios-window">
+    <div class="ios-top">
+      <div class="ios-dots">
+        <span class="ios-dot ios-close" data-close="notesModal"></span>
+        <span class="ios-dot ios-yellow"></span>
+        <span class="ios-dot ios-green"></span>
+      </div>
+      ЗАМЕТКИ И ПРИНЦИПЫ
+    </div>
+    <div class="notes-body">
+      <div class="notes-heading"><h2>Стандарты разработки</h2><span>•••</span></div>
+      <div class="notes-search">⌕ &nbsp; Search</div>
+      <div class="notes-section">Закреплено</div>
+      <div class="notes-card">
+        <div class="notes-item"><strong>Чистый код — основа стабильности</strong><span>Понятная модульная структура, типизация и отсутствие оверинжиниринга.</span></div>
+        <div class="notes-item"><strong>Работа на бизнес-результат</strong><span>Красивый интерфейс без четко работающей конверсии не имеет смысла. Главное — результат.</span></div>
+      </div>
+      <div class="notes-section">Принципы</div>
+      <div class="notes-card">
+        <div class="notes-item"><strong>Производительность</strong><span>Оптимизация бандла, сжатие медиа и Lighthouse 95+ обеспечивают мгновенную загрузку.</span></div>
+        <div class="notes-item"><strong>Внимание к UX/UI</strong><span>Плавные анимации, тактильный отклик и выверенная типографика формируют доверие.</span></div>
+        <div class="notes-item"><strong>Надежность</strong><span>Официальная работа по договору, поэтапное согласование и гарантийная поддержка.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SAFARI / STORE -->
+<div class="ios-modal" id="safariModal">
+  <div class="ios-window">
+    <div class="ios-top">
+      <div class="ios-dots">
+        <span class="ios-dot ios-close" data-close="safariModal"></span>
+        <span class="ios-dot ios-yellow"></span>
+        <span class="ios-dot ios-green"></span>
+      </div>
+      KUPETS.SEARCH — БРАУЗЕР
+    </div>
+    <div class="safari-toolbar">
+      <span class="safari-nav">‹ &nbsp;› &nbsp;↻</span>
+      <div class="safari-address">🔒 &nbsp;<span id="safariTyped"></span></div>
+    </div>
+    <div class="safari-content">
+      <h2 class="ios-title">Kupets Studio Search</h2>
+      <div class="ios-copy">Разработка сайтов и веб-приложений под ключ.</div>
+      <div class="safari-card">Оставьте заявку на разработку в Telegram: @kupetsnovgorodny или ознакомьтесь с кейсами в портфолио.</div>
+      <a class="ios-btn ios-btn-dark" href="https://t.me/kupetsnovgorodny" target="_blank" rel="noopener" style="display:inline-block;text-decoration:none;">НАПИСАТЬ В TELEGRAM ↗</a>
+    </div>
+  </div>
+</div>
+
+<!-- PRIVACY -->
+<div class="ios-modal" id="privacyModal">
+  <div class="ios-window">
+    <div class="ios-top">
+      <div class="ios-dots">
+        <span class="ios-dot ios-close" data-close="privacyModal"></span>
+        <span class="ios-dot ios-yellow"></span>
+        <span class="ios-dot ios-green"></span>
+      </div>
+      PRIVACY POLICY
+    </div>
+    <div class="legal-body">
+      <h2 class="ios-title">Privacy Policy</h2>
+      <div class="legal-copy">
+        <p>Настоящая Политика конфиденциальности определяет порядок обработки и защиты персональных данных пользователей сайта kupetsportfolio.ru.</p>
+        <h3>1. Общие положения</h3><p>Оператор обрабатывает персональные данные исключительно в целях обратной связи и согласования условий разработки проектов.</p>
+        <h3>2. Перечень данных</h3><p>Имя, контактный номер телефона, адрес электронной почты, логин в Telegram, предоставленные пользователем добровольно.</p>
+        <h3>3. Безопасность</h3><p>Данные хранятся конфиденциально и не передаются третьим лицам без законных оснований.</p>
+        <h3>4. Contacts</h3><p>YOUR EMAIL</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TERMS -->
+<div class="ios-modal" id="termsModal">
+  <div class="ios-window">
+    <div class="ios-top">
+      <div class="ios-dots">
+        <span class="ios-dot ios-close" data-close="termsModal"></span>
+        <span class="ios-dot ios-yellow"></span>
+        <span class="ios-dot ios-green"></span>
+      </div>
+      TERMS OF SERVICE
+    </div>
+    <div class="legal-body">
+      <h2 class="ios-title">Terms of Service</h2>
+      <div class="legal-copy">
+        <p>Договор публичной оферты на оказание услуг по разработке сайтов, веб-сервисов и графического дизайна.</p>
+        <h3>1. Предмет договора</h3><p>Исполнитель обязуется выполнить работы по веб-разработке и веб-дизайну согласно согласованному с Заказчиком техническому заданию.</p>
+        <h3>2. Порядок расчетов</h3><p>Оплата производится поэтапно или по факту сдачи согласованных этапов с формированием электронных чеков самозанятого.</p>
+        <h3>3. Гарантии</h3><p>Исполнитель гарантирует качество программного кода и устранение выявленных недочетов в гарантийный период.</p>
+        <h3>4. Contact</h3><p>YOUR EMAIL</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TRASH -->
+<div class="ios-modal" id="trashModal">
+  <div class="ios-window" style="width:min(620px,90vw);height:min(390px,76vh);">
+    <div class="ios-top">
+      <div class="ios-dots">
+        <span class="ios-dot ios-close" data-close="trashModal"></span>
+        <span class="ios-dot ios-yellow"></span>
+        <span class="ios-dot ios-green"></span>
+      </div>
+      TRASH
+    </div>
+    <div class="confirm-body">
+      <h2 class="ios-title">Очистить систему?</h2>
+      <div class="ios-copy">Вы действительно хотите перезагрузить рабочий стол и симулировать сброс данных?</div>
+      <div class="confirm-actions">
+        <button class="ios-btn ios-btn-light" data-close="trashModal" type="button">Отмена</button>
+        <button class="ios-btn ios-btn-dark" id="deleteSite" type="button">Сбросить</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TELEGRAM CONFIRM -->
+<div class="ios-modal" id="telegramConfirm">
+  <div class="ios-window" style="width:min(590px,90vw);height:min(350px,72vh);">
+    <div class="ios-top">
+      <div class="ios-dots">
+        <span class="ios-dot ios-close" data-close="telegramConfirm"></span>
+        <span class="ios-dot ios-yellow"></span>
+        <span class="ios-dot ios-green"></span>
+      </div>
+      OPEN TELEGRAM
+    </div>
+    <div class="confirm-body">
+      <h2 class="ios-title">Перейти в Telegram?</h2>
+      <div class="ios-copy">Чат @kupetsnovgorodny откроется в новой вкладке.</div>
+      <div class="confirm-actions">
+        <button class="ios-btn ios-btn-light" data-close="telegramConfirm" type="button">Отмена</button>
+        <button class="ios-btn ios-btn-dark" id="telegramOpen" type="button">Открыть</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- INSTAGRAM CONFIRM -->
+<div class="ios-modal" id="instagramConfirm">
+  <div class="ios-window" style="width:min(590px,90vw);height:min(350px,72vh);">
+    <div class="ios-top">
+      <div class="ios-dots">
+        <span class="ios-dot ios-close" data-close="instagramConfirm"></span>
+        <span class="ios-dot ios-yellow"></span>
+        <span class="ios-dot ios-green"></span>
+      </div>
+      ОТКРЫТЬ WHATSAPP
+    </div>
+    <div class="confirm-body">
+      <h2 class="ios-title">Перейти в WhatsApp?</h2>
+      <div class="ios-copy">Диалог +7 (931) 611-70-82 откроется в новой вкладке.</div>
+      <div class="confirm-actions">
+        <button class="ios-btn ios-btn-light" data-close="instagramConfirm" type="button">Отмена</button>
+        <button class="ios-btn ios-btn-dark" id="instagramOpen" type="button">Открыть</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MUSIC PLAYER -->
+<div id="ilnurMusic">
+  <button class="music-close" id="musicClose" type="button">×</button>
+  <div class="music-cover"></div>
+  <div class="music-main">
+    <div class="music-title">Kupets Coding Beats</div>
+    <div class="music-sub">Lo-Fi Chill Focus Stream</div>
+    <div class="music-progress" id="musicProgressBar">
+      <div class="music-progress-fill" id="musicProgressFill"></div>
+    </div>
+  </div>
+  <div class="music-controls">
+    <button class="music-btn" type="button">‹‹</button>
+    <button class="music-btn" id="musicPlay" type="button">▶</button>
+    <button class="music-btn" type="button">››</button>
+  </div>
+</div>
+
+<!-- AUDIO -->
+<audio id="siteMusic" loop preload="metadata">
+  <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3" type="audio/mpeg">
+</audio>
+
+<!-- 404 -->
+<div id="errorScreen">
+  <div class="error-code">404</div>
+  <div class="error-text">PAGE NOT FOUND.</div>
+  <div class="error-sub">restoring system...</div>
+</div>
+
+
+<script>
+(function(){
+  "use strict";
+
+
+  /* =========================================================
+     01. CONFIG
+  ========================================================= */
+
+  const CONFIG = {
+
+    telegram:
+      "https://t.me/kupetsnovgorodny",
+
+    instagram:
+      "https://wa.me/79316117082",
+
+    safariDomain:
+      "kupetsportfolio.ru",
+
+    desktopVideo:
+      "",
+
+    mobileVideo:
+      "",
+
+    intro:{
+      firstDelay:480,
+      folderDelay:145,
+      chromeDelay:150,
+      dockDelay:115,
+      finishDelay:520
+    },
+
+    notifications:true,
+
+    notificationTimes:{
+      system:1800,
+      client:7200,
+      phone:10800,
+      figma:14500
+    },
+
+    mobileBreakpoint:768
+
+  };
+
+
+  /* =========================================================
+     02. START
+  ========================================================= */
+
+  function init(){
+
+    const desktop =
+      document.getElementById("ilnurDesktop");
+
+    if(!desktop){
+      console.warn("TEMPLATE: #ilnurDesktop not found.");
+      return;
+    }
+
+    initSystem();
+
+  }
+
+
+  if(document.readyState === "loading"){
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      init,
+      {once:true}
+    );
+
+  }else{
+
+    init();
+
+  }
+
+
+  /* =========================================================
+     03. MAIN SYSTEM
+  ========================================================= */
+
+  function initSystem(){
+
+    const body =
+      document.body;
+
+    const desktop =
+      document.getElementById("ilnurDesktop");
+
+    const folders =
+      Array.from(
+        document.querySelectorAll(".ilnur-folder")
+      );
+
+    const dock =
+      document.querySelector(".ilnur-dock");
+
+    const dockItems =
+      Array.from(
+        document.querySelectorAll(".ilnur-dock-item")
+      );
+
+    const trashDock =
+      document.querySelector(
+        ".ilnur-dock-item.trash-trigger"
+      );
+
+    const notifications =
+      document.getElementById("ilnurNotifications");
+
+    const contextMenu =
+      document.getElementById("ilnurContext");
+
+    const clock =
+      document.getElementById("systemClock");
+
+
+    const wait = ms =>
+      new Promise(
+        resolve => setTimeout(resolve,ms)
+      );
+
+
+    const isMobile = () =>
+      window.innerWidth <= CONFIG.mobileBreakpoint;
+
+
+    function q(selector){
+      return document.querySelector(selector);
+    }
+
+
+    function qa(selector){
+      return Array.from(
+        document.querySelectorAll(selector)
+      );
+    }
+
+
+    /* =======================================================
+       04. SYSTEM SOUNDS
+    ======================================================= */
+
+    let audioContext = null;
+
+
+    function systemSound(type){
+
+      try{
+
+        const AudioCtx =
+          window.AudioContext ||
+          window.webkitAudioContext;
+
+        if(!AudioCtx) return;
+
+
+        if(!audioContext){
+          audioContext = new AudioCtx();
+        }
+
+
+        if(audioContext.state === "suspended"){
+          audioContext.resume();
+        }
+
+
+        const oscillator =
+          audioContext.createOscillator();
+
+        const gain =
+          audioContext.createGain();
+
+        const now =
+          audioContext.currentTime;
+
+
+        let frequency = 520;
+
+
+        if(type === "close"){
+          frequency = 330;
+        }
+
+
+        if(type === "secret"){
+          frequency = 720;
+        }
+
+
+        oscillator.type = "sine";
+
+        oscillator.frequency.setValueAtTime(
+          frequency,
+          now
+        );
+
+
+        if(type === "secret"){
+
+          oscillator.frequency
+            .exponentialRampToValueAtTime(
+              980,
+              now + .09
+            );
+
+        }
+
+
+        gain.gain.setValueAtTime(
+          .0001,
+          now
+        );
+
+        gain.gain.exponentialRampToValueAtTime(
+          .012,
+          now + .008
+        );
+
+        gain.gain.exponentialRampToValueAtTime(
+          .0001,
+          now + .11
+        );
+
+
+        oscillator.connect(gain);
+
+        gain.connect(
+          audioContext.destination
+        );
+
+
+        oscillator.start(now);
+
+        oscillator.stop(
+          now + .13
+        );
+
+
+      }catch(error){}
+
+    }
+
+
+    /* =======================================================
+       05. MODALS
+    ======================================================= */
+
+    function openModal(id){
+
+      const modal =
+        document.getElementById(id);
+
+      if(!modal) return;
+
+
+      qa(".ios-modal.is-open")
+        .forEach(function(item){
+
+          if(item !== modal){
+            item.classList.remove("is-open");
+          }
+
+        });
+
+
+      modal.classList.add("is-open");
+
+
+      if(id === "safariModal"){
+        typeSafari();
+      }
+
+
+      syncDockWithModal(id);
+
+    }
+
+
+    function closeModal(id){
+
+      const modal =
+        document.getElementById(id);
+
+      if(modal){
+        modal.classList.remove("is-open");
+      }
+
+
+      clearDockState();
+
+    }
+
+
+    const triggerMap = {
+
+      "about-trigger":"aboutModal",
+      "works-trigger":"worksModal",
+      "process-trigger":"processModal",
+      "contact-trigger":"contactModal",
+      "notes-trigger":"notesModal",
+      "safari-trigger":"safariModal",
+      "trash-trigger":"trashModal",
+      "privacy-trigger":"privacyModal",
+      "terms-trigger":"termsModal"
+
+    };
+
+
+    Object.entries(triggerMap)
+      .forEach(function(entry){
+
+        const className =
+          entry[0];
+
+        const modalID =
+          entry[1];
+
+
+        qa("." + className)
+          .forEach(function(element){
+
+            element.addEventListener(
+              "click",
+              function(event){
+
+                if(
+                  element.dataset.justDragged === "1"
+                ){
+                  return;
+                }
+
+
+                event.preventDefault();
+                event.stopPropagation();
+
+                systemSound("open");
+
+                openModal(modalID);
+
+              }
+            );
+
+          });
+
+      });
+
+
+    qa("[data-open]")
+      .forEach(function(element){
+
+        element.addEventListener(
+          "click",
+          function(event){
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            systemSound("open");
+
+            openModal(
+              element.getAttribute("data-open")
+            );
+
+            closeContextMenu();
+
+          }
+        );
+
+      });
+
+
+    qa("[data-close]")
+      .forEach(function(element){
+
+        element.addEventListener(
+          "click",
+          function(event){
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            systemSound("close");
+
+            closeModal(
+              element.getAttribute("data-close")
+            );
+
+          }
+        );
+
+      });
+
+
+    qa(".ios-modal")
+      .forEach(function(modal){
+
+        modal.addEventListener(
+          "click",
+          function(event){
+
+            if(event.target === modal){
+
+              modal.classList.remove("is-open");
+
+              clearDockState();
+
+              systemSound("close");
+
+            }
+
+          }
+        );
+
+      });
+
+
+    document.addEventListener(
+      "keydown",
+      function(event){
+
+        if(event.key === "Escape"){
+
+          const opened =
+            qa(".ios-modal.is-open");
+
+
+          if(opened.length){
+
+            opened[
+              opened.length - 1
+            ].classList.remove("is-open");
+
+          }
+
+
+          closeContextMenu();
+
+          clearDockState();
+
+        }
+
+
+        if(
+          (event.metaKey || event.ctrlKey) &&
+          event.key.toLowerCase() === "k"
+        ){
+
+          event.preventDefault();
+
+          openModal("contactModal");
+
+        }
+
+      }
+    );
+
+
+    /* =======================================================
+       06. SOCIALS
+    ======================================================= */
+
+    qa(".telegram-trigger")
+      .forEach(function(element){
+
+        element.addEventListener(
+          "click",
+          function(event){
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            activateDock("telegram-trigger");
+
+            openModal("telegramConfirm");
+
+          },
+          true
+        );
+
+      });
+
+
+    qa(".instagram-trigger")
+      .forEach(function(element){
+
+        element.addEventListener(
+          "click",
+          function(event){
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            activateDock("instagram-trigger");
+
+            openModal("instagramConfirm");
+
+          },
+          true
+        );
+
+      });
+
+
+    const telegramOpen =
+      q("#telegramOpen");
+
+
+    if(telegramOpen){
+
+      telegramOpen.addEventListener(
+        "click",
+        function(){
+
+          window.open(
+            CONFIG.telegram,
+            "_blank",
+            "noopener"
+          );
+
+          closeModal("telegramConfirm");
+
+        }
+      );
+
+    }
+
+
+    const instagramOpen =
+      q("#instagramOpen");
+
+
+    if(instagramOpen){
+
+      instagramOpen.addEventListener(
+        "click",
+        function(){
+
+          window.open(
+            CONFIG.instagram,
+            "_blank",
+            "noopener"
+          );
+
+          closeModal("instagramConfirm");
+
+        }
+      );
+
+    }
+
+
+    /* =======================================================
+       07. SAFARI TYPING
+    ======================================================= */
+
+    let safariTimer = null;
+
+
+    function typeSafari(){
+
+      const target =
+        q("#safariTyped");
+
+      if(!target) return;
+
+
+      clearInterval(safariTimer);
+
+      target.textContent = "";
+
+
+      let index = 0;
+
+
+      safariTimer =
+        setInterval(
+          function(){
+
+            target.textContent +=
+              CONFIG.safariDomain[index] || "";
+
+
+            index++;
+
+
+            if(
+              index >=
+              CONFIG.safariDomain.length
+            ){
+
+              clearInterval(safariTimer);
+
+            }
+
+          },
+          55
+        );
+
+    }
+
+
+    /* =======================================================
+       08. CLOCK
+    ======================================================= */
+
+    function updateClock(){
+
+      if(!clock) return;
+
+
+      const now =
+        new Date();
+
+
+      clock.textContent =
+        String(now.getHours()).padStart(2,"0") +
+        ":" +
+        String(now.getMinutes()).padStart(2,"0");
+
+    }
+
+
+    updateClock();
+
+
+    setInterval(
+      updateClock,
+      15000
+    );
+
+
+    /* =======================================================
+       09. CALENDAR
+    ======================================================= */
+
+    const calendar =
+      document.createElement("div");
+
+    calendar.id =
+      "ihCalendar";
+
+    document.body.appendChild(calendar);
+
+
+    function renderCalendar(){
+
+      const now =
+        new Date();
+
+
+      const months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+      ];
+
+
+      const first =
+        new Date(
+          now.getFullYear(),
+          now.getMonth(),
+          1
+        );
+
+
+      const totalDays =
+        new Date(
+          now.getFullYear(),
+          now.getMonth()+1,
+          0
+        ).getDate();
+
+
+      const offset =
+        (first.getDay()+6)%7;
+
+
+      let html =
+        '<div class="ih-calendar-title">' +
+        months[now.getMonth()] +
+        " " +
+        now.getFullYear() +
+        "</div>";
+
+
+      html +=
+        '<div class="ih-calendar-grid">';
+
+
+      ["Mo","Tu","We","Th","Fr","Sa","Su"]
+        .forEach(function(day){
+
+          html +=
+            '<div class="ih-calendar-day">' +
+            day +
+            "</div>";
+
+        });
+
+
+      for(let i=0;i<offset;i++){
+
+        html +=
+          '<div class="ih-calendar-day"></div>';
+
+      }
+
+
+      for(let day=1;day<=totalDays;day++){
+
+        html +=
+          '<div class="ih-calendar-day' +
+          (
+            day === now.getDate()
+            ? " is-today"
+            : ""
+          ) +
+          '">' +
+          day +
+          "</div>";
+
+      }
+
+
+      html += "</div>";
+
+
+      calendar.innerHTML =
+        html;
+
+    }
+
+
+    renderCalendar();
+
+
+    if(clock){
+
+      clock.style.cursor =
+        "pointer";
+
+
+      clock.addEventListener(
+        "click",
+        function(event){
+
+          event.stopPropagation();
+
+          calendar.classList.toggle("is-open");
+
+          systemSound("open");
+
+        }
+      );
+
+    }
+
+
+    document.addEventListener(
+      "click",
+      function(event){
+
+        if(
+          !event.target.closest("#ihCalendar") &&
+          event.target !== clock
+        ){
+
+          calendar.classList.remove("is-open");
+
+        }
+
+      }
+    );
+
+
+    /* =======================================================
+       10. DOCK ACTIVE STATE
+    ======================================================= */
+
+    function clearDockState(){
+
+      dockItems.forEach(
+        function(button){
+
+          button.classList.remove("is-active");
+
+        }
+      );
+
+    }
+
+
+    function activateDock(className){
+
+      clearDockState();
+
+
+      const button =
+        q(
+          ".ilnur-dock-item." +
+          className
+        );
+
+
+      if(button){
+
+        button.classList.add("is-active");
+
+      }
+
+    }
+
+
+    function syncDockWithModal(id){
+
+      const map = {
+
+        notesModal:"notes-trigger",
+        safariModal:"safari-trigger",
+        trashModal:"trash-trigger",
+        telegramConfirm:"telegram-trigger",
+        instagramConfirm:"instagram-trigger"
+
+      };
+
+
+      if(map[id]){
+
+        activateDock(
+          map[id]
+        );
+
+      }
+
+    }
+
+
+    /* =======================================================
+       11. DOCK — STATIC
+    ======================================================= */
+
+    if(dock){
+
+      dockItems.forEach(function(item){
+
+        item.style.removeProperty("--ih-dock-scale");
+        item.style.removeProperty("--ih-dock-lift");
+        item.style.removeProperty("--ih-dock-glow");
+
+        item.style.transform = "";
+
+      });
+
+    }
+
+
+    /* =======================================================
+       12. FINDER FILTERS
+    ======================================================= */
+
+    const finder =
+      q("#worksModal");
+
+
+    if(finder){
+
+      const filters =
+        Array.from(
+          finder.querySelectorAll(".finder-side-item")
+        ).slice(0,4);
+
+
+      const projects =
+        Array.from(
+          finder.querySelectorAll(".project-file")
+        );
+
+
+      const filterKeys = [
+        "all",
+        "fashion",
+        "shop",
+        "experiment"
+      ];
+
+
+      filters.forEach(
+        function(filter,index){
+
+          filter.addEventListener(
+            "click",
+            function(event){
+
+              event.preventDefault();
+
+
+              filters.forEach(
+                function(item){
+
+                  item.classList.remove("is-active");
+
+                }
+              );
+
+
+              filter.classList.add("is-active");
+
+
+              const key =
+                filterKeys[index];
+
+
+              projects.forEach(
+                function(project){
+
+                  const categories =
+                    (
+                      project.dataset.category ||
+                      project.dataset.categories ||
+                      ""
+                    )
+                    .split(" ")
+                    .filter(Boolean);
+
+
+                  const hidden =
+                    key !== "all" &&
+                    !categories.includes(key);
+
+
+                  project.classList.toggle(
+                    "is-filter-hidden",
+                    hidden
+                  );
+
+                }
+              );
+
+            }
+          );
+
+        }
+      );
+
+    }
+
+
+    /* =======================================================
+       13. MUSIC
+    ======================================================= */
+
+    const musicPlayer =
+      q("#ilnurMusic");
+
+    const audio =
+      q("#siteMusic");
+
+    const playButton =
+      q("#musicPlay");
+
+    const musicClose =
+      q("#musicClose");
+
+    const progressBar =
+      q("#musicProgressBar");
+
+    const progressFill =
+      q("#musicProgressFill");
+
+
+    qa(".music-trigger")
+      .forEach(function(element){
+
+        element.addEventListener(
+          "click",
+          function(event){
+
+            event.preventDefault();
+            event.stopPropagation();
+
+
+            if(!musicPlayer) return;
+
+
+            musicPlayer.classList.toggle("is-open");
+
+
+            if(
+              musicPlayer.classList.contains("is-open")
+            ){
+
+              activateDock("music-trigger");
+
+            }else{
+
+              clearDockState();
+
+            }
+
+
+            systemSound("open");
+
+          }
+        );
+
+      });
+
+
+    if(musicClose){
+
+      musicClose.addEventListener(
+        "click",
+        function(){
+
+          if(musicPlayer){
+
+            musicPlayer.classList.remove("is-open");
+
+          }
+
+          clearDockState();
+
+          systemSound("close");
+
+        }
+      );
+
+    }
+
+
+    if(playButton && audio){
+
+      playButton.addEventListener(
+        "click",
+        function(){
+
+          if(audio.paused){
+
+            audio.play()
+              .then(function(){
+
+                playButton.textContent =
+                  "❚❚";
+
+              })
+              .catch(function(){
+
+                notify(
+                  "Music",
+                  "Add a valid audio URL to enable playback.",
+                  "♫",
+                  3300
+                );
+
+              });
+
+          }else{
+
+            audio.pause();
+
+            playButton.textContent =
+              "▶";
+
+          }
+
+        }
+      );
+
+
+      audio.addEventListener(
+        "timeupdate",
+        function(){
+
+          if(
+            audio.duration &&
+            progressFill
+          ){
+
+            progressFill.style.width =
+              (
+                audio.currentTime /
+                audio.duration *
+                100
+              ) +
+              "%";
+
+          }
+
+        }
+      );
+
+    }
+
+
+    if(progressBar && audio){
+
+      progressBar.addEventListener(
+        "click",
+        function(event){
+
+          if(!audio.duration) return;
+
+
+          const rect =
+            progressBar.getBoundingClientRect();
+
+
+          const ratio =
+            Math.max(
+              0,
+              Math.min(
+                1,
+                (
+                  event.clientX -
+                  rect.left
+                ) /
+                rect.width
+              )
+            );
+
+
+          audio.currentTime =
+            ratio *
+            audio.duration;
+
+        }
+      );
+
+    }
+
+
+    /* =======================================================
+       14. NOTIFICATIONS
+    ======================================================= */
+
+    function notify(
+      app,
+      text,
+      icon,
+      duration
+    ){
+
+      if(!notifications) return;
+
+
+      const item =
+        document.createElement("div");
+
+
+      item.className =
+        "ilnur-notification";
+
+
+      item.innerHTML =
+        '<div class="notification-icon">' +
+        (icon || "✦") +
+        "</div>" +
+        "<div>" +
+        '<div class="notification-app">' +
+        app +
+        "</div>" +
+        '<div class="notification-text">' +
+        text +
+        "</div>" +
+        "</div>";
+
+
+      notifications.appendChild(item);
+
+
+      enhanceNotification(item);
+
+      makeNotificationClickable(item);
+
+      updateNotificationStack();
+
+
+      requestAnimationFrame(
+        function(){
+
+          requestAnimationFrame(
+            function(){
+
+              item.classList.add("is-visible");
+
+            }
+          );
+
+        }
+      );
+
+
+      setTimeout(
+        function(){
+
+          if(
+            item.dataset.dismissed !== "1"
+          ){
+
+            dismissNotification(
+              item,
+              "right"
+            );
+
+          }
+
+        },
+        duration || 4300
+      );
+
+    }
+
+
+    function updateNotificationStack(){
+
+      if(!notifications) return;
+
+
+      const items =
+        Array.from(
+          notifications.querySelectorAll(
+            ".ilnur-notification"
+          )
+        ).filter(
+          item =>
+            item.dataset.dismissed !== "1"
+        );
+
+
+      items.forEach(
+        function(item,index){
+
+          const depth =
+            Math.min(
+              items.length - 1 - index,
+              3
+            );
+
+
+          item.style.setProperty(
+            "--stack-y",
+            depth * 9 + "px"
+          );
+
+
+          item.style.setProperty(
+            "--stack-scale",
+            String(
+              1 - depth * .035
+            )
+          );
+
+
+          item.style.setProperty(
+            "--stack-opacity",
+            String(
+              1 - depth * .14
+            )
+          );
+
+
+          item.style.zIndex =
+            String(
+              100 + index
+            );
+
+        }
+      );
+
+
+      notifications.style.height =
+        items.length
+        ?
+        (
+          56 +
+          Math.min(
+            items.length - 1,
+            3
+          ) *
+          9
+        ) +
+        "px"
+        :
+        "0px";
+
+    }
+
+
+    function dismissNotification(
+      item,
+      direction
+    ){
+
+      if(
+        !item ||
+        item.dataset.dismissed === "1"
+      ){
+        return;
+      }
+
+
+      item.dataset.dismissed =
+        "1";
+
+
+      item.style.setProperty(
+        "--ih-dismiss-x",
+        direction === "left"
+        ?
+        "-115%"
+        :
+        "115%"
+      );
+
+
+      item.classList.remove("ih-swiping");
+
+      item.classList.add("ih-dismissing");
+
+
+      setTimeout(
+        function(){
+
+          item.classList.add("ih-collapsing");
+
+          updateNotificationStack();
+
+        },
+        220
+      );
+
+
+      setTimeout(
+        function(){
+
+          if(item.parentNode){
+
+            item.remove();
+
+          }
+
+          updateNotificationStack();
+
+        },
+        560
+      );
+
+    }
+
+
+    function enhanceNotification(item){
+
+      if(
+        !item ||
+        item.dataset.dismissReady === "1"
+      ){
+        return;
+      }
+
+
+      item.dataset.dismissReady =
+        "1";
+
+
+      const close =
+        document.createElement("button");
+
+
+      close.type =
+        "button";
+
+      close.className =
+        "ih-notification-close";
+
+      close.setAttribute(
+        "aria-label",
+        "Close notification"
+      );
+
+      close.textContent =
+        "×";
+
+
+      close.addEventListener(
+        "click",
+        function(event){
+
+          event.preventDefault();
+          event.stopPropagation();
+
+          dismissNotification(
+            item,
+            "right"
+          );
+
+        }
+      );
+
+
+      item.appendChild(close);
+
+
+      let startX = 0;
+      let currentX = 0;
+      let dragging = false;
+
+
+      item.addEventListener(
+        "pointerdown",
+        function(event){
+
+          if(
+            event.target.closest(
+              ".ih-notification-close"
+            )
+          ){
+            return;
+          }
+
+
+          startX =
+            event.clientX;
+
+          currentX =
+            0;
+
+          dragging =
+            true;
+
+
+          item.classList.add(
+            "ih-swiping"
+          );
+
+
+          try{
+
+            item.setPointerCapture(
+              event.pointerId
+            );
+
+          }catch(error){}
+
+        }
+      );
+
+
+      item.addEventListener(
+        "pointermove",
+        function(event){
+
+          if(!dragging) return;
+
+
+          currentX =
+            event.clientX -
+            startX;
+
+
+          const resistance =
+            Math.abs(currentX) > 140
+            ?
+            .72
+            :
+            1;
+
+
+          const x =
+            currentX *
+            resistance;
+
+
+          item.style.transform =
+            "translateX(" +
+            x +
+            "px)";
+
+
+          item.style.opacity =
+            Math.max(
+              .35,
+              1 -
+              Math.abs(x) /
+              230
+            );
+
+        }
+      );
+
+
+      function finishSwipe(){
+
+        if(!dragging) return;
+
+
+        dragging =
+          false;
+
+
+        const threshold =
+          Math.min(
+            90,
+            item.offsetWidth *
+            .24
+          );
+
+
+        if(
+          Math.abs(currentX) >= threshold
+        ){
+
+          dismissNotification(
+            item,
+            currentX < 0
+            ?
+            "left"
+            :
+            "right"
+          );
+
+        }else{
+
+          item.classList.remove("ih-swiping");
+
+          item.style.transform =
+            "";
+
+          item.style.opacity =
+            "";
+
+          updateNotificationStack();
+
+        }
+
+      }
+
+
+      item.addEventListener(
+        "pointerup",
+        finishSwipe
+      );
+
+
+      item.addEventListener(
+        "pointercancel",
+        finishSwipe
+      );
+
+    }
+
+
+    function makeNotificationClickable(item){
+
+      const text =
+        (
+          item.textContent ||
+          ""
+        ).toLowerCase();
+
+
+      let targetModal =
+        "";
+
+
+      if(text.includes("project")){
+
+        targetModal =
+          "worksModal";
+
+      }else if(text.includes("note")){
+
+        targetModal =
+          "notesModal";
+
+      }else if(text.includes("process")){
+
+        targetModal =
+          "processModal";
+
+      }
+
+
+      if(!targetModal) return;
+
+
+      item.classList.add(
+        "is-clickable"
+      );
+
+
+      item.addEventListener(
+        "click",
+        function(event){
+
+          if(
+            event.target.closest(
+              ".ih-notification-close"
+            )
+          ){
+            return;
+          }
+
+
+          openModal(
+            targetModal
+          );
+
+        }
+      );
+
+    }
+
+
+    qa("[data-toast]")
+      .forEach(function(element){
+
+        element.addEventListener(
+          "click",
+          function(event){
+
+            event.preventDefault();
+
+            notify(
+              "SYSTEM",
+              element.getAttribute(
+                "data-toast"
+              ),
+              "✦",
+              4500
+            );
+
+            closeContextMenu();
+
+          }
+        );
+
+      });
+
+
+    function scheduleNotifications(){
+
+      if(!CONFIG.notifications){
+        return;
+      }
+
+
+      setTimeout(
+        function(){
+
+          notify(
+            "System",
+            "Projects loaded.",
+            "⌘",
+            4800
+          );
+
+        },
+        CONFIG.notificationTimes.system
+      );
+
+
+      setTimeout(
+        function(){
+
+          notify(
+            "Message",
+            "YOUR CUSTOM NOTIFICATION.",
+            "✉",
+            5200
+          );
+
+        },
+        CONFIG.notificationTimes.client
+      );
+
+
+      setTimeout(
+        function(){
+
+          notify(
+            "Phone",
+            "YOUR CUSTOM MESSAGE.",
+            "✉",
+            4700
+          );
+
+        },
+        CONFIG.notificationTimes.phone
+      );
+
+
+      setTimeout(
+        function(){
+
+          notify(
+            "System",
+            "YOUR CUSTOM SYSTEM MESSAGE.",
+            "F",
+            4800
+          );
+
+        },
+        CONFIG.notificationTimes.figma
+      );
+
+    }
+
+
+    /* =======================================================
+       15. CONTEXT MENU
+    ======================================================= */
+
+    function closeContextMenu(){
+
+      if(contextMenu){
+
+        contextMenu.classList.remove(
+          "is-open"
+        );
+
+      }
+
+    }
+
+
+    if(contextMenu){
+
+      document.addEventListener(
+        "contextmenu",
+        function(event){
+
+          if(isMobile()) return;
+
+
+          if(
+            event.target.closest(
+              ".ios-modal,#ilnurSystemBar,#ilnurMusic"
+            )
+          ){
+            return;
+          }
+
+
+          event.preventDefault();
+
+
+          const menuWidth =
+            218;
+
+          const menuHeight =
+            300;
+
+
+          const left =
+            Math.min(
+              event.clientX,
+              window.innerWidth -
+              menuWidth -
+              10
+            );
+
+
+          const top =
+            Math.min(
+              event.clientY,
+              window.innerHeight -
+              menuHeight -
+              10
+            );
+
+
+          contextMenu.style.left =
+            Math.max(
+              8,
+              left
+            ) +
+            "px";
+
+
+          contextMenu.style.top =
+            Math.max(
+              35,
+              top
+            ) +
+            "px";
+
+
+          contextMenu.classList.add(
+            "is-open"
+          );
+
+        }
+      );
+
+
+      document.addEventListener(
+        "click",
+        function(event){
+
+          if(
+            !event.target.closest(
+              "#ilnurContext"
+            )
+          ){
+
+            closeContextMenu();
+
+          }
+
+        }
+      );
+
+    }
+
+
+    /* =======================================================
+       16. LIGHT MODES
+    ======================================================= */
+
+    const roomOverlay =
+      document.createElement("div");
+
+    roomOverlay.className =
+      "ih-room-overlay";
+
+
+    const focusOverlay =
+      document.createElement("div");
+
+    focusOverlay.className =
+      "ih-focus-vignette";
+
+
+    desktop.appendChild(
+      roomOverlay
+    );
+
+    desktop.appendChild(
+      focusOverlay
+    );
+
+
+    let lightMode =
+      0;
+
+
+    function cycleLight(){
+
+      lightMode =
+        (lightMode + 1) % 3;
+
+
+      body.classList.toggle(
+        "ih-night-mode",
+        lightMode === 1
+      );
+
+
+      body.classList.toggle(
+        "ih-focus-mode",
+        lightMode === 2
+      );
+
+
+      const names = [
+        "normal mode",
+        "night mode",
+        "focus mode"
+      ];
+
+
+      notify(
+        "Lighting",
+        names[lightMode],
+        "◐",
+        2800
+      );
+
+
+      systemSound("open");
+
+    }
+
+
+    /* =======================================================
+       17. OBJECT HOTSPOTS
+    ======================================================= */
+
+    function makeHotspot(
+      className,
+      label
+    ){
+
+      const button =
+        document.createElement("button");
+
+
+      button.type =
+        "button";
+
+
+      button.className =
+        "ih-object-hotspot " +
+        className;
+
+
+      button.setAttribute(
+        "data-label",
+        label
+      );
+
+
+      desktop.appendChild(
+        button
+      );
+
+
+      return button;
+
+    }
+
+
+    const lamp =
+      makeHotspot(
+        "ih-lamp-hotspot",
+        "CHANGE LIGHT"
+      );
+
+
+    const airpods =
+      makeHotspot(
+        "ih-airpods-hotspot",
+        "PLAY MUSIC"
+      );
+
+
+    const redbull =
+      makeHotspot(
+        "ih-redbull-hotspot",
+        "CUSTOM ACTION"
+      );
+
+
+    lamp.addEventListener(
+      "click",
+      cycleLight
+    );
+
+
+    airpods.addEventListener(
+      "click",
+      function(){
+
+        if(musicPlayer){
+
+          musicPlayer.classList.add(
+            "is-open"
+          );
+
+        }
+
+
+        activateDock(
+          "music-trigger"
+        );
+
+
+        if(
+          audio &&
+          audio.paused
+        ){
+
+          audio.play()
+            .then(function(){
+
+              if(playButton){
+
+                playButton.textContent =
+                  "❚❚";
+
+              }
+
+            })
+            .catch(function(){
+
+              notify(
+                "Music",
+                "Add your audio URL.",
+                "♫",
+                3300
+              );
+
+            });
+
+        }
+
+
+        systemSound("open");
+
+      }
+    );
+
+
+    redbull.addEventListener(
+      "click",
+      function(){
+
+        notify(
+          "SYSTEM",
+          "YOUR CUSTOM INTERACTION TEXT.",
+          "⚡",
+          3600
+        );
+
+
+        if(document.body.animate){
+
+          document.body.animate(
+            [
+              {filter:"brightness(1)"},
+              {filter:"brightness(1.12)"},
+              {filter:"brightness(1)"}
+            ],
+            {
+              duration:420,
+              easing:"ease-out"
+            }
+          );
+
+        }
+
+
+        systemSound("secret");
+
+      }
+    );
+
+
+    /* =======================================================
+       18. MONITOR PORTAL
+    ======================================================= */
+
+    let monitorGlow =
+      null;
+
+    let monitorBurst =
+      null;
+
+    let monitorCRT =
+      null;
+
+
+    if(!isMobile()){
+
+      monitorGlow =
+        document.createElement("button");
+
+
+      monitorGlow.type =
+        "button";
+
+
+      monitorGlow.className =
+        "ilnur-monitor-glow";
+
+
+      monitorGlow.setAttribute(
+        "aria-label",
+        "Open works"
+      );
+
+
+      monitorBurst =
+        document.createElement("div");
+
+      monitorBurst.className =
+        "ilnur-monitor-burst";
+
+
+      monitorCRT =
+        document.createElement("div");
+
+      monitorCRT.className =
+        "ih-monitor-crt";
+
+
+      desktop.appendChild(
+        monitorCRT
+      );
+
+
+      desktop.appendChild(
+        monitorBurst
+      );
+
+
+      desktop.appendChild(
+        monitorGlow
+      );
+
+
+      monitorGlow.addEventListener(
+        "click",
+        function(event){
+
+          event.preventDefault();
+          event.stopPropagation();
+
+
+          body.classList.add(
+            "ih-monitor-opening"
+          );
+
+
+          systemSound(
+            "secret"
+          );
+
+
+          setTimeout(
+            function(){
+
+              openModal(
+                "worksModal"
+              );
+
+
+              body.classList.remove(
+                "ih-monitor-opening"
+              );
+
+            },
+            420
+          );
+
+        }
+      );
+
+    }
+
+
+    /* =======================================================
+       19. DRAG FOLDERS
+    ======================================================= */
+
+    let activeDrag =
+      null;
+
+
+    folders.forEach(
+      function(folder){
+
+        let moved =
+          false;
+
+        let startX =
+          0;
+
+        let startY =
+          0;
+
+        let baseX =
+          0;
+
+        let baseY =
+          0;
+
+
+        folder.addEventListener(
+          "pointerdown",
+          function(event){
+
+            if(
+              event.button !== undefined &&
+              event.button !== 0
+            ){
+              return;
+            }
+
+
+            moved =
+              false;
+
+
+            startX =
+              event.clientX;
+
+            startY =
+              event.clientY;
+
+
+            baseX =
+              parseFloat(
+                folder.dataset.dragX ||
+                "0"
+              );
+
+
+            baseY =
+              parseFloat(
+                folder.dataset.dragY ||
+                "0"
+              );
+
+
+            activeDrag =
+              folder;
+
+
+            folder.classList.add(
+              "is-dragging"
+            );
+
+
+            try{
+
+              folder.setPointerCapture(
+                event.pointerId
+              );
+
+            }catch(error){}
+
+          }
+        );
+
+
+        folder.addEventListener(
+          "pointermove",
+          function(event){
+
+            if(
+              activeDrag !== folder
+            ){
+              return;
+            }
+
+
+            const dx =
+              event.clientX -
+              startX;
+
+
+            const dy =
+              event.clientY -
+              startY;
+
+
+            if(
+              Math.abs(dx) +
+              Math.abs(dy) >
+              7
+            ){
+
+              moved =
+                true;
+
+            }
+
+
+            const x =
+              baseX +
+              dx;
+
+
+            const y =
+              baseY +
+              dy;
+
+
+            folder.dataset.dragX =
+              x;
+
+
+            folder.dataset.dragY =
+              y;
+
+
+            folder.style.translate =
+              x +
+              "px " +
+              y +
+              "px";
+
+
+            if(trashDock){
+
+              const folderRect =
+                folder
+                  .getBoundingClientRect();
+
+
+              const trashRect =
+                trashDock
+                  .getBoundingClientRect();
+
+
+              const overlap =
+                !(
+                  folderRect.right <
+                    trashRect.left - 30 ||
+
+                  folderRect.left >
+                    trashRect.right + 30 ||
+
+                  folderRect.bottom <
+                    trashRect.top - 30 ||
+
+                  folderRect.top >
+                    trashRect.bottom + 30
+                );
+
+
+              trashDock.classList.toggle(
+                "is-receiving",
+                overlap
+              );
+
+            }
+
+
+            updateHotspotPriority();
+
+          }
+        );
+
+
+        folder.addEventListener(
+          "pointerup",
+          function(){
+
+            if(
+              activeDrag !== folder
+            ){
+              return;
+            }
+
+
+            folder.classList.remove(
+              "is-dragging"
+            );
+
+
+            activeDrag =
+              null;
+
+
+            let dropped =
+              false;
+
+
+            if(
+              trashDock &&
+              trashDock.classList.contains(
+                "is-receiving"
+              )
+            ){
+
+              dropped =
+                true;
+
+
+              trashDock.classList.remove(
+                "is-receiving"
+              );
+
+
+              folder.style.translate =
+                "0px 0px";
+
+
+              folder.dataset.dragX =
+                "0";
+
+
+              folder.dataset.dragY =
+                "0";
+
+
+              openModal(
+                "trashModal"
+              );
+
+
+              notify(
+                "Trash",
+                "Protected item. Confirmation required.",
+                "⌫",
+                3800
+              );
+
+
+              systemSound(
+                "close"
+              );
+
+            }
+
+
+            if(
+              moved ||
+              dropped
+            ){
+
+              folder.dataset.justDragged =
+                "1";
+
+
+              setTimeout(
+                function(){
+
+                  delete folder.dataset.justDragged;
+
+                },
+                700
+              );
+
+            }
+
+
+            updateHotspotPriority();
+
+          }
+        );
+
+
+        folder.addEventListener(
+          "pointercancel",
+          function(){
+
+            folder.classList.remove(
+              "is-dragging"
+            );
+
+
+            activeDrag =
+              null;
+
+
+            if(trashDock){
+
+              trashDock.classList.remove(
+                "is-receiving"
+              );
+
+            }
+
+
+            updateHotspotPriority();
+
+          }
+        );
+
+
+        folder.addEventListener(
+          "click",
+          function(event){
+
+            if(
+              folder.dataset.justDragged === "1"
+            ){
+
+              event.preventDefault();
+              event.stopPropagation();
+              event.stopImmediatePropagation();
+
+            }
+
+          },
+          true
+        );
+
+      }
+    );
+
+
+    /* =======================================================
+       20. FOLDER RESTORE / SHUFFLE
+    ======================================================= */
+
+    function restoreFolders(){
+
+      folders.forEach(
+        function(folder){
+
+          folder.style.translate =
+            "0px 0px";
+
+
+          folder.dataset.dragX =
+            "0";
+
+
+          folder.dataset.dragY =
+            "0";
+
+        }
+      );
+
+
+      updateHotspotPriority();
+
+
+      notify(
+        "Desktop",
+        "Folder positions restored.",
+        "⌘",
+        2700
+      );
+
+    }
+
+
+    function shuffleFolders(){
+
+      folders.forEach(
+        function(folder){
+
+          const x =
+            (
+              Math.random() -
+              .5
+            ) *
+            180;
+
+
+          const y =
+            (
+              Math.random() -
+              .5
+            ) *
+            100;
+
+
+          folder.dataset.dragX =
+            x.toFixed(1);
+
+
+          folder.dataset.dragY =
+            y.toFixed(1);
+
+
+          folder.style.translate =
+            x +
+            "px " +
+            y +
+            "px";
+
+        }
+      );
+
+
+      updateHotspotPriority();
+
+
+      notify(
+        "Desktop",
+        "Folders shuffled.",
+        "⌁",
+        2700
+      );
+
+    }
+
+
+    /* =======================================================
+       21. HOTSPOT PRIORITY
+    ======================================================= */
+
+    function overlaps(a,b){
+
+      return !(
+        a.right <= b.left ||
+        a.left >= b.right ||
+        a.bottom <= b.top ||
+        a.top >= b.bottom
+      );
+
+    }
+
+
+    function updateHotspotPriority(){
+
+      const hotspots =
+        qa(".ih-object-hotspot");
+
+
+      hotspots.forEach(
+        function(hotspot){
+
+          const hotRect =
+            hotspot
+              .getBoundingClientRect();
+
+
+          const covered =
+            folders.some(
+              function(folder){
+
+                return overlaps(
+                  folder.getBoundingClientRect(),
+                  hotRect
+                );
+
+              }
+            );
+
+
+          hotspot.classList.toggle(
+            "ih-covered-by-folder",
+            covered
+          );
+
+        }
+      );
+
+    }
+
+
+    setInterval(
+      updateHotspotPriority,
+      220
+    );
+
+
+    /* =======================================================
+       22. DELETE / 404
+    ======================================================= */
+
+    const deleteSite =
+      q("#deleteSite");
+
+    const errorScreen =
+      q("#errorScreen");
+
+
+    if(
+      deleteSite &&
+      errorScreen
+    ){
+
+      deleteSite.addEventListener(
+        "click",
+        function(){
+
+          closeModal(
+            "trashModal"
+          );
+
+
+          setTimeout(
+            function(){
+
+              errorScreen.classList.add(
+                "is-open"
+              );
+
+            },
+            220
+          );
+
+
+          setTimeout(
+            function(){
+
+              errorScreen.classList.remove(
+                "is-open"
+              );
+
+
+              notify(
+                "SYSTEM",
+                "Deletion cancelled. System restored.",
+                "⌫",
+                4300
+              );
+
+            },
+            3900
+          );
+
+        }
+      );
+
+    }
+
+
+    /* =======================================================
+       23. DEVELOPER MODE
+    ======================================================= */
+
+    const experiments =
+      document.createElement("button");
+
+
+    experiments.type =
+      "button";
+
+
+    experiments.className =
+      "ih-experiments-folder";
+
+
+    experiments.innerHTML =
+      '<img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 80' width='100' height='80'%3E%3Cpath d='M8 12C8 7.58 11.58 4 16 4H36C39.5 4 42.6 6.3 43.6 9.6L46 16H84C88.42 16 92 19.58 92 24V68C92 72.42 88.42 76 84 76H16C11.58 76 8 72.42 8 68V12Z' fill='%235aa7ff'/%3E%3Cpath d='M8 26C8 21.58 11.58 18 16 18H84C88.42 18 92 21.58 92 26V68C92 72.42 88.42 76 84 76H16C11.58 76 8 72.42 8 68V26Z' fill='%233b82f6'/%3E%3Cpath d='M8 32H92V68C92 72.42 88.42 76 84 76H16C11.58 76 8 72.42 8 68V32Z' fill='%232563eb' fill-opacity='0.25'/%3E%3C/svg%3E" alt="">' +
+      "<span>EXPERIMENTS</span>";
+
+
+    desktop.appendChild(
+      experiments
+    );
+
+
+    const terminal =
+      document.createElement("div");
+
+
+    terminal.id =
+      "ihTerminal";
+
+
+    terminal.innerHTML =
+      "<div>&gt; boot developer_tools</div>" +
+      "<div>&gt; experiments mounted</div>" +
+      "<div>&gt; status: active</div>" +
+      "<div>&gt; items found: 00</div>" +
+      "<div>&gt; finished: 00</div>" +
+      '<div>&gt; waiting for input<span class="ih-terminal-caret"></span></div>';
+
+
+    document.body.appendChild(
+      terminal
+    );
+
+
+    const experimentsModal =
+      document.createElement("div");
+
+
+    experimentsModal.className =
+      "ios-modal";
+
+
+    experimentsModal.id =
+      "experimentsModal";
+
+
+    experimentsModal.innerHTML =
+      '<div class="ios-window">' +
+
+        '<div class="ios-top">' +
+
+          '<div class="ios-dots">' +
+
+            '<span class="ios-dot ios-close" data-close="experimentsModal"></span>' +
+
+            '<span class="ios-dot ios-yellow"></span>' +
+
+            '<span class="ios-dot ios-green"></span>' +
+
+          "</div>" +
+
+          "EXPERIMENTS" +
+
+        "</div>" +
+
+        '<div class="process-body">' +
+
+          '<h2 class="ios-title">YOUR SECRET SECTION</h2>' +
+
+          '<div class="process-intro">' +
+            "YOUR DESCRIPTION." +
+          "</div>" +
+
+          '<div class="process-steps" style="grid-template-columns:repeat(3,1fr)">' +
+
+            '<div class="process-step">' +
+              '<div class="process-step-num">01</div>' +
+              '<div class="process-step-name">EXPERIMENT 01</div>' +
+              '<div class="process-step-text">YOUR TEXT.</div>' +
+            "</div>" +
+
+            '<div class="process-step">' +
+              '<div class="process-step-num">02</div>' +
+              '<div class="process-step-name">EXPERIMENT 02</div>' +
+              '<div class="process-step-text">YOUR TEXT.</div>' +
+            "</div>" +
+
+            '<div class="process-step">' +
+              '<div class="process-step-num">03</div>' +
+              '<div class="process-step-name">EXPERIMENT 03</div>' +
+              '<div class="process-step-text">YOUR TEXT.</div>' +
+            "</div>" +
+
+          "</div>" +
+
+        "</div>" +
+
+      "</div>";
+
+
+    document.body.appendChild(
+      experimentsModal
+    );
+
+
+    experiments.addEventListener(
+      "click",
+      function(){
+
+        openModal(
+          "experimentsModal"
+        );
+
+        systemSound(
+          "secret"
+        );
+
+      }
+    );
+
+
+    const experimentClose =
+      experimentsModal.querySelector(
+        "[data-close]"
+      );
+
+
+    if(experimentClose){
+
+      experimentClose.addEventListener(
+        "click",
+        function(){
+
+          experimentsModal.classList.remove(
+            "is-open"
+          );
+
+        }
+      );
+
+    }
+
+
+    experimentsModal.addEventListener(
+      "click",
+      function(event){
+
+        if(
+          event.target === experimentsModal
+        ){
+
+          experimentsModal.classList.remove(
+            "is-open"
+          );
+
+        }
+
+      }
+    );
+
+
+    const title =
+      q(".ilnur-identity-title");
+
+
+    let titleClicks =
+      0;
+
+
+    let clickTimer =
+      null;
+
+
+    function toggleDeveloperMode(){
+
+      body.classList.toggle(
+        "ih-dev-mode"
+      );
+
+
+      const enabled =
+        body.classList.contains(
+          "ih-dev-mode"
+        );
+
+
+      notify(
+        "Developer Mode",
+        enabled
+        ?
+        "Developer tools enabled."
+        :
+        "Developer tools disabled.",
+        "</>",
+        3600
+      );
+
+
+      systemSound(
+        "secret"
+      );
+
+    }
+
+
+    if(title){
+
+      title.style.cursor =
+        "pointer";
+
+
+      title.title =
+        "system identity";
+
+
+      title.addEventListener(
+        "click",
+        function(){
+
+          titleClicks++;
+
+
+          clearTimeout(
+            clickTimer
+          );
+
+
+          clickTimer =
+            setTimeout(
+              function(){
+
+                titleClicks =
+                  0;
+
+              },
+              1600
+            );
+
+
+          if(
+            titleClicks >= 5
+          ){
+
+            titleClicks =
+              0;
+
+            toggleDeveloperMode();
+
+          }
+
+        }
+      );
+
+    }
+
+
+    /* =======================================================
+       24. CONTEXT MENU EXTENSIONS
+    ======================================================= */
+
+    if(contextMenu){
+
+      const divider =
+        document.createElement("div");
+
+      divider.className =
+        "context-divider";
+
+
+      const lighting =
+        document.createElement("div");
+
+      lighting.className =
+        "context-item";
+
+      lighting.innerHTML =
+        "<span>Change lighting</span><span>◐</span>";
+
+
+      const shuffle =
+        document.createElement("div");
+
+      shuffle.className =
+        "context-item";
+
+      shuffle.innerHTML =
+        "<span>Shuffle folders</span><span>⌁</span>";
+
+
+      const restore =
+        document.createElement("div");
+
+      restore.className =
+        "context-item";
+
+      restore.innerHTML =
+        "<span>Restore folders</span><span>↺</span>";
+
+
+      const dev =
+        document.createElement("div");
+
+      dev.className =
+        "context-item";
+
+      dev.innerHTML =
+        "<span>Developer mode</span><span>&lt;/&gt;</span>";
+
+
+      contextMenu.appendChild(
+        divider
+      );
+
+      contextMenu.appendChild(
+        lighting
+      );
+
+      contextMenu.appendChild(
+        shuffle
+      );
+
+      contextMenu.appendChild(
+        restore
+      );
+
+      contextMenu.appendChild(
+        dev
+      );
+
+
+      lighting.addEventListener(
+        "click",
+        function(){
+
+          cycleLight();
+
+          closeContextMenu();
+
+        }
+      );
+
+
+      shuffle.addEventListener(
+        "click",
+        function(){
+
+          shuffleFolders();
+
+          closeContextMenu();
+
+        }
+      );
+
+
+      restore.addEventListener(
+        "click",
+        function(){
+
+          restoreFolders();
+
+          closeContextMenu();
+
+        }
+      );
+
+
+      dev.addEventListener(
+        "click",
+        function(){
+
+          toggleDeveloperMode();
+
+          closeContextMenu();
+
+        }
+      );
+
+    }
+
+
+    /* =======================================================
+       25. VIDEO INTRO
+    ======================================================= */
+
+    function createLoader(){
+
+      const existing =
+        q("#ilnurVideoLoader");
+
+
+      if(existing){
+        existing.remove();
+      }
+
+
+      const loader =
+        document.createElement("div");
+
+
+      loader.id =
+        "ilnurVideoLoader";
+
+
+      loader.innerHTML =
+        '<div class="ivl-center">' +
+
+          '<div class="ivl-logo">' +
+            "YOUR.STUDIO" +
+          "</div>" +
+
+          '<div class="ivl-status" id="ivlStatus">' +
+            "loading video..." +
+          "</div>" +
+
+          '<div class="ivl-track">' +
+
+            '<div class="ivl-bar" id="ivlBar"></div>' +
+
+          "</div>" +
+
+        "</div>";
+
+
+      document.body.appendChild(
+        loader
+      );
+
+
+      return loader;
+
+    }
+
+
+    function createVideo(){
+
+      const bg =
+        q("#ilnurDesktop .ilnur-scene-bg");
+
+
+      if(!bg) return null;
+
+
+      bg.querySelectorAll(
+        "video"
+      ).forEach(
+        function(video){
+
+          video.remove();
+
+        }
+      );
+
+
+      const video =
+        document.createElement("video");
+
+
+      video.id =
+        "ilnurVideoFinal";
+
+
+      video.muted =
+        true;
+
+      video.defaultMuted =
+        true;
+
+      video.autoplay =
+        false;
+
+      video.loop =
+        false;
+
+      video.controls =
+        false;
+
+      video.playsInline =
+        true;
+
+      video.preload =
+        "auto";
+
+      video.disablePictureInPicture =
+        true;
+
+
+      video.setAttribute(
+        "muted",
+        ""
+      );
+
+
+      video.setAttribute(
+        "playsinline",
+        ""
+      );
+
+
+      video.setAttribute(
+        "webkit-playsinline",
+        ""
+      );
+
+
+      video.setAttribute(
+        "preload",
+        "auto"
+      );
+
+
+      video.setAttribute(
+        "controlslist",
+        "nodownload nofullscreen noremoteplayback"
+      );
+
+
+      bg.prepend(
+        video
+      );
+
+
+      return video;
+
+    }
+
+
+    let progress =
+      0;
+
+
+    let progressTimer =
+      null;
+
+
+    function setProgress(
+      value,
+      text
+    ){
+
+      progress =
+        Math.max(
+          progress,
+          Math.min(
+            100,
+            value
+          )
+        );
+
+
+      const bar =
+        q("#ivlBar");
+
+
+      const status =
+        q("#ivlStatus");
+
+
+      if(bar){
+
+        bar.style.width =
+          progress +
+          "%";
+
+      }
+
+
+      if(
+        status &&
+        text
+      ){
+
+        status.textContent =
+          text;
+
+      }
+
+    }
+
+
+    function startProgress(){
+
+      progressTimer =
+        setInterval(
+          function(){
+
+            if(progress < 40){
+
+              setProgress(
+                progress + 1.7
+              );
+
+            }else if(progress < 72){
+
+              setProgress(
+                progress + .52
+              );
+
+            }else if(progress < 88){
+
+              setProgress(
+                progress + .15
+              );
+
+            }
+
+          },
+          110
+        );
+
+    }
+
+
+    function stopProgress(){
+
+      clearInterval(
+        progressTimer
+      );
+
+    }
+
+
+    function waitForVideo(
+      video
+    ){
+
+      return new Promise(
+        function(resolve){
+
+          let finished =
+            false;
+
+
+          function complete(ok){
+
+            if(finished) return;
+
+
+            finished =
+              true;
+
+
+            cleanup();
+
+            resolve(ok);
+
+          }
+
+
+          function ready(){
+
+            if(
+              video.readyState >= 3
+            ){
+
+              complete(true);
+
+            }
+
+          }
+
+
+          function fail(){
+
+            complete(false);
+
+          }
+
+
+          function cleanup(){
+
+            clearTimeout(
+              timeout
+            );
+
+
+            video.removeEventListener(
+              "canplay",
+              ready
+            );
+
+
+            video.removeEventListener(
+              "loadeddata",
+              ready
+            );
+
+
+            video.removeEventListener(
+              "error",
+              fail
+            );
+
+          }
+
+
+          const timeout =
+            setTimeout(
+              function(){
+
+                complete(
+                  video.readyState >= 2
+                );
+
+              },
+              12000
+            );
+
+
+          video.addEventListener(
+            "canplay",
+            ready
+          );
+
+
+          video.addEventListener(
+            "loadeddata",
+            ready
+          );
+
+
+          video.addEventListener(
+            "error",
+            fail,
+            {once:true}
+          );
+
+
+          ready();
+
+        }
+      );
+
+    }
+
+
+    function startPlayback(
+      video
+    ){
+
+      return new Promise(
+        function(resolve){
+
+          let completed =
+            false;
+
+
+          function finish(ok){
+
+            if(completed) return;
+
+
+            completed =
+              true;
+
+            cleanup();
+
+            resolve(ok);
+
+          }
+
+
+          function playing(){
+
+            finish(true);
+
+          }
+
+
+          function timeUpdate(){
+
+            if(
+              video.currentTime > 0
+            ){
+
+              finish(true);
+
+            }
+
+          }
+
+
+          function error(){
+
+            finish(false);
+
+          }
+
+
+          function cleanup(){
+
+            clearTimeout(
+              timeout
+            );
+
+
+            video.removeEventListener(
+              "playing",
+              playing
+            );
+
+
+            video.removeEventListener(
+              "timeupdate",
+              timeUpdate
+            );
+
+
+            video.removeEventListener(
+              "error",
+              error
+            );
+
+          }
+
+
+          const timeout =
+            setTimeout(
+              function(){
+
+                finish(
+                  !video.paused &&
+                  video.readyState >= 2
+                );
+
+              },
+              5000
+            );
+
+
+          video.addEventListener(
+            "playing",
+            playing,
+            {once:true}
+          );
+
+
+          video.addEventListener(
+            "timeupdate",
+            timeUpdate
+          );
+
+
+          video.addEventListener(
+            "error",
+            error,
+            {once:true}
+          );
+
+
+          try{
+
+            video.currentTime =
+              0;
+
+          }catch(error){}
+
+
+          video.muted =
+            true;
+
+          video.defaultMuted =
+            true;
+
+
+          try{
+
+            const promise =
+              video.play();
+
+
+            if(
+              promise &&
+              promise.catch
+            ){
+
+              promise.catch(
+                function(){
+
+                  finish(false);
+
+                }
+              );
+
+            }
+
+          }catch(error){
+
+            finish(false);
+
+          }
+
+        }
+      );
+
+    }
+
+
+    async function runIntro(){
+
+      body.classList.remove(
+        "ivl-waiting",
+        "ivl-done"
+      );
+
+
+      body.classList.add(
+        "ivl-running",
+        "ih-monitor-start"
+      );
+
+
+      await wait(
+        CONFIG.intro.firstDelay
+      );
+
+
+      body.classList.add(
+        "ih-monitor-bursting"
+      );
+
+
+      for(
+        let index = 0;
+        index < folders.length;
+        index++
+      ){
+
+        folders[index].classList.add(
+          "ivl-launched"
+        );
+
+
+        await wait(
+          CONFIG.intro.folderDelay
+        );
+
+      }
+
+
+      body.classList.add(
+        "ivl-chrome"
+      );
+
+
+      await wait(
+        CONFIG.intro.chromeDelay
+      );
+
+
+      body.classList.add(
+        "ivl-dock"
+      );
+
+
+      await wait(
+        CONFIG.intro.dockDelay
+      );
+
+
+      body.classList.add(
+        "ivl-bar"
+      );
+
+
+      await wait(
+        CONFIG.intro.finishDelay
+      );
+
+
+      body.classList.remove(
+        "ivl-running",
+        "ivl-chrome",
+        "ivl-dock",
+        "ivl-bar",
+        "ih-monitor-start",
+        "ih-monitor-bursting"
+      );
+
+
+      body.classList.add(
+        "ivl-done",
+        "ih-folders-launched",
+        "ilnur-os-ready"
+      );
+
+
+      folders.forEach(
+        function(folder){
+
+          folder.classList.remove(
+            "ivl-launched"
+          );
+
+        }
+      );
+
+
+      updateHotspotPriority();
+
+    }
+
+
+    function closeLoader(
+      loader
+    ){
+
+      loader.classList.add(
+        "is-hidden"
+      );
+
+
+      setTimeout(
+        function(){
+
+          if(loader.parentNode){
+
+            loader.remove();
+
+          }
+
+        },
+        560
+      );
+
+    }
+
+
+    function freezeLastFrame(
+      video
+    ){
+
+      video.pause();
+
+
+      try{
+
+        if(
+          Number.isFinite(
+            video.duration
+          ) &&
+          video.duration > 0
+        ){
+
+          video.currentTime =
+            Math.max(
+              0,
+              video.duration - .04
+            );
+
+        }
+
+      }catch(error){}
+
+
+      video.classList.add(
+        "is-visible"
+      );
+
+    }
+
+
+    async function installIntro(){
+
+      body.classList.add(
+        "ivl-waiting"
+      );
+
+
+      body.classList.remove(
+        "ivl-done"
+      );
+
+
+      const loader =
+        createLoader();
+
+
+      const video =
+        createVideo();
+
+
+      startProgress();
+
+
+      let finished =
+        false;
+
+
+      const hardTimeout =
+        setTimeout(
+          function(){
+
+            if(finished) return;
+
+
+            finished =
+              true;
+
+
+            stopProgress();
+
+
+            setProgress(
+              100,
+              "launching desktop..."
+            );
+
+
+            runIntro();
+
+
+            closeLoader(
+              loader
+            );
+
+          },
+          16000
+        );
+
+
+      if(!video){
+
+        clearTimeout(
+          hardTimeout
+        );
+
+
+        finished =
+          true;
+
+
+        stopProgress();
+
+
+        await runIntro();
+
+
+        closeLoader(
+          loader
+        );
+
+
+        startAfterIntro();
+
+
+        return;
+
+      }
+
+
+      video.addEventListener(
+        "ended",
+        function(){
+
+          freezeLastFrame(
+            video
+          );
+
+        }
+      );
+
+
+      video.src =
+        isMobile()
+        ?
+        CONFIG.mobileVideo
+        :
+        CONFIG.desktopVideo;
+
+
+      video.load();
+
+
+      const loaded =
+        await waitForVideo(
+          video
+        );
+
+
+      if(!loaded){
+
+        clearTimeout(
+          hardTimeout
+        );
+
+
+        if(!finished){
+
+          finished =
+            true;
+
+
+          stopProgress();
+
+
+          setProgress(
+            100,
+            "launching desktop..."
+          );
+
+
+          await runIntro();
+
+
+          closeLoader(
+            loader
+          );
+
+
+          startAfterIntro();
+
+        }
+
+
+        return;
+
+      }
+
+
+      setProgress(
+        88,
+        "starting video..."
+      );
+
+
+      const playing =
+        await startPlayback(
+          video
+        );
+
+
+      clearTimeout(
+        hardTimeout
+      );
+
+
+      if(finished) return;
+
+
+      finished =
+        true;
+
+
+      stopProgress();
+
+
+      setProgress(
+        100,
+        "launching desktop..."
+      );
+
+
+      if(playing){
+
+        video.classList.add(
+          "is-visible"
+        );
+
+      }
+
+
+      runIntro();
+
+
+      await wait(90);
+
+
+      closeLoader(
+        loader
+      );
+
+
+      if(!playing){
+
+        const retry =
+          function(){
+
+            video.muted =
+              true;
+
+
+            video.play()
+              .then(function(){
+
+                video.classList.add(
+                  "is-visible"
+                );
+
+              })
+              .catch(function(){});
+
+          };
+
+
+        document.addEventListener(
+          "pointerdown",
+          retry,
+          {once:true}
+        );
+
+
+        document.addEventListener(
+          "touchstart",
+          retry,
+          {
+            once:true,
+            passive:true
+          }
+        );
+
+      }
+
+
+      startAfterIntro();
+
+    }
+
+
+    /* =======================================================
+       26. AFTER INTRO
+    ======================================================= */
+
+    let afterIntroStarted =
+      false;
+
+
+    function startAfterIntro(){
+
+      if(afterIntroStarted){
+        return;
+      }
+
+
+      afterIntroStarted =
+        true;
+
+
+      scheduleNotifications();
+
+      updateHotspotPriority();
+
+    }
+
+
+    /* =======================================================
+       27. INITIAL
+    ======================================================= */
+
+    folders.forEach(
+      function(folder){
+
+        folder.style.visibility =
+          "visible";
+
+      }
+    );
+
+
+    installIntro();
+
+  }
+
+})();
+</script>
+</body>
+</html>
